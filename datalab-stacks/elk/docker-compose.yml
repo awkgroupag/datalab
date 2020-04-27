@@ -13,7 +13,7 @@ services:
       # see https://www.elastic.co/guide/en/elasticsearch/reference/current/bootstrap-checks.html
       discovery.type: single-node
     networks:
-      - elk
+      - datalab_stack_master-network
     volumes:
       - elasticsearch_data:/usr/share/elasticsearch/data
 
@@ -26,7 +26,7 @@ services:
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
-      - elk
+      - datalab_stack_master-network
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.6.2
@@ -34,14 +34,15 @@ services:
     ports:
       - 5601:5601
     networks:
-      - elk
+      - datalab_stack_master-network
     environment:
       server.name: kibana
       server.host: "0"
       elasticsearch.hosts: http://elasticsearch:9200
 
 networks:
-  elk:
+  datalab_stack_master-network:
+    external: true
 
 volumes:
   elasticsearch_data:
