@@ -1,6 +1,7 @@
 @echo off
 set PORT=12334
 
+docker network create datalab-network
 docker-compose -f controlboard.yml up -d
 
 echo Waiting for the controlboard to spin up on port %PORT%

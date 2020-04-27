@@ -8,7 +8,7 @@ services:
     image: awkgroupag/controlboard:latest
     container_name: controlboard
     networks:
-      - master-network
+      - datalab-network
     ports:
       # Access this controlboard using the url http://localhost:12334
       - 12334:8888
@@ -31,4 +31,5 @@ services:
     user: root
 
 networks:
-  master-network:
+  datalab-network:
+    external: true
