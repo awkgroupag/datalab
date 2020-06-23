@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+  postgres:
+    image: postgres:12.3-alpine
+    container_name: postgres
+    ports:
+      - 5432:5432
+    networks:
+      - datalab-network
+    volumes:
+      - ./example-db:/data
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    restart: unless-stopped
+
+networks:
+  datalab-network:
+    external: true
+
+volumes:
+  postgres_data:
+    external: true
