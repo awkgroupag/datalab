@@ -4,6 +4,7 @@ Run the following stacks on your local machine or remote server:
 * ["Vanilla" Jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
 * [Elastic Stack (formerly ELK-Stack)](https://www.elastic.co/de/products/)
 * [PostgreSQL Database](https://www.postgresql.org/)
+* [MySQL Database](https://www.mysql.com/)
 * Coming up: [Neo4j](https://neo4j.com/)
 
 ## Controlboard

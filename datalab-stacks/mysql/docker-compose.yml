@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  mysql:
+    image: mysql:8.0.20
+    container_name: mysql
+    ports:
+      - 3306:3306
+    networks:
+      - datalab-network
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=mysql-database
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=password
+    restart: unless-stopped
+
+networks:
+  datalab-network:
+    external: true
+
+volumes:
+  mysql_data:
+    external: true
