@@ -9,7 +9,6 @@ services:
     networks:
       - datalab-network
     volumes:
-      - ./example-db:/data
       - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
