@@ -1,4 +1,11 @@
 # DataLab_Stack
+## Supported Stacks
+Run the following stacks on your local machine or remote server:
+* ["Vanilla" Jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
+* [Elastic Stack (formerly ELK-Stack)](https://www.elastic.co/de/products/)
+* [PostgreSQL Database](https://www.postgresql.org/)
+* Coming up: [Neo4j](https://neo4j.com/)
+
 ## Controlboard
 ### Start the controlboard
 Use the command prompt and just type
