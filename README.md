@@ -1,4 +1,7 @@
-# DataLab_Stack
+# DataLab Stack
+* Get your Data Analytics environment up and running in a few minutes (or even seconds)
+* Easily control your environment through a Jupyter notebook instead of command line arguments
+
 ## Supported Stacks
 Run the following stacks on your local machine or remote server:
 * ["Vanilla" Jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
@@ -7,7 +10,7 @@ Run the following stacks on your local machine or remote server:
 * [MySQL Database](https://www.mysql.com/)
 * Coming up: [Neo4j](https://neo4j.com/)
 
-## Controlboard
+## How-to
 ### Start the controlboard
 Use the command prompt and just type
 ```
