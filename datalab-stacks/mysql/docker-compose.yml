@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   mysql:
-    image: mysql:8.0.20
+    image: mysql:8.0.21
     container_name: mysql
     ports:
       - 3306:3306
@@ -13,8 +13,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=mysql-database
-      - MYSQL_USER=mysql
-      - MYSQL_PASSWORD=password
     restart: unless-stopped
 
 networks:
