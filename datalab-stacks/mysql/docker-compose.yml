@@ -12,7 +12,6 @@ services:
       - mysql_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=mysql-database
     restart: unless-stopped
 
 networks:
