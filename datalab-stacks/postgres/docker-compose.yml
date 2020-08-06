@@ -13,6 +13,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
+    shm_size: 256M
     restart: unless-stopped
 
 networks:
