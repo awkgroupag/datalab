@@ -18,12 +18,10 @@ WARNING: Found orphan containers
 Now if you publish your source code to GitHub, you will include your DataLab. And avoid publishing data to the whole world. 
 
 ### Set-up a few variables for your new project once
-Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`:
+Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save the customized file as a new file `./datalab-stacks/environment.env`.
 * `COMPOSE_PROJECT_NAME`: name of this project. Will show up in all container names associated with this project. No spaces or special characters allowed
 * `DATALAB_SOURCECODE_DIR`: your Windows directory containing all your source code - including this datalab! Will appear as `/home/jovyan/work` in the Jupyter Notebook
 * `DATALAB_DATA_DIR`: your Windows directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
-
-Save the customized file as a new file `./datalab-stacks/environment.env`.
 
 
 ### Start a single Jupyter Notebook directly
