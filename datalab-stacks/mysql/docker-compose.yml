@@ -2,10 +2,9 @@ version: '3.7'
 
 services:
   mysql:
-    image: mysql:8.0.21
-    container_name: mysql
+    image: mysql:8.0.22
     ports:
-      - 3306:3306
+      - ${DATALAB_MYSQL_PORT}:3306
     networks:
       - datalab-network
     volumes:

@@ -2,10 +2,9 @@ version: '3.7'
 
 services:
   postgres:
-    image: postgres:12.3-alpine
-    container_name: postgres
+    image: postgres:12.4-alpine
     ports:
-      - 5432:5432
+      - ${DATALAB_POSTGRES_PORT}:5432
     networks:
       - datalab-network
     volumes:

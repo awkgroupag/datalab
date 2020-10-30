@@ -2,11 +2,10 @@ version: '3.7'
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
-    container_name: elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
     ports:
-      - 9200:9200
-      - 9300:9300
+      - ${DATALAB_ELK_ELASTICSEARCH_PORT1}:9200
+      - ${DATALAB_ELK_ELASTICSEARCH_PORT2}:9300
     environment:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       # Use single node discovery in order to disable production mode and avoid bootstrap checks
@@ -18,21 +17,19 @@ services:
       - elasticsearch_data:/usr/share/elasticsearch/data
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.6.2
-    container_name: logstash
+    image: docker.elastic.co/logstash/logstash:7.9.3
     ports:
-      - 5000:5000
-      - 9600:9600
+      - ${DATALAB_ELK_LOGSTASH_PORT1}:5000
+      - ${DATALAB_ELK_LOGSTASH_PORT2}:9600
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     networks:
       - datalab-network
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.6.2
-    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.9.3
     ports:
-      - 5601:5601
+      - ${DATALAB_ELK_ELASTICSEARCH_KIBANA}:5601
     networks:
       - datalab-network
     environment:
