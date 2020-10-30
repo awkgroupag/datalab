@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  jupyter:
+    image: awkgroupag/datascience-notebook:c7b1c1a
+    ports:
+      - ${DATALAB_JUPYTER_PORT}:8888
+    networks:
+      - datalab-network
+    volumes:
+      - "${DATALAB_SOURCECODE_DIR}:/home/jovyan/work"
+      - "${DATALAB_DATA_DIR}:/home/jovyan/data"
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+    restart: unless-stopped
+
+networks:
+  datalab-network:
+    external: true

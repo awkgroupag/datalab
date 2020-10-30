@@ -6,12 +6,11 @@ version: "3.7"
 services:
   controlboard:
     image: awkgroupag/controlboard:latest
-    container_name: controlboard
     networks:
       - datalab-network
     ports:
       # Access this controlboard using the url http://localhost:12334
-      - 12334:8888
+      - ${DATALAB_CONTROLBOARD_PORT}:8888
     volumes:
       # Write-access to Docker socket so we can remote-control Docker from
       # within a notebook

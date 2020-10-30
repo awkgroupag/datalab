@@ -2,9 +2,7 @@
 :: ensure that environment variables will be deleted after programm termination
 setlocal
 :: You might want to customize these
-:: set Docker's environemtn variable COMPOSE_FILE - this way we can deal with
-:: SEVERAL docker-composes in ONE environment.env
-set COMPOSE_FILE=controlboard.yml
+set APPNAME=Jupyterlab Notebook
 set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.env
 
 if not exist %ENVIRONMENT_FILE_PATH% (
@@ -19,13 +17,17 @@ if not exist %ENVIRONMENT_FILE_PATH% (
 :: docker-compose.yml
 :: Set environment variables from file. Skip lines starting with #
 FOR /F "tokens=*" %%i in ('findstr /v /c:"#" %ENVIRONMENT_FILE_PATH%') do SET %%i
+:: set Docker's environemtn variable COMPOSE_FILE - this way we can deal with
+:: SEVERAL docker-composes in ONE environment.env
+set COMPOSE_FILE=.\datalab-stacks\%DATALAB_JUPYTER_COMPOSE_PATH%
 
 :: Make sure that the Docker network exists
 docker network create %DATALAB_DOCKER_NETWORK% >nul 2>nul
-
-echo Starting controlboard
+:: Use env files for docker-compose
 docker-compose up -d
-echo Waiting for the controlboard to spin up on port %DATALAB_CONTROLBOARD_PORT%
+
+
+echo Waiting for %APPNAME% to spin up on port %DATALAB_JUPYTER_PORT%
 
 ::
 :: Wait until Jupyter is really ready
@@ -35,8 +37,7 @@ set COUNTER=0
 :: Wait for another second so the notebook is indeed listening
 timeout /t 1 /nobreak >nul 2>nul
 ::Grab the Jupyter token
-setlocal
-for /F "tokens=* USEBACKQ" %%F IN (`"docker-compose logs controlboard 2>&1 | findstr "http://127.0.0.1:8888/?token=""`) DO (
+for /F "tokens=* USEBACKQ" %%F IN (`"docker-compose logs jupyter 2>&1 | findstr "http://127.0.0.1:8888/?token=""`) DO (
     set TOKENSTRING=%%F
 )
 :: TOKENSTRING equals to e.g. (without quotes!)
@@ -52,16 +53,16 @@ if "%TOKEN%" == "" goto error_empty_token
 
 :: Start Chrome
 echo.
-echo Use the following URL to access your controlboard:
-echo http://localhost:%DATALAB_CONTROLBOARD_PORT%/?token=%TOKEN%
+echo Use the following URL to access the %APPNAME%:
+echo http://localhost:%DATALAB_JUPYTER_PORT%/?token=%TOKEN%
 
-start chrome http://localhost:%DATALAB_CONTROLBOARD_PORT%/?token=%TOKEN%
+start chrome http://localhost:%DATALAB_JUPYTER_PORT%/?token=%TOKEN%
 goto end_of_file
 
 
 :error_empty_token
 echo.
-echo ERROR: no token found for your Jupyter Notebook :-(
+echo ERROR: no token found for %APPNAME% :-(
 echo.
 
 :end_of_file
