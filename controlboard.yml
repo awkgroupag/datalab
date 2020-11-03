@@ -5,7 +5,7 @@ version: "3.7"
 
 services:
   controlboard:
-    image: awkgroupag/controlboard:latest
+    image: awkgroupag/controlboard:75fa9a3
     networks:
       - datalab-network
     ports:
