@@ -13,7 +13,7 @@ WARNING: Found orphan containers
 ### Create a new directory for your project
 * Create a dedicated directory for your source code
 * Create another dedicated directory for your data (not within the source code directory ;-))
-* Download this entire DataLab's sourcecode from GitHub and place it in a new directory `datalab` that you created within your source code directory
+* Download this entire DataLab's sourcecode from GitHub and place it in a new directory `datalab` that you created within your source code directory (mind the case!)
 
 Now if you publish your source code to GitHub, you will include your DataLab. And avoid publishing data to the whole world. 
 
@@ -52,4 +52,4 @@ Run the following stacks on your local machine or remote server:
 * [Elastic Stack (formerly ELK-Stack)](https://www.elastic.co/de/products/)
 * [PostgreSQL Database](https://www.postgresql.org/)
 * [MySQL Database](https://www.mysql.com/)
-* Coming up: [Neo4j](https://neo4j.com/)
+* [Neo4j](https://neo4j.com/)
