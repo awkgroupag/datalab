@@ -12,6 +12,11 @@ WARNING: Found orphan containers
 ## Requirements
 * Docker installed on your system, e.g. [Docker Desktop on Windows](https://docs.docker.com/docker-for-windows/install/)
   * To test this, open a command prompt and type `docker run hello-world`
+* Docker can access your files. When using Docker Desktop on Windows:
+  1. Right-click on Docker in the system tray, then click settings
+  2. Under General, make sure that "Use the WSL 2 based engine" is NOT selected
+  3. Under Ressources, File Sharing, click the plus and add the folder (or even drive) where your source code and data is stored
+  4. Click "Apply and Restart"
 * Optional: If you're coding, you probably want some kind of code version management like `git`. Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/)
 
 ## How-to use the AWK DataLab
