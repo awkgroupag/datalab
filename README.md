@@ -9,6 +9,11 @@ You can safely ignore this warning:
 WARNING: Found orphan containers
 ```
 
+## Requirements
+* Docker installed on your system, e.g. [Docker Desktop on Windows](https://docs.docker.com/docker-for-windows/install/)
+  * To test this, open a command prompt and type `docker run hello-world`
+* Optional: If you're coding, you probably want some kind of code version management like `git`. Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/)
+
 ## How-to use the AWK DataLab
 ### Create a new directory for your project
 * Create a dedicated directory for your source code
