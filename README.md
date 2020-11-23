@@ -1,4 +1,4 @@
-# AWK DataLab Stack
+# AWK Datalab
 * Get your Data Analytics environment up and running in seconds
 * Add and remove technology stacks as needed
 * Collaborate and share your environment easily even years later - being sure that everything still runs
