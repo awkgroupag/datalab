@@ -19,7 +19,7 @@ WARNING: Found orphan containers
   4. Click "Apply and Restart"
 * Optional: If you're coding, you probably want some kind of code version management like `git`. Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/)
 
-## How-to use the AWK DataLab
+## How-to use the AWK Datalab
 ### Create the directory structure for your new project
 If you publish your source code to GitHub, you will include your datalab and thus your entire infrastructure
 * Create a new dedicated directory for your source code
