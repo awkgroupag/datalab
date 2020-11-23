@@ -20,12 +20,14 @@ WARNING: Found orphan containers
 * Optional: If you're coding, you probably want some kind of code version management like `git`. Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/)
 
 ## How-to use the AWK DataLab
-### Create a new directory for your project
-* Create a dedicated directory for your source code
+### Create the directory structure for your new project
+If you publish your source code to GitHub, you will include your datalab and thus your entire infrastructure
+* Create a new dedicated directory for your source code
+* Download this entire datalab's sourcecode:
+  1. Hit the green "Code"-button, then Download ZIP
+  2. Unzip the downloaded ZIP-file into the source code folder you just created
+  3. **Important**: rename the folder you justed unzipped from `datalab-master` to `datalab`
 * Create another dedicated directory for your data (not within the source code directory ;-))
-* Download this entire DataLab's sourcecode from GitHub and place it in a new directory `datalab` that you created within your source code directory (mind the case!)
-
-Now if you publish your source code to GitHub, you will include your DataLab. And avoid publishing data to the whole world. 
 
 ### Set-up a few variables for your new project once
 Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save the customized file as a new file `./datalab-stacks/environment.env`.
