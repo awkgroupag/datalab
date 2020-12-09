@@ -17,6 +17,7 @@ if not exist %ENVIRONMENT_FILE_PATH% (
     echo ERROR: Environment file %ENVIRONMENT_FILE_PATH% not found!
     echo Please edit %ENVIRONMENT_FILE_PATH%.EXAMPLE and save it as %ENVIRONMENT_FILE_PATH%
     echo.
+    pause
     goto end_of_file
 )
 
