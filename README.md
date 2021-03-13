@@ -65,3 +65,28 @@ Run the following stacks on your local machine or remote server:
 * [PostgreSQL Database](https://www.postgresql.org/)
 * [MySQL Database](https://www.mysql.com/)
 * [Neo4j](https://neo4j.com/)
+
+## Additions/Tweaks to JupyerLab
+### Major additional Python modules
+* [h2o AutoML](http://docs.h2o.ai/h2o/latest-stable/h2o-py/docs/index.html)
+* [Pandas Profiling](https://pandas-profiling.github.io/pandas-profiling/docs/master/rtd/)
+* [NLTK: Natural Language Toolkit](https://www.nltk.org/)
+* [spaCy: Industrial-strength NLP](https://spacy.io/)
+* [Streamlit: Create apps](https://docs.streamlit.io/en/stable/)
+
+Visualizations
+* [Altair: Declarative Visualization in Python](https://altair-viz.github.io/)
+
+Database stuff
+* [sqlalchemy-utils](https://sqlalchemy-utils.readthedocs.io/en/latest/)
+* [sqlalchemy_schemadisplay](https://github.com/fschulze/sqlalchemy_schemadisplay)
+* [psycopg2 PostgreSQL Connector](https://www.psycopg.org/docs/)
+* [mysql-connector-python MySQL Connector](https://dev.mysql.com/doc/connector-python/en/)
+
+Tools
+* [lxml - XML and HTML with Python](https://lxml.de/)
+
+### Jupyterlab plugins
+* [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git)
+* [Language Server Protocol integration for Jupyter](https://github.com/krassowski/jupyterlab-lsp)
+* [JupyterLab System Monitor](https://github.com/jtpio/jupyterlab-system-monitor)
