@@ -4,10 +4,13 @@
 * Collaborate and share your environment easily even years later - being sure that everything still runs
 * Control your docker environment through a Jupyter notebook instead of command line arguments
 
-You can safely ignore this warning:
-```
-WARNING: Found orphan containers
-```
+## Contents
+* [Requirements](#requirements)
+* [How-to use the AWK Datalab](#how-to-use-the-awk-datalab)
+* [Run several projects simultaneously](#run-several-projects-simultaneously)
+* [Supported Stacks](#supported-stacks)
+* [Additions/Tweaks to JupyerLab](#additionstweaks-to-jupyerlab)
+* [Good to know](#good-to-know)
 
 ## Requirements
 * Docker installed on your system, e.g. [Docker Desktop on Windows](https://docs.docker.com/docker-for-windows/install/)
@@ -55,9 +58,6 @@ Easily run several projects at the same time. Make sure that you choose differen
 If your head starts spinning because you don't know which project's container talks to which other project's container: set-up a dedicated network e.g. with `docker network create project-A-network` and replace **all** strings `datalab-network`  with  `project-A-network` in all files for project A. 
 
 
-## Remarks
-Docker containers such as this controlboard or the different stacks will keep on running forever, even if you restart your machine. So remember to stop them.
-
 ## Supported Stacks
 Run the following stacks on your local machine or remote server:
 * ["Vanilla" Jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
@@ -90,3 +90,11 @@ Tools
 * [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git)
 * [Language Server Protocol integration for Jupyter](https://github.com/krassowski/jupyterlab-lsp)
 * [JupyterLab System Monitor](https://github.com/jtpio/jupyterlab-system-monitor)
+
+
+## Good to know
+* You can safely ignore this warning:
+```
+WARNING: Found orphan containers
+```
+* Docker containers such as this controlboard or the different stacks will keep on running forever, even if you restart your machine. So remember to stop them.
