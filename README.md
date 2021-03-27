@@ -49,9 +49,14 @@ Run `run_controlboard.cmd`. Once the controlboard is up, it will be opened withi
 * Start the notebook `ControlBoard.ipynb`
 * Follow the instructions in that notebook
 
-### 4. Stop the containers when done
-* If you only started Jupyter (3a), `stop_jupyter_notebook.cmd` stops the container. `rm_jupyter_notebook.cmd` removes the container, thus resetting everything including e.g. 
-* Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
+### 4. Do your work
+As everything else will be **deleted** when recreating the Jupyter container: Make sure that
+* your source code is saved to `/home/jovyan/work`
+* your data lives in `/home/jovyan/data`
+
+### 5. Stop and/or remove the containers when done
+* If you only started Jupyter (3a), `stop_jupyter_notebook.cmd` stops the container - configurations like additional Python packages are kept. `rm_jupyter_notebook.cmd` removes the container, thus resetting everything.
+* If you used the controlboard (3bg): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
 
 ## Run several projects simultaneously
 Easily run several projects at the same time. Make sure that you choose different project-names in `./datalab-stacks/environment.env` and also set different, **unique** values for all the ports.
@@ -68,7 +73,7 @@ Run the following stacks on your local machine or remote server:
 * [Elastic Stack (formerly ELK-Stack)](https://www.elastic.co/de/products/)
 
 ## Additions/Tweaks to JupyerLab
-### Major additional Python modules
+Major additional Python modules
 * [h2o AutoML](http://docs.h2o.ai/h2o/latest-stable/h2o-py/docs/index.html)
 * [Pandas Profiling](https://pandas-profiling.github.io/pandas-profiling/docs/master/rtd/)
 * [NLTK: Natural Language Toolkit](https://www.nltk.org/)
@@ -98,4 +103,4 @@ Tools
 ```
 WARNING: Found orphan containers
 ```
-* Docker containers such as this controlboard or the different stacks will keep on running forever, even if you restart your machine. So remember to stop them.
+* Docker containers such as this controlboard or the different stacks will keep on running forever, even if you restart your machine. So remember [to stop them](#5-stop-andor-remove-the-containers-when-done).
