@@ -56,7 +56,7 @@ As everything else will be **deleted** when recreating the Jupyter container: Ma
 
 ### 5. Stop and/or remove the containers when done
 * If you only started Jupyter (3a), `stop_jupyter_notebook.cmd` stops the container - configurations like additional Python packages are kept. `rm_jupyter_notebook.cmd` removes the container, thus resetting everything.
-* If you used the controlboard (3bg): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
+* If you used the controlboard (3b): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
 
 ## Run several projects simultaneously
 Easily run several projects at the same time. Make sure that you choose different project-names in `./datalab-stacks/environment.env` and also set different, **unique** values for all the ports.
