@@ -45,3 +45,4 @@ networks:
 volumes:
   elasticsearch_data:
     external: true
+    name: ${DATALAB_ELASTICSEARCH_DATA}
