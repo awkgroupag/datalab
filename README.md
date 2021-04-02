@@ -1,5 +1,6 @@
 * [Requirements](#requirements)
-* [How-to use the AWK Datalab](#how-to-install-and-use-the-awk-datalab)
+* [How-to use the AWK Datalab - WINDOWS](#how-to-install-and-use-the-awk-datalab---windows)
+* [How-to use the AWK Datalab - LINUX](#how-to-install-and-use-the-awk-datalab---linux)
 * [Run several projects simultaneously](#run-several-projects-simultaneously)
 * [Supported Stacks](#supported-stacks)
 * [Additions/Tweaks to JupyerLab](#additionstweaks-to-jupyerlab)
@@ -22,7 +23,7 @@
   4. Click "Apply and Restart"
 * Optional: If you're coding, you probably want some kind of code version management like `git`. Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/)
 
-## How-to install and use the AWK Datalab
+## How-to install and use the AWK Datalab - WINDOWS
 ### 1. Create the directory structure for your new project
 If you publish your source code to GitHub, you will include your datalab and thus your entire infrastructure
 * Create a new dedicated directory for your source code
@@ -56,6 +57,40 @@ As everything else will be **deleted** when recreating the Jupyter container: Ma
 ### 5. Stop and/or remove the containers when done
 * If you only started Jupyter (3a), `stop_jupyter_notebook.cmd` stops the container - configurations like additional Python packages are kept. `rm_jupyter_notebook.cmd` removes the container, thus resetting everything.
 * If you used the controlboard (3b): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
+
+## How-to install and use the AWK Datalab - LINUX
+Just follow the instructions above except for the following.
+
+### 3. Load environment variables (necessary once e.g. per SSH-session start)
+* Load the environment variables you just declared for this project.
+```bash
+cd datalab-stacks
+set -a
+. environment.env
+set +a
+```
+
+### 3a. Start a single Jupyter Notebook directly
+* Navigate to the folder `datalab-stacks/jupyter`
+* Run `docker-compose up -d`
+* Copy the URL of the log output when you enter `docker-compose logs`. The log output will end with something like this:
+```
+jupyter_1  |     To access the server, open this file in a browser:
+jupyter_1  |         file:///home/jovyan/.local/share/jupyter/runtime/jpserver-7-open.html
+jupyter_1  |     Or copy and paste one of these URLs:
+jupyter_1  |         http://bc1a7b9a832a:8888/lab?token=d5d6cb3f75aeee90cad00959ce588c8050da53900bc948b1
+jupyter_1  |      or http://127.0.0.1:8888/lab?token=d5d6cb3f75aeee90cad00959ce588c8050da53900bc948b1
+```
+In this case, use `http://127.0.0.1:8888/lab?token=d5d6cb3f75aeee90cad00959ce588c8050da53900bc948b1` to access Jupyter.
+* **WARNING**: if you changed Jupyter's port `DATALAB_JUPYTER_PORT`, adjust port `8888` accordingly!
+
+### 3b. Start the controlboard if it gets more complicated
+* Navigate to the root folder of this repository.
+* Run `docker-compose -f controlboard.yml up -d`
+* Copy the URL of the log output when you enter `docker-compose -f controlboard.yml logs`, see 3a. above.
+* Replace port `8888` with your `DATALAB_CONTROLBOARD_PORT`, most likely `12334`
+* Once you have opened JupyterLab using your browser, open the notebook `datalab-stacks/ControlBoard.ipynb`
+
 
 ## Run several projects simultaneously
 Easily run several projects at the same time. Make sure that you choose different project-names in `./datalab-stacks/environment.env` and also set different, **unique** values for all variables of services you plan to use simultaneously.
