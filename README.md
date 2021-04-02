@@ -58,9 +58,7 @@ As everything else will be **deleted** when recreating the Jupyter container: Ma
 * If you used the controlboard (3b): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
 
 ## Run several projects simultaneously
-Easily run several projects at the same time. Make sure that you choose different project-names in `./datalab-stacks/environment.env` and also set different, **unique** values for all the ports.
-
-If your head starts spinning because you don't know which project's container talks to which other project's container: set-up a dedicated network e.g. with `docker network create project-A-network` and replace **all** strings `datalab-network`  with  `project-A-network` in all files for project A. 
+Easily run several projects at the same time. Make sure that you choose different project-names in `./datalab-stacks/environment.env` and also set different, **unique** values for all variables of services you plan to use simultaneously.
 
 
 ## Supported Stacks
