@@ -40,6 +40,7 @@ services:
 networks:
   datalab-network:
     external: true
+    name: ${DATALAB_DOCKER_NETWORK}
 
 volumes:
   elasticsearch_data:

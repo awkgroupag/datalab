@@ -18,6 +18,7 @@ services:
 networks:
   datalab-network:
     external: true
+    name: ${DATALAB_DOCKER_NETWORK}
 
 volumes:
   postgres_data:
