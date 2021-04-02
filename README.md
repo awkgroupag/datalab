@@ -73,15 +73,29 @@ Run the following stacks on your local machine or remote server:
 * [Elastic Stack (formerly ELK-Stack)](https://www.elastic.co/de/products/)
 
 ## Additions/Tweaks to JupyerLab
-Major additional Python modules
-* [h2o AutoML](http://docs.h2o.ai/h2o/latest-stable/h2o-py/docs/index.html)
-* [Pandas Profiling](https://pandas-profiling.github.io/pandas-profiling/docs/master/rtd/)
-* [NLTK: Natural Language Toolkit](https://www.nltk.org/)
-* [spaCy: Industrial-strength NLP](https://spacy.io/)
-* [Streamlit: Create apps](https://docs.streamlit.io/en/stable/)
+
+The following packages are installed on-top of the [jupyter/datascience-notebook](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html).
+
+Automation
+* [Featuretools](https://featuretools.alteryx.com/en/stable/), an open source python framework for automated feature engineering
+* [h2o AutoML](http://docs.h2o.ai/h2o/latest-stable/h2o-py/docs/index.html): Automatic machine learning
+* [TPOT](http://epistasislab.github.io/tpot/): optimize machine learning pipelines using genetic programming
+* [auto-sklearn](https://automl.github.io/auto-sklearn/master/index.html), automated machine learning toolkit and a drop-in replacement for a scikit-learn estimator
+
+Explainable AI
+* [SHAP (SHapley Additive exPlanations)](https://github.com/slundberg/shap): game theoretic approach to explain the output of any machine learning model
+* [Lime](https://github.com/marcotcr/lime): Explaining the predictions of any machine learning classifier
+* [ELI5](https://eli5.readthedocs.io/en/latest/overview.html): debug machine learning classifiers and explain their predictions
+
+NLP
+* [spaCy](https://spacy.io/): Industrial-strength NLP
+* [Natural Language Toolkit (NLTK)](https://www.nltk.org/): leading platform for building Python programs to work with human language data
 
 Visualizations
-* [Altair: Declarative Visualization in Python](https://altair-viz.github.io/)
+* [Altair](https://altair-viz.github.io/): Declarative Visualization in Python
+
+Frontend and apps
+* [Streamlit](https://docs.streamlit.io/en/stable/): The fastest way to build and share data apps
 
 Database stuff
 * [sqlalchemy-utils](https://sqlalchemy-utils.readthedocs.io/en/latest/)
@@ -90,12 +104,13 @@ Database stuff
 * [mysql-connector-python MySQL Connector](https://dev.mysql.com/doc/connector-python/en/)
 
 Tools
-* [lxml - XML and HTML with Python](https://lxml.de/)
+* [Pandas Profiling](https://pandas-profiling.github.io/pandas-profiling/docs/master/rtd/): Create profiling reports from pandas DataFrame objects
+* [lxml](https://lxml.de/): secure and fast XML and HTML with Python
 
-### JupyterLab plugins
-* [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git)
-* [Language Server Protocol integration for Jupyter](https://github.com/krassowski/jupyterlab-lsp)
-* [JupyterLab System Monitor](https://github.com/jtpio/jupyterlab-system-monitor)
+JupyterLab plugins
+* [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git): Version control using Git within Jupyter
+* [Language Server Protocol integration](https://github.com/krassowski/jupyterlab-lsp): Coding assistance for JupyterLab - code navigation + hover suggestions + linters + autocompletion + rename
+* [jupyter-resource-usage](https://github.com/jupyter-server/jupyter-resource-usage): Monitor RAM and CPU usage within a Jupyter notebook
 
 
 ## Good to know
