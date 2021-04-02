@@ -114,8 +114,4 @@ JupyterLab plugins
 
 
 ## Good to know
-* You can safely ignore this warning:
-```
-WARNING: Found orphan containers
-```
 * Docker containers such as this controlboard or the different stacks will keep on running forever, even if you restart your machine. So remember [to stop them](#5-stop-andor-remove-the-containers-when-done).
