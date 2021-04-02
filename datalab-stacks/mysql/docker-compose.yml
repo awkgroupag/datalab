@@ -21,3 +21,4 @@ networks:
 volumes:
   mysql_data:
     external: true
+    name: ${DATALAB_MYSQL_DATA}
