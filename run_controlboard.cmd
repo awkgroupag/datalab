@@ -66,9 +66,9 @@ if "%TOKEN%" == "" goto error_empty_token
 :: Start Chrome
 echo.
 echo Use the following URL to access your controlboard:
-echo http://localhost:%DATALAB_CONTROLBOARD_PORT%/lab?token=%TOKEN%
+echo http://localhost:%DATALAB_CONTROLBOARD_PORT%/lab/tree/datalab-stacks/ControlBoard.ipynb?token=%TOKEN%
 
-start chrome http://localhost:%DATALAB_CONTROLBOARD_PORT%/lab?token=%TOKEN%
+start chrome http://localhost:%DATALAB_CONTROLBOARD_PORT%/lab/tree/datalab-stacks/ControlBoard.ipynb?token=%TOKEN%
 goto end_of_file
 
 

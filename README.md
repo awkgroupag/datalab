@@ -44,10 +44,9 @@ Just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome aut
 
 
 ### 3b. Start the controlboard if it gets more complicated
-Run `run_controlboard.cmd`. Once the controlboard is up, it will be opened within Chrome.
-* In the controlboard, open the directory `datalab-stacks`
-* Start the notebook `ControlBoard.ipynb`
-* Follow the instructions in that notebook
+* Run `run_controlboard.cmd`. 
+* Once the controlboard is up, it will be opened within Chrome.
+* Just follow the instructions in the notebook `ControlBoard.ipynb` which is opened automatically.
 
 ### 4. Do your work
 As everything else will be **deleted** when recreating the Jupyter container: Make sure that
