@@ -40,28 +40,42 @@ Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save t
 * `DATALAB_DATA_DIR`: your Windows directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
 
 
-### 3a. Start a single Jupyter Notebook directly
+### 3. Set-up GitHub repository (backup, version-control & collaboration)
+1. Create a new **empty** repository (usually a private one, thus visible for AWK employees only) within the [AWK GitHub page](https://github.com/awkgroupag) (the green `New`-button). Note the new URL to your new repo, e.g. https://github.com/awkgroupag/MY-NEW-REPO
+2. Open a command prompt and navigate to your source code folder
+3. Type (replacing the URL)
+```
+git init
+git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
+git push --set-upstream origin main
+```
+4. You should be prompted for GitHub credentials.
+5. Check [Atlassian's Comparing Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) to get started with `git`. See the [Git-flow-Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) to understand collaboration with other team members.
+    * Use `git pull` to get the latest changes from GitHub
+    * Use `git commit` and `git push` to push your changes to GitHub
+
+### 4a. Start a single Jupyter Notebook directly
 Just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome automatically.
 
 
-### 3b. Start the controlboard if it gets more complicated
+### 4b. Start the controlboard if it gets more complicated
 * Run `run_controlboard.cmd`. 
 * Once the controlboard is up, it will be opened within Chrome.
 * Just follow the instructions in the notebook `ControlBoard.ipynb` which is opened automatically.
 
-### 4. Do your work
+### 5. Do your work
 As everything else will be **deleted** when recreating the Jupyter container: Make sure that
 * your source code is saved to `/home/jovyan/work`
 * your data lives in `/home/jovyan/data`
 
-### 5. Stop and/or remove the containers when done
-* If you only started Jupyter (3a), `stop_jupyter_notebook.cmd` stops the container - configurations like additional Python packages are kept. `rm_jupyter_notebook.cmd` removes the container, thus resetting everything.
-* If you used the controlboard (3b): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
+### 6. Stop and/or remove the containers when done
+* If you only started Jupyter (4a), `stop_jupyter_notebook.cmd` stops the container - configurations like additional Python packages are kept. `rm_jupyter_notebook.cmd` removes the container, thus resetting everything.
+* If you used the controlboard (4b): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
 
 ## How-to install and use the AWK Datalab - LINUX
 Just follow the instructions above except for the following.
 
-### 3. Load environment variables (necessary once e.g. per SSH-session start)
+### 4. Load environment variables (necessary once e.g. per SSH-session start)
 * Load the environment variables you just declared for this project.
 ```bash
 cd datalab-stacks
@@ -70,7 +84,7 @@ set -a
 set +a
 ```
 
-### 3a. Start a single Jupyter Notebook directly
+### 4a. Start a single Jupyter Notebook directly
 * Navigate to the folder `datalab-stacks/jupyter`
 * Run `docker-compose up -d`
 * Copy the URL of the log output when you enter `docker-compose logs`. The log output will end with something like this:
@@ -84,7 +98,7 @@ jupyter_1  |      or http://127.0.0.1:8888/lab?token=d5d6cb3f75aeee90cad00959ce5
 In this case, use `http://127.0.0.1:8888/lab?token=d5d6cb3f75aeee90cad00959ce588c8050da53900bc948b1` to access Jupyter.
 * **WARNING**: if you changed Jupyter's port `DATALAB_JUPYTER_PORT`, adjust port `8888` accordingly!
 
-### 3b. Start the controlboard if it gets more complicated
+### 4b. Start the controlboard if it gets more complicated
 * Navigate to the root folder of this repository.
 * Run `docker-compose -f controlboard.yml up -d`
 * Copy the URL of the log output when you enter `docker-compose -f controlboard.yml logs`, see 3a. above.
