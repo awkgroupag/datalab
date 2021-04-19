@@ -4,7 +4,7 @@
 * [Run several projects simultaneously](#run-several-projects-simultaneously)
 * [Supported Stacks](#supported-stacks)
 * [Additions/Tweaks to JupyerLab](#additionstweaks-to-jupyerlab)
-* [Good to know](#good-to-know)
+* [Good to know & troubleshooting](#good-to-know--troubleshooting)
 
 
 # AWK Datalab
@@ -159,5 +159,8 @@ JupyterLab plugins
 * [jupyter-resource-usage](https://github.com/jupyter-server/jupyter-resource-usage): Monitor RAM and CPU usage within a Jupyter notebook
 
 
-## Good to know
+## Good to know & troubleshooting
 * Docker containers such as this controlboard or the different stacks will keep on running forever, even if you restart your machine. So remember [to stop them](#5-stop-andor-remove-the-containers-when-done).
+* Jupyter will not start; container restarts all the time
+  - Your Docker images might take up a lot of space. Type `docker image ls` to view your images
+  - `docker image rm <IMAGE>` deletes a specific image, `docker image prune` deletes all unused images
