@@ -3,7 +3,7 @@ version: "3.7"
 
 services:
   neo4j:
-    image: neo4j:4.2.4
+    image: neo4j:4.3.2
     volumes:
       - "${DATALAB_DATA_DIR}/neo4j:/data"
       # You're mounting the Host path from the controlboard!
