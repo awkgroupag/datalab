@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   postgres:
-    image: postgres:13.2-alpine
+    image: postgres:13.3-alpine
     ports:
       - ${DATALAB_POSTGRES_PORT}:5432
     networks:
