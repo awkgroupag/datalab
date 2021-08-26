@@ -138,7 +138,9 @@ NLP
 * [Natural Language Toolkit (NLTK)](https://www.nltk.org/): leading platform for building Python programs to work with human language data
 
 Visualizations
+* [Plotly](https://plotly.com/python/): Graphing library for interactive, publication-quality graphs
 * [Altair](https://altair-viz.github.io/): Declarative Visualization in Python
+* [Wordcloud](https://github.com/amueller/word_cloud): fill any space with a word cloud
 
 Frontend and apps
 * [Streamlit](https://docs.streamlit.io/en/stable/): The fastest way to build and share data apps

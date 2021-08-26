@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   jupyter:
-    image: awkgroupag/datascience-notebook:5a8e38f
+    image: awkgroupag/datascience-notebook:b5f056c
     ports:
       - ${DATALAB_JUPYTER_PORT}:8888
     networks:
