@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
     ports:
       - ${DATALAB_ELK_ELASTICSEARCH_PORT1}:9200
       - ${DATALAB_ELK_ELASTICSEARCH_PORT2}:9300
@@ -17,7 +17,7 @@ services:
       - elasticsearch_data:/usr/share/elasticsearch/data
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.14.0
+    image: docker.elastic.co/logstash/logstash:7.16.2
     ports:
       - ${DATALAB_ELK_LOGSTASH_PORT1}:5000
       - ${DATALAB_ELK_LOGSTASH_PORT2}:9600
@@ -27,7 +27,7 @@ services:
       - datalab-network
 
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.14.0
+    image: docker.elastic.co/kibana/kibana:7.16.2
     ports:
       - ${DATALAB_ELK_ELASTICSEARCH_KIBANA}:5601
     networks:
