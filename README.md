@@ -48,6 +48,8 @@ Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save t
 git init
 git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
 git push --set-upstream origin main
+# If the last command does not work, try this one instead (different name of the branch)
+git push --set-upstream origin master
 ```
 4. You should be prompted for GitHub credentials.
 5. Check [Atlassian's Comparing Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) to get started with `git`. See the [Git-flow-Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) to understand collaboration with other team members.
