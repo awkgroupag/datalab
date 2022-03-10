@@ -5,7 +5,7 @@ setlocal
 
 :: You might want to customize these
 set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.env
-::set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.other-project.env
+
 
 if not exist %ENVIRONMENT_FILE_PATH% (
     echo ERROR: Environment file %ENVIRONMENT_FILE_PATH% not found!
@@ -24,40 +24,20 @@ SET CHCP_CURRENT=%CHCP_CURRENT:~0,-1%
 CHCP 65001 >nul
 
 :: Need to set the Windows environment variables from a dedicated environment
-:: file. The environment variables will be used/referenced for the configuration
-:: of k3s and the Jupyter Notebook.
+:: file. The environmnent variables will be used/referenced within the
+:: docker-compose.yml
 :: Set environment variables from file. Skip lines starting with #
 FOR /F "tokens=*" %%i in ('findstr /v /c:"#" %ENVIRONMENT_FILE_PATH%') do SET %%i
 
 :: Switch codepage back
 chcp %CHCP_CURRENT% >nul
 
-:: convert paths from Windows to Linux/Unix resp. WSL
-FOR /F "tokens=* USEBACKQ" %%F IN (`wsl -e wslpath "%DATALAB_SOURCECODE_DIR%"`) DO (
-    SET DATALAB_SOURCECODE_DIR_UX=%%F
-)
-FOR /F "tokens=* USEBACKQ" %%F IN (`wsl -e wslpath "%DATALAB_DATA_DIR%"`) DO (
-    SET DATALAB_DATA_DIR_UX=%%F
-)
-
-:: set the necessary configuration for our project, using templates to write the config files to DATALAB_DATA_DIR
-echo Writing config files to %DATALAB_DATA_DIR%
-:: jupyter_notebook_config.py: set base_url
-powershell -Command "(gc '%DATALAB_SOURCECODE_DIR%\datalab-stacks\jupyter\jupyter_notebook_config.tmpl.py') -replace 'PROJECT_NAME', '%PROJECT_NAME%' | Out-File -encoding ASCII '%DATALAB_DATA_DIR%\%PROJECT_NAME%.jnc.py'"
-:: single-notebook.yml: path for volumes (data, work, config) and projectname for URLs, labels etc.
-powershell -Command "(gc '%DATALAB_SOURCECODE_DIR%\datalab-stacks\jupyter\single-notebook.tmpl.yml') -replace 'DATALAB_SOURCECODE_DIR', '%DATALAB_SOURCECODE_DIR_UX%' | ForEach-Object { $_ -replace 'PROJECT_NAME', '%PROJECT_NAME%' } | ForEach-Object { $_ -replace 'DATALAB_DATA_DIR', '%DATALAB_DATA_DIR_UX%' } | Out-File -encoding ASCII '%DATALAB_DATA_DIR%\%PROJECT_NAME%.yml'"
-
-:: start single-notebook with given configuration
-kubectl apply -f "%DATALAB_DATA_DIR%\%PROJECT_NAME%.yml"
-
-echo Waiting for pod %PROJECT_NAME% to spin up
-
 ::
 :: Wait until Jupyter is really ready
 ::
 set COUNTER=0
 :wait_for_token
-:: Wait for another second so the notebook is indeed listening
+:: Wait for another second so the notebook is indeed listening (could be Juypter Lab or Controlboard)
 timeout /t 1 /nobreak >nul 2>nul
 ::Grab the Jupyter token
 for /F "tokens=* USEBACKQ" %%F IN (`"kubectl logs %PROJECT_NAME% | findstr "http://127.0.0.1""`) DO (
@@ -74,7 +54,7 @@ if "%TOKEN%" == "" if %COUNTER% LSS 30 goto wait_for_token
 if "%TOKEN%" == "" goto error_empty_token
 
 :: output the full URL for access with ingress on k3s
-echo Use the following URL to access %PROJECT_NAME%:
+echo Use the following URL to access your controlboard:
 echo https://localhost/%PROJECT_NAME%/lab?token=%TOKEN%
 
 :: Start Chrome
@@ -84,7 +64,7 @@ goto end_of_file
 
 :error_empty_token
 echo.
-echo ERROR: no token found for %PROJECT_NAME% :-(
+echo ERROR: no token found for controlboard %PROJECT_NAME% :-(
 echo.
 
 :end_of_file
