@@ -42,14 +42,14 @@ FOR /F "tokens=*" %%i in ('findstr /v /c:"#" %ENVIRONMENT_FILE_PATH%') do SET %%
 chcp %CHCP_CURRENT% >nul
 
 :: check if configured file paths exist
-if not exist %DATALAB_SOURCECODE_DIR% (
+if not exist "%DATALAB_SOURCECODE_DIR%" (
     echo ERROR: variable DATALAB_SOURCECODE_DIR is set to "%DATALAB_SOURCECODE_DIR%", but path does not exist!
     echo Please edit %ENVIRONMENT_FILE_PATH% to correct the path
     echo.
     pause
     goto end_of_file
 )
-if not exist %DATALAB_DATA_DIR% (
+if not exist "%DATALAB_DATA_DIR%" (
     echo ERROR: variable DATALAB_DATA_DIR is set to "%DATALAB_DATA_DIR%", but path does not exist!
     echo Please edit %ENVIRONMENT_FILE_PATH% to correct the path
     echo.
