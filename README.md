@@ -43,6 +43,7 @@ Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save t
 ```
 git init
 git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
+git commit -m "initial commit"
 git push --set-upstream origin main
 # If the last command does not work, try this one instead (different name of the branch)
 git push --set-upstream origin master
@@ -58,7 +59,7 @@ Just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome aut
 
 ### 4b. Start the controlboard if it gets more complicated
 >NOTE: TODO .. this is work in progress and will not yet work with **Rancher Desktop**, but still use **Docker** and **docker-compose**
-* Run `run_controlboard.cmd`. 
+* Run `run_controlboard.cmd`.
 * Once the controlboard is up, it will be opened within Chrome.
 * Just follow the instructions in the notebook `ControlBoard.ipynb` which is opened automatically.
 
