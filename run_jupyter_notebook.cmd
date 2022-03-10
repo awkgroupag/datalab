@@ -7,6 +7,15 @@ setlocal
 set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.env
 ::set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.other-project.env
 
+:: use argument as ENVIRONMENT_FILE_PATH if available
+if "%~1"=="" (
+    echo no arguments given ..
+) else (
+    set ENVIRONMENT_FILE_PATH=%1
+)
+echo using environment file %ENVIRONMENT_FILE_PATH%
+
+
 if not exist %ENVIRONMENT_FILE_PATH% (
     echo ERROR: Environment file %ENVIRONMENT_FILE_PATH% not found!
     echo Please edit %ENVIRONMENT_FILE_PATH%.EXAMPLE and save it as %ENVIRONMENT_FILE_PATH%

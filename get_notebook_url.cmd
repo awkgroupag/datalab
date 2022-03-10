@@ -3,6 +3,15 @@
 :: ensure that environment variables will be deleted after programm termination
 setlocal
 
+:: use argument as project name if available .. no need to read environment file in this case
+if ["%~1"]==[""] (
+    echo "no arguments given"
+) else (
+    set PROJECT_NAME=%1
+    goto start_get_token
+)
+
+
 :: You might want to customize these
 set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.env
 
@@ -32,6 +41,7 @@ FOR /F "tokens=*" %%i in ('findstr /v /c:"#" %ENVIRONMENT_FILE_PATH%') do SET %%
 :: Switch codepage back
 chcp %CHCP_CURRENT% >nul
 
+:start_get_token
 ::
 :: Wait until Jupyter is really ready
 ::
