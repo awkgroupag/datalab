@@ -14,13 +14,9 @@
 * Control your docker environment through a Jupyter notebook instead of command line arguments
 
 ## Requirements
-* Docker installed on your system, e.g. [Docker Desktop on Windows](https://docs.docker.com/docker-for-windows/install/)
-  * To test this, open a command prompt and type `docker run hello-world`
-* Docker can access your files. When using Docker Desktop on Windows:
-  1. Right-click on Docker in the system tray, then click settings
-  2. Under General, make sure that "Use the WSL 2 based engine" is NOT selected
-  3. Under Ressources, File Sharing, click the plus and add the folder (or even drive) where your source code and data is stored
-  4. Click "Apply and Restart"
+* Rancher Desktop installed on your system, e.g. [Rancher Desktop](https://rancherdesktop.io/)
+  * TODO: how to test this in a similar way to docker?
+  * REMOVE: To test this, open a command prompt and type `docker run hello-world`
 * Optional: If you're coding, you probably want some kind of code version management like `git`. Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/)
 
 ## How-to install and use the AWK Datalab - WINDOWS
@@ -35,7 +31,7 @@ If you publish your source code to GitHub, you will include your datalab and thu
 
 ### 2. Set-up a few variables for your new project once
 Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save the customized file as a new file `./datalab-stacks/environment.env`.
-* `COMPOSE_PROJECT_NAME`: name of this project. Will show up in all container names associated with this project. No spaces or special characters allowed
+* `PROJECT_NAME`: name of this project. Will show up in all resource names associated with this project. No spaces or special characters allowed
 * `DATALAB_SOURCECODE_DIR`: your Windows directory containing all your source code - including this datalab! Will appear as `/home/jovyan/work` in the Jupyter Notebook
 * `DATALAB_DATA_DIR`: your Windows directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
 
@@ -61,6 +57,7 @@ Just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome aut
 
 
 ### 4b. Start the controlboard if it gets more complicated
+>NOTE: TODO .. this is work in progress and will not yet work with **Rancher Desktop**, but still use **Docker** and **docker-compose**
 * Run `run_controlboard.cmd`. 
 * Once the controlboard is up, it will be opened within Chrome.
 * Just follow the instructions in the notebook `ControlBoard.ipynb` which is opened automatically.
@@ -71,10 +68,12 @@ As everything else will be **deleted** when recreating the Jupyter container: Ma
 * your data lives in `/home/jovyan/data`
 
 ### 6. Stop and/or remove the containers when done
-* If you only started Jupyter (4a), `stop_jupyter_notebook.cmd` stops the container - configurations like additional Python packages are kept. `rm_jupyter_notebook.cmd` removes the container, thus resetting everything.
+* You can simply stop all your running notebooks by stopping **Rancher Desktop**. They will all restart once you start Rancher Desktop again.
+* Calling `rm_jupyter_notebook.cmd` removes the container, thus resetting everything. Note that the configuration for it will be retained in your `DATALAB_DATA_DIR` (Notbook configuration file and pod deployment specification)
 * If you used the controlboard (4b): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
 
 ## How-to install and use the AWK Datalab - LINUX
+>Note: TODO not sure **Rancher Desktop** exists for Linux .. but you should be able to use [k3s](https://k3s.io/), as this is what is used under the hood of Rancher Desktop.
 Just follow the instructions above except for the following.
 
 ### 4. Load environment variables (necessary once e.g. per SSH-session start)
@@ -87,6 +86,7 @@ set +a
 ```
 
 ### 4a. Start a single Jupyter Notebook directly
+>NOTE: TODO .. the script run_jupyter_controlboard.cmd is **NOT** yet rewritten as a Linux shell script. Therefore, this will still use **Docker** and **docker-compose**
 * Navigate to the folder `datalab-stacks/jupyter`
 * Run `docker-compose up -d`
 * Copy the URL of the log output when you enter `docker-compose logs`. The log output will end with something like this:
@@ -101,6 +101,7 @@ In this case, use `http://127.0.0.1:8888/lab?token=d5d6cb3f75aeee90cad00959ce588
 * **WARNING**: if you changed Jupyter's port `DATALAB_JUPYTER_PORT`, adjust port `8888` accordingly!
 
 ### 4b. Start the controlboard if it gets more complicated
+>NOTE: TODO .. this is work in progress and will not yet work with **Rancher Desktop**, but still use **Docker** and **docker-compose**
 * Navigate to the root folder of this repository.
 * Run `docker-compose -f controlboard.yml up -d`
 * Copy the URL of the log output when you enter `docker-compose -f controlboard.yml logs`, see 3a. above.
@@ -115,6 +116,7 @@ Easily run several projects at the same time. Make sure that you choose differen
 ## Supported Stacks
 Run the following stacks on your local machine or remote server:
 * ["Vanilla" Jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
+>NOTE: TODO .. the script run_jupyter_controlboard.cmd is **NOT** yet rewritten as a Linux shell script. Therefore, this will still use **Docker** and **docker-compose**
 * [PostgreSQL Database](https://www.postgresql.org/)
 * [Neo4j](https://neo4j.com/)
 * [MySQL Database](https://www.mysql.com/)
@@ -164,6 +166,7 @@ JupyterLab plugins
 
 
 ## Good to know & troubleshooting
+>NOTE: TODO .. this is work in progress and is not yet rewritten for **Rancher Desktop**
 * Docker containers such as this controlboard or the different stacks will keep on running forever, even if you restart your machine. So remember [to stop them](#5-stop-andor-remove-the-containers-when-done).
 * Jupyter will not start; container restarts all the time
   - Your Docker images might take up a lot of space. Type `docker image ls` to view your images
