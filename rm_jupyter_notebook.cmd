@@ -1,9 +1,17 @@
 @echo off
 :: ensure that environment variables will be deleted after programm termination
 setlocal
+
 :: You might want to customize these
 set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.env
-::set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.other-project.env
+
+:: use argument as ENVIRONMENT_FILE_PATH if available
+if "%~1"=="" (
+    echo no arguments given ..
+) else (
+    set ENVIRONMENT_FILE_PATH=%1
+)
+echo using environment file %ENVIRONMENT_FILE_PATH%
 
 if not exist %ENVIRONMENT_FILE_PATH% (
     echo ERROR: Environment file %ENVIRONMENT_FILE_PATH% not found!
@@ -35,7 +43,14 @@ kubectl delete -f "%DATALAB_DATA_DIR%\%PROJECT_NAME%.yml"
 
 echo.
 echo %PROJECT_NAME% has been shut down and removed completely
-echo The data is retained for the next start of the project,
-echo but the infrastructure will be recreated from scratch.
+echo     The data in
+echo       %DATALAB_DATA_DIR% 
+echo     is retained for the next start of the project,
+echo     but the infrastructure will be recreated from scratch.
+echo.
+echo You might want to shut down other running deployments:
+echo     list running pods:       kubectl get pods
+echo     remove deployment:       kubectl delete -f deployment-filename.yml
+echo.
 
 :end_of_file

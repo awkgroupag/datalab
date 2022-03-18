@@ -11,10 +11,8 @@ if ["%~1"]==[""] (
     goto start_get_token
 )
 
-
 :: You might want to customize these
 set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.env
-
 
 if not exist %ENVIRONMENT_FILE_PATH% (
     echo ERROR: Environment file %ENVIRONMENT_FILE_PATH% not found!

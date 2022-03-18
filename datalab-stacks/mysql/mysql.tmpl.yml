@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    group: awkdatalab
+    project: PROJECT_NAME
+    app: PROJECT_NAME-mysql
+  name: PROJECT_NAME-mysql
+spec:
+  type: NodePort
+  ports:
+    - port: DATALAB_MYSQL_PORT
+      targetPort: 3306
+      name: data
+  selector:
+    app: PROJECT_NAME-mysql
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    group: awkdatalab
+    project: PROJECT_NAME
+    app: PROJECT_NAME-mysql
+  name: PROJECT_NAME-mysql
+spec:
+  containers:
+    - image: mysql:8.0.28
+      name: mysql
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "500m"
+        limits:
+          memory: "512Mi"
+          cpu: "1000m"
+      ports:
+        - containerPort: 3306
+          name: data
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+      volumeMounts:
+        - name: mysql-volume
+          mountPath: /var/lib/mysql
+  volumes:
+  - name: mysql-volume
+    hostPath:
+      path: DATALAB_DATA_DIR/PROJECT_NAME-mysql
+      type: Directory

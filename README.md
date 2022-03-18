@@ -14,6 +14,7 @@
 * Control your docker environment through a Jupyter notebook instead of command line arguments
 
 ## Requirements
+* WSL setup on your Windows machine (see [ACL Onboarding, setup for WSL](https://github.com/awkgroupag/ITA-ACL-Onboarding/blob/main/General_topics/dev-setup.md#wsl)) for instructions on how to get WSL ready
 * Rancher Desktop installed on your system, e.g. [Rancher Desktop](https://rancherdesktop.io/)
   * TODO: how to test this in a similar way to docker?
   * REMOVE: To test this, open a command prompt and type `docker run hello-world`
