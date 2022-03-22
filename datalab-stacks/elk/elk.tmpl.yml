@@ -129,16 +129,14 @@ spec:
       env:
       - name: ES_JAVA_OPTS
         value: "-Xmx256m -Xms256m"
-      - name: elasticsearch.hosts
-        value: http://127.0.0.1:9200
     - image: docker.elastic.co/kibana/kibana:8.0.1
       name: kibana
       resources:
         requests:
-          memory: "256Mi"
+          memory: "512Mi"
           cpu: "500m"
         limits:
-          memory: "512Mi"
+          memory: "1024Mi"
           cpu: "1000m"
       ports:
         - containerPort: 5601
@@ -146,12 +144,6 @@ spec:
       env:
       - name: ES_JAVA_OPTS
         value: "-Xmx256m -Xms256m"
-      - name: server.name
-        value: kibana
-      - name: server.host
-        value: "0"
-      - name: elasticsearch.hosts
-        value: http://127.0.0.1:9200
       - name: SERVER_BASEPATH
         value: /PROJECT_NAME-kibana
       - name: SERVER_REWRITEBASEPATH
