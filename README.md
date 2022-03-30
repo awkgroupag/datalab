@@ -19,7 +19,7 @@
 * Docker can access your files. When using Docker Desktop on Windows:
   1. Right-click on Docker in the system tray, then click settings
   2. Under General, make sure that "Use the WSL 2 based engine" is NOT selected
-  3. Under Ressources, File Sharing, click the plus and add the folder (or even drive) where your source code and data is stored
+  3. Under Ressources, File Sharing, click the plus and add the folder (or even drive) where your source code and data is stored (find detailed information on the set-up of the directory structure in 1.)
   4. Click "Apply and Restart"
 * Optional: If you're coding, you probably want some kind of code version management like `git`. Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/)
 
@@ -47,6 +47,8 @@ Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save t
 ```
 git init
 git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
+git add .
+git commit -m "initial commit"
 git push --set-upstream origin main
 # If the last command does not work, try this one instead (different name of the branch)
 git push --set-upstream origin master
@@ -57,8 +59,7 @@ git push --set-upstream origin master
     * Use `git commit` and `git push` to push your changes to GitHub
 
 ### 4a. Start a single Jupyter Notebook directly
-Just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome automatically.
-
+In the command prompt, navigate into the datalab directory and type `start run_jupyter_notebook.cmd` to run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome automatically.
 
 ### 4b. Start the controlboard if it gets more complicated
 * Run `run_controlboard.cmd`. 
