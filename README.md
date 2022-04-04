@@ -59,7 +59,6 @@ Just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome aut
 
 
 ### 4b. Start the controlboard if it gets more complicated
->NOTE: TODO .. this is work in progress and will not yet work with **Rancher Desktop**, but still use **Docker** and **docker-compose**
 * Run `run_controlboard.cmd`.
 * Once the controlboard is up, it will be opened within Chrome.
 * Just follow the instructions in the notebook `ControlBoard.ipynb` which is opened automatically.
