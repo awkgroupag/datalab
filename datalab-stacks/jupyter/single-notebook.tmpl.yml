@@ -51,11 +51,11 @@ spec:
       name: awkdatalab
       resources:
         requests:
-          memory: "64Mi"
-          cpu: "250m"
+          memory: "1024Mi"
+          cpu: "1000m"
         limits:
-          memory: "128Mi"
-          cpu: "500m"
+          memory: "2048Mi"
+          cpu: "2000m"
       env:
       - name: JUPYTER_ENABLE_LAB
         value: "yes"
