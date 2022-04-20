@@ -20,7 +20,7 @@
 * Windows: Rancher Desktop installed on your system, e.g. [Rancher Desktop](https://rancherdesktop.io/)
   * In the Rancher preferences, make sure that `Enable Traefik` is activated (it is enabled by default)
 * Linux: Another Kubernetes distribution, e.g. [K3S](https://k3s.io/)
-  * [Deploy traefik](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started
+  * [Deploy Traefik](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started
 * Code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
