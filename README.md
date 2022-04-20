@@ -18,7 +18,9 @@
 ## Requirements
 * WSL setup on your Windows machine (see [ACL Onboarding, setup for WSL](https://github.com/awkgroupag/ITA-ACL-Onboarding/blob/main/General_topics/dev-setup.md#wsl)) for instructions on how to get WSL ready
 * Windows: Rancher Desktop installed on your system, e.g. [Rancher Desktop](https://rancherdesktop.io/)
+  * In the Rancher preferences, make sure that `Enable Traefik` is activated (it is by default)
 * Linux: Another Kubernetes distribution, e.g. [K3S](https://k3s.io/)
+  * [Deploy traefik](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started
 * Code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
