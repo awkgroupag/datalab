@@ -8,7 +8,7 @@ set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.env
 
 :: use argument as ENVIRONMENT_FILE_PATH if available
 if "%~1"=="" (
-    echo no arguments given ..
+    echo no arguments given, using default environment.env
 ) else (
     set ENVIRONMENT_FILE_PATH=%1
 )
@@ -36,7 +36,7 @@ CHCP 65001 >nul
 :: Set environment variables from file. Skip lines starting with #
 FOR /F "tokens=*" %%i in ('findstr /v /c:"#" %ENVIRONMENT_FILE_PATH%') do SET %%i
 
-:: Switch codepage back
+:: Switch codepage back. In the author's case, codepage 850 was used
 chcp %CHCP_CURRENT% >nul
 
 :: check if configured file paths exist
