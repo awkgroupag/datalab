@@ -98,8 +98,7 @@ foo@bar:~$ git push --set-upstream origin main
 
 ## Usage - WINDOWS
 ### 1a. Start a single Jupyter Notebook directly
-In your `datalab` directory, just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome automatically.
-
+In your `datalab` directory, just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome automatically. Your browser will complain that the SSL certificate is not valid.
 
 ### 1b. Start the controlboard if it gets more complicated
 * Run `run_controlboard.cmd`.
