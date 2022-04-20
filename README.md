@@ -21,7 +21,7 @@
 * Linux: Another Kubernetes distribution, e.g. [K3S](https://k3s.io/)
 * Code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
-### Test your set-up with [Podinfo](https://github.com/stefanprodan/podinfo)
+### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
 Open a Windows command prompt and enter the following to install Podinfo:
 ```console
 foo@bar:~$ kubectl apply -k github.com/stefanprodan/podinfo/kustomize
