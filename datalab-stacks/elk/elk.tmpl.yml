@@ -87,6 +87,7 @@ metadata:
 spec:
   containers:
     - image: docker.elastic.co/elasticsearch/elasticsearch:8.0.1
+      imagePullPolicy: IfNotPresent
       name: elasticsearch
       resources:
         requests:
@@ -113,6 +114,7 @@ spec:
         - name: elastic-volume
           mountPath: /usr/share/elasticsearch/data
     - image: docker.elastic.co/logstash/logstash:8.0.1
+      imagePullPolicy: IfNotPresent
       name: logstash
       resources:
         requests:
@@ -130,6 +132,7 @@ spec:
       - name: ES_JAVA_OPTS
         value: "-Xmx256m -Xms256m"
     - image: docker.elastic.co/kibana/kibana:8.0.1
+      imagePullPolicy: IfNotPresent
       name: kibana
       resources:
         requests:
@@ -152,6 +155,7 @@ spec:
         value: "https://localhost/PROJECT_NAME-kibana"
   initContainers:
     - name: fix-permissions
+      imagePullPolicy: IfNotPresent
       image: busybox
       command: ["sh", "-c", "chown -R 1000:1000 /usr/share/elasticsearch/data"]
       securityContext:
@@ -160,11 +164,13 @@ spec:
       - name: elastic-volume
         mountPath: /usr/share/elasticsearch/data
     - name: increase-vm-max-map
+      imagePullPolicy: IfNotPresent
       image: busybox
       command: ["sysctl", "-w", "vm.max_map_count=262144"]
       securityContext:
         privileged: true
     - name: increase-fd-ulimit
+      imagePullPolicy: IfNotPresent
       image: busybox
       command: ["sh", "-c", "ulimit -n 65536"]
       securityContext:

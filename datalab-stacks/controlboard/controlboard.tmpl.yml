@@ -48,6 +48,7 @@ metadata:
 spec:
   containers:
     - image: awkgroupag/controlboard:4106629
+      imagePullPolicy: IfNotPresent
       name: controlboard
       resources:
         requests:

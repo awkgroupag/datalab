@@ -30,6 +30,7 @@ metadata:
 spec:
   containers:
     - image: neo4j:4.4.4
+      imagePullPolicy: IfNotPresent
       name: neo4j
       resources:
         requests:

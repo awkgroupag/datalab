@@ -48,6 +48,7 @@ metadata:
 spec:
   containers:
     - image: awkgroupag/datascience-notebook:bc8ee41
+      imagePullPolicy: IfNotPresent
       name: awkdatalab
       resources:
         requests:

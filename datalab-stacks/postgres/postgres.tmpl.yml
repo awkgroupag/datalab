@@ -27,6 +27,7 @@ metadata:
 spec:
   containers:
     - image: postgres:14.2-alpine
+      imagePullPolicy: IfNotPresent
       name: postgres
       resources:
         requests:

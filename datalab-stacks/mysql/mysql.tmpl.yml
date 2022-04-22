@@ -27,6 +27,7 @@ metadata:
 spec:
   containers:
     - image: mysql:8.0.28
+      imagePullPolicy: IfNotPresent
       name: mysql
       resources:
         requests:
