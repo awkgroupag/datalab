@@ -143,6 +143,29 @@ def get_project_url(project_name):
     except ApiException as e:
         print("Exception when calling get_project_url: %s\n" % e)
 
+# get Kibana first time access URL (written to logfile on first start of pod .. code changes)
+def get_kibana_setup_url(project_name):
+    import re
+    import time
+
+    config.load_incluster_config()
+    v1 = client.CoreV1Api()
+
+    i = 0
+    try:
+        while i < 5:
+            pod_logs = v1.read_namespaced_pod_log(name=project_name+"-elastic", container="kibana", namespace="default")
+            for line in pod_logs.splitlines():
+                #print (line)
+                if (line.find('Go to http://0.0.0.0') != -1):
+                    code = re.sub('^.*http://0.0.0.0.*\?code=','', line)
+                    return ('Go to https://localhost/'+project_name+'-kibana/?code='+code)
+            i += 1
+            time.sleep(3)
+        return 'Not ready yet, please try again.'
+    except ApiException as e:
+        print("Exception when calling get_project_url: %s\n" % e)
+
 # delete all objects that are defined in the projects .yml
 def delete_project(project_name, namespace = 'default', data_dir='/home/jovyan/data'):
 
