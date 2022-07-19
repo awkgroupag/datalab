@@ -26,30 +26,44 @@
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
 Open a command prompt/terminal and enter the following to install Podinfo:
 ```console
-foo@bar:~$ kubectl apply -k github.com/stefanprodan/podinfo/kustomize
+foo@bar:~$ helm repo add podinfo https://stefanprodan.github.io/podinfo
+"podinfo" has been added to your repositories
 
-service/podinfo created
-deployment.apps/podinfo created
-horizontalpodautoscaler.autoscaling/podinfo created
+foo@bar:~$ helm upgrade -i my-release podinfo/podinfo
+Release "my-release" does not exist. Installing it now.
+NAME: my-release
+LAST DEPLOYED: Tue Jul 19 08:05:01 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+NOTES:
+1. Get the application URL by running these commands:
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
 ```
 Check whether the Podinfo Kubernetes pods are running; `STATUS` should be `Running`. You might need to wait a bit.
 ```console
 foo@bar:~$ kubectl get pods -A
 
-NAMESPACE     NAME                                      READY   STATUS    RESTARTS   AGE
-kube-system   local-path-provisioner-84bb864455-jtltm   1/1     Running   0          31m
-kube-system   coredns-96cc4f57d-2zffw                   1/1     Running   0          31m
-kube-system   metrics-server-ff9dbcb6c-f7vlp            1/1     Running   0          31m
-default       podinfo-59579c6587-f9bj2                  1/1     Running   0          24m
-default       podinfo-59579c6587-h65j9                  1/1     Running   0          24m
+NAMESPACE     NAME                                      READY   STATUS      RESTARTS        AGE
+kube-system   local-path-provisioner-6c79684f77-vm9hc   1/1     Running     1 (7m17s ago)   14m
+kube-system   coredns-d76bd69b-pwsf7                    1/1     Running     1 (7m17s ago)   14m
+kube-system   svclb-traefik-60fa6f09-qwz7p              2/2     Running     0               5m14s
+kube-system   helm-install-traefik-crd-2qjhl            0/1     Completed   0               5m38s
+kube-system   helm-install-traefik-hsrgq                0/1     Completed   0               5m38s
+kube-system   metrics-server-7cd5fcb6b7-h5g98           1/1     Running     1 (7m17s ago)   14m
+kube-system   traefik-df4ff85d6-wx9nt                   1/1     Running     1 (7m17s ago)   13m
+default       my-release-podinfo-6d4c7fcd7d-zzsv9       1/1     Running     0               46s
 ```
-**Windows only:** To actually connect to the pod you just created, you need to forward a port:
-* Right-click on the Rancher Desktop tray icon, then choose `Preferences`
-* In the `Port Forwarding` tab, hit the `Forward` button for the entry with name `podinfo` and port `http`. A random local port on your host machine will be forwarded to the corresponding Podinfo service:
-![Rancher Desktop Port Forwarding](resources/podinfo_01.png)
-* Using a browser, surf to `localhost:<random forwarded port>`, in our case `localhost:49414`
+To actually connect to your Podinfo pod within Kubernetes, follow the `NOTES:` that the `helm upgrade` command above printed. The command prompt will **not return** (prompt seems to hang). Once done testing access to the pod, hit `CTRL+C` to abort the command. The port-forwarding will be stopped.
+```console
+foo@bar:~$ kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
+Forwarding from 127.0.0.1:8080 -> 9898
+Forwarding from [::1]:8080 -> 9898
+```
+Using a browser, surf to `localhost:8080`. You should get a friendly greeting from a kraken.
 
-Once your test has been successful, remove Podinfo from Kubernetes:
+Once your test has been successful, hit `CTRL+C` to abort the command. The port-forwarding will be stopped. Remove Podinfo from Kubernetes:
 ```console
 foo@bar:~$ kubectl delete -k github.com/stefanprodan/podinfo/kustomize
 
