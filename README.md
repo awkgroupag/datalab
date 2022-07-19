@@ -78,7 +78,7 @@ release "my-release" uninstalled
   3. **Important**: rename the folder you justed unzipped from `datalab-master` to `datalab`
 * Create another dedicated directory for your data - NOT within the source code directory since you don't want to upload your data to the internet
 
-Example folder structure for a new project - **only `datalab`** is version tracked!
+Example folder structure for a new project - **only `datalab`** is tracked with git/GitHub!
 ```
 my_new_project
 |-  datalab
@@ -89,7 +89,10 @@ my_new_project
 |   |   |   | ...
 |   |   |-  jupyter
 |   |   |   | ...
-|   |   | ...
+|   |   ControlBoard.ipynb
+|   |   database_SAP_S4HANA.ipynb
+|   |   database_getting_started.ipynb
+|   |   environment.env.EXAMPLE
 |   |-  resources
 |   |   | ...
 |   |   .gitignore
@@ -101,7 +104,7 @@ my_new_project
 ```
 
 ### 2. Set-up environment variables for your new project once
-Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save the customized file as a new file `./datalab-stacks/environment.env`.
+Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save the customized file as a new file `./datalab-stacks/environment.env`. Normally, you will need to set only three variables:
 * `PROJECT_NAME`: name of this project. Will show up in all resource names associated with this project. No spaces or special characters allowed
 * `DATALAB_SOURCECODE_DIR`: the new directory you just created above, containing all your source code. Will appear as `/home/jovyan/work` in the Jupyter Notebook
 * `DATALAB_DATA_DIR`: your directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
