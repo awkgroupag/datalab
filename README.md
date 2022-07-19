@@ -9,7 +9,7 @@
 * [Good to know & troubleshooting](#good-to-know--troubleshooting)
 
 
-# AWK Datalab
+# AWK Data Science Lab
 * Get your Data Analytics environment up and running in seconds
 * Add and remove technology stacks as needed
 * Collaborate and share your environment easily even years later - being sure that everything still runs
@@ -41,7 +41,7 @@ NOTES:
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
 ```
-Check whether the Podinfo Kubernetes pod is running (`my-release-podinfo-6d4c7fcd7d-zzsv9` below); `STATUS` should be `Running` or `Completed`. You might need to wait a bit.
+Check whether the Podinfo Kubernetes pod is running (`my-release-podinfo-6d4c7fcd7d-zzsv9` below); `STATUS` should be `Running`. You might need to wait a bit.
 ```console
 foo@bar:~$ kubectl get pods -A
 
@@ -71,9 +71,8 @@ release "my-release" uninstalled
 
 ## Installation - WINDOWS
 ### 1. Create the directory structure for your new project
-If you publish your source code to GitHub, you will include your datalab and thus your entire infrastructure
-* Create a new dedicated directory for your source code on your local machine
-* Download this entire datalab's sourcecode:
+* Create a new dedicated directory for your source code on your local machine where you want the Data Science Lab to run
+* Download this entire data science lab's sourcecode:
   1. Hit the green `Code`-button on GitHub, then `Download ZIP`
   2. Unzip the downloaded ZIP-file into the source code folder you just created
   3. **Important**: rename the folder you justed unzipped from `datalab-master` to `datalab`
