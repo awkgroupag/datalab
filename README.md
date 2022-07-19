@@ -55,7 +55,7 @@ kube-system   metrics-server-7cd5fcb6b7-h5g98           1/1     Running     1 (7
 kube-system   traefik-df4ff85d6-wx9nt                   1/1     Running     1 (7m17s ago)   13m
 default       my-release-podinfo-6d4c7fcd7d-zzsv9       1/1     Running     0               46s
 ```
-To actually connect to your Podinfo pod within Kubernetes, follow the `NOTES:` that the `helm upgrade` command above printed. The command prompt will **not return** (prompt seems to hang). Once done testing access to the pod, hit `CTRL+C` to abort the command. The port-forwarding will be stopped.
+To actually connect to your Podinfo pod within Kubernetes, follow the `NOTES:` that the `helm upgrade` command above printed - the port `9898` might be different for you! This command prompt will **not return** (prompt seems to hang).
 ```console
 foo@bar:~$ kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
 Forwarding from 127.0.0.1:8080 -> 9898
@@ -63,13 +63,10 @@ Forwarding from [::1]:8080 -> 9898
 ```
 Using a browser, surf to `localhost:8080`. You should get a friendly greeting from a kraken.
 
-Once your test has been successful, hit `CTRL+C` to abort the command. The port-forwarding will be stopped. Remove Podinfo from Kubernetes:
+Once your test has been successful, return to the command prompt, hit `CTRL+C` to stop the port-forwarding and have the command prompt return. Remove Podinfo from Kubernetes:
 ```console
-foo@bar:~$ kubectl delete -k github.com/stefanprodan/podinfo/kustomize
-
-service "podinfo" deleted
-deployment.apps "podinfo" deleted
-horizontalpodautoscaler.autoscaling "podinfo" deleted
+foo@bar:~$ helm delete my-release
+release "my-release" uninstalled
 ```
 
 ## Installation - WINDOWS
