@@ -41,7 +41,7 @@ NOTES:
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
 ```
-Check whether the Podinfo Kubernetes pods are running; `STATUS` should be `Running`. You might need to wait a bit.
+Check whether the Podinfo Kubernetes pods are running; `STATUS` should be `Running` or `Completed`. You might need to wait a bit.
 ```console
 foo@bar:~$ kubectl get pods -A
 
@@ -55,7 +55,7 @@ kube-system   metrics-server-7cd5fcb6b7-h5g98           1/1     Running     1 (7
 kube-system   traefik-df4ff85d6-wx9nt                   1/1     Running     1 (7m17s ago)   13m
 default       my-release-podinfo-6d4c7fcd7d-zzsv9       1/1     Running     0               46s
 ```
-To actually connect to your Podinfo pod within Kubernetes, follow the `NOTES:` that the `helm upgrade` command above printed - the port `9898` might be different for you! This command prompt will **not return** (prompt seems to hang).
+To actually connect to your Podinfo pod within Kubernetes, follow the `NOTES:` that the `helm upgrade` command above printed - port `9898` might be different for you! This command will **not return** (prompt seems to hang).
 ```console
 foo@bar:~$ kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
 Forwarding from 127.0.0.1:8080 -> 9898
