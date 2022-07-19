@@ -77,6 +77,20 @@ release "my-release" uninstalled
   2. Unzip the downloaded ZIP-file into the source code folder you just created
   3. **Important**: rename the folder you justed unzipped from `datalab-master` to `datalab`
 * Create another dedicated directory for your data - NOT within the source code directory since you don't want to upload your data to the internet
+Example folder structure for a new project:
+```
+|-  my_new_project
+|-  |-  datalab
+|   |   |-  datalab-stacks
+|   |   |   |- ...
+|   |   |-  resources
+|   |   |   |- ...
+|   |   |   .gitignore
+|   |   |   README.md
+|   |   |   ...
+|   |-  data
+|   |   |-  ...
+```
 
 ### 2. Set-up environment variables for your new project once
 Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save the customized file as a new file `./datalab-stacks/environment.env`.
