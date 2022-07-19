@@ -41,7 +41,7 @@ NOTES:
   echo "Visit http://127.0.0.1:8080 to use your application"
   kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
 ```
-Check whether the Podinfo Kubernetes pods are running; `STATUS` should be `Running` or `Completed`. You might need to wait a bit.
+Check whether the Podinfo Kubernetes pod is running (`my-release-podinfo-6d4c7fcd7d-zzsv9` below); `STATUS` should be `Running` or `Completed`. You might need to wait a bit.
 ```console
 foo@bar:~$ kubectl get pods -A
 
