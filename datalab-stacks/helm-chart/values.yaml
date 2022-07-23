@@ -1,0 +1,50 @@
+# MUST: Sourcecode directory on your HOST machine
+# You MUST have a subfolder in that directory called "datascience-lab"
+sourcecodeDirectory: '/mnt/c/GitHub/datalab'
+
+# MUST: Data directory  on your HOST machine
+dataDirectory: '/mnt/c/Users/kat/data'
+
+
+# Optionally change any configs here
+jupyter:
+  # Default values for AWK Data Science Lab
+  image:
+    name: awkgroupag/datascience-notebook
+    # Version of the Jupyter image - you want to change that to use an older image
+    tag: bc8ee41
+  # Enable sudo rights for the Jupyter user?
+  sudo: false
+  # Show new Jupyterlab GUI instead of old Jupyter interface?
+  jupyterlab: true
+  # Resources per container allocated for Jupyter
+  containers:
+    resources:
+      requests:
+        memory: "1024Mi"
+        cpu: "1000m"
+      limits:
+        memory: "2048Mi"
+        cpu: "2000m"
+    # Add any additional environment variables for the Jupyter container here as a YAML list
+    env:
+    # Change where the data and source code directories are mounted to within Jupyter
+    volumeMounts:
+      mountPath:
+        sourcecode: /home/jovyan/work
+        data: /home/jovyan/data
+
+postgresql:
+  enabled: false
+
+# Optionally override the fully qualified name
+fullnameOverride: ""
+
+# Optionally override the name
+nameOverride: ""
+
+# What do we do with container images?
+pullPolicy: IfNotPresent
+
+# Annotions to add to each pod
+annotions: {}

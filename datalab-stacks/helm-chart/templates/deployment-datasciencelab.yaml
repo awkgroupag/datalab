@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "datasciencelab.fullname" . }}
+  labels:
+    {{- include "datasciencelab.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "datasciencelab.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "datasciencelab.selectorLabels" . | nindent 8 }}
+      {{- if .Values.annotions}}
+      annotions:
+        {{- include ".Values.annotions" . | nindent 8 }}
+      {{- end}}
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - imagePullPolicy: {{ .Values.pullPolicy }}
+          name: {{ .Chart.Name }}
+          {{- with .Values.jupyter }}
+          image: {{ .image.name }}:{{ .image.tag }}
+          resources:
+            {{- toYaml .containers.resources | nindent 12 }}
+          env:
+            {{- if .jupyterlab }}
+            - name: JUPYTER_ENABLE_LAB
+              value: "yes"
+            {{- end }}
+            {{- if .sudo }}
+            - name: GRANT_SUDO
+              value: "yes"
+            {{- end }}
+            {{- if .containers.env }}
+            {{- toYaml .containers.env | nindent 12 }}
+            {{- end }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .containers.volumeMounts.mountPath.data | quote | quote }}
+            - name: work
+              mountPath: {{ .containers.volumeMounts.mountPath.sourcecode | quote }}
+            - name: jupyter-config
+              mountPath: /home/jovyan/.jupyter/jupyter_notebook_config.py
+          securityContext:
+            {{- if .sudo }}
+            runAsUser: 0
+            {{- else }}
+            {{- toYaml .Values.securityContext | nindent 12 }}
+            {{- end }}
+          {{- end}}
+      volumes:
+      - name: data
+        hostPath:
+          path: {{ .Values.dataDirectory | quote }}
+          type: DirectoryOrCreate
+      - name: work
+        hostPath:
+          path: {{ .Values.sourcecodeDirectory | quote }}
+          type: DirectoryOrCreate
+      - name: jupyter-config
+        hostPath:
+          path: {{ .Values.sourcecodeDirectory }}/datalab-stacks/helm-chart/jupyter-config.py
+          type: File

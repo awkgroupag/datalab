@@ -78,7 +78,7 @@ release "my-release" uninstalled
   3. **Important**: rename the folder you justed unzipped from `datalab-master` to `datalab`
 * Create another dedicated directory for your data - NOT within the source code directory since you don't want to upload your data to the internet
 
-Example folder structure for a new project - **only `datalab`** is tracked with git/GitHub!
+Resulting example folder structure for a new project - **only the directory `datalab` is tracked with `git`/GitHub!**
 ```
 my_new_project
 |-  datalab
