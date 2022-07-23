@@ -59,22 +59,6 @@ spec:
             {{- toYaml .securityContext | nindent 12 }}
           {{- end }}
           {{- end}}
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 15 
-            failureThreshold: 40
-            periodSeconds: 10
-            timeoutSeconds: 2
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-            initialDelaySeconds: 15 
-            failureThreshold: 40
-            periodSeconds: 10
-            timeoutSeconds: 2
       volumes:
       - name: data
         hostPath:
