@@ -8,6 +8,8 @@ dataDirectory: '/mnt/c/Users/kat/data'
 
 # Optionally change any configs here
 jupyter:
+  # If no Jupyer token is given, a random one is generated
+  token:
   # Default values for AWK Data Science Lab
   image:
     name: awkgroupag/datascience-notebook
@@ -33,6 +35,11 @@ jupyter:
       mountPath:
         sourcecode: /home/jovyan/work
         data: /home/jovyan/data
+    # Extra commands to run for the pod
+    command: []
+    # Extra security context. Will be overriden if you enable sudo above
+    securityContext: {}
+
 
 postgresql:
   enabled: false

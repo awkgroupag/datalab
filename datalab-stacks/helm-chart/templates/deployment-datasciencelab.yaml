@@ -1,7 +1,8 @@
+{{- $fullName := include "datasciencelab.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "datasciencelab.fullname" . }}
+  name: {{ $fullName }}
   labels:
     {{- include "datasciencelab.labels" . | nindent 4 }}
 spec:
@@ -27,6 +28,11 @@ spec:
           resources:
             {{- toYaml .containers.resources | nindent 12 }}
           env:
+            - name: JUPYTER_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullName }}
+                  key: jupyterToken
             {{- if .jupyterlab }}
             - name: JUPYTER_ENABLE_LAB
               value: "yes"
@@ -40,18 +46,35 @@ spec:
             {{- end }}
           volumeMounts:
             - name: data
-              mountPath: {{ .containers.volumeMounts.mountPath.data | quote | quote }}
+              mountPath: {{ .containers.volumeMounts.mountPath.data | quote }}
             - name: work
               mountPath: {{ .containers.volumeMounts.mountPath.sourcecode | quote }}
             - name: jupyter-config
               mountPath: /home/jovyan/.jupyter/jupyter_notebook_config.py
+          {{- if .sudo }}
           securityContext:
-            {{- if .sudo }}
             runAsUser: 0
-            {{- else }}
-            {{- toYaml .Values.securityContext | nindent 12 }}
-            {{- end }}
+          {{- else if .securityContext}}
+          securityContext:
+            {{- toYaml .securityContext | nindent 12 }}
+          {{- end }}
           {{- end}}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 15 
+            failureThreshold: 40
+            periodSeconds: 10
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 15 
+            failureThreshold: 40
+            periodSeconds: 10
+            timeoutSeconds: 2
       volumes:
       - name: data
         hostPath:
