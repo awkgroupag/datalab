@@ -1,0 +1,16 @@
+{{- $fullName := include "datasciencelab.fullname" . -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "datasciencelab.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+    - web
+  routes:
+  - kind: Rule
+    match: Host(`localhost`)
+    services:                       # [8]
+    - kind: Service
+      name: {{ $fullName }}

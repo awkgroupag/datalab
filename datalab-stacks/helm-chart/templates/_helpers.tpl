@@ -57,8 +57,13 @@ Create a default fully qualified app name for the postgres requirement.
 {{- end }}
 
 {{/*
-Create the service DNS name.
+Create a secret - but only if one does not exist already
 */}}
-{{- define "datasciencelab.serviceDnsName" -}}
-{{ include "datasciencelab.fullname" . }}-headless.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}
-{{- end }}
+{{- define "datasciencelab.jupyterToken" }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (include "datasciencelab.fullname" .)) }}
+{{- if $secret }}
+{{- index $secret.data "jupyterToken" }}
+{{- else }}
+{{- randAlphaNum 64 | b64enc }}
+{{- end -}}
+{{- end -}}

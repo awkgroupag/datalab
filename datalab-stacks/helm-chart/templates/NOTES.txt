@@ -1,0 +1,5 @@
+Get the deployed application URL by running these commands:
+     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
+           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "datasciencelab.fullname" . }}'
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "datasciencelab.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.service.ingress 0) }}{{.}}{{ end }}"}}")
+  echo http://localhost/lab?token={{ include "datasciencelab.jupyterToken" . | b64dec }}

@@ -1,0 +1,14 @@
+{{- $fullName := include "datasciencelab.fullname" . -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "datasciencelab.labels" . | nindent 4 }}
+spec:
+  ports:
+    - port: 80
+      targetPort: 8888
+      protocol: TCP
+  selector:
+    {{- include "datasciencelab.selectorLabels" . | nindent 4 }}
