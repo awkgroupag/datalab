@@ -28,8 +28,8 @@ Common labels
 */}}
 {{- define "datasciencelab.labels" -}}
 app.kubernetes.io/name: {{ .Chart.Name | quote }}
-app.kubernetes.io/instance: {{ .Release.Name | quote }}
-app.kubernetes.io/version: {{ .Chart.AppVersion }}
+app.kubernetes.io/instance: {{ include "datasciencelab.fullname" . | quote }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
 helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 {{- end }}
@@ -38,8 +38,8 @@ helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 Selector labels
 */}}
 {{- define "datasciencelab.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "datasciencelab.fullname" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/name: {{ .Chart.Name | quote }}
+app.kubernetes.io/instance: {{ include "datasciencelab.fullname" . | quote }}
 {{- end }}
 
 {{/*
