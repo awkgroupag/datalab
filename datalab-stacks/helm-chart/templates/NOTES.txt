@@ -6,17 +6,17 @@
 
 To remove the Helm chart again immediately:
 
-    helm uninstall {{ include "datasciencelab.name" . }}
+    helm uninstall {{ .Release.Name }}
 
 {{ end }}
 {{- if $secret }}
 Use the following URL to access your Jupyter notebook:
 
-  http://localhost/{{ include "datasciencelab.name" . }}?token={{ index $secret.data "jupyterToken" | b64dec }}
+  http://localhost/{{ .Release.Name }}?token={{ index $secret.data "jupyterToken" | b64dec }}
 
 {{- else}}
 Kubernetes secret for Jupyter token has not been fully deployed yet. To get the appropriate URL, try again:
     
-    helm upgrade --install --namespace {{ .Release.Namespace }} --create-namespace --wait {{ include "datasciencelab.name" . }} .
+    helm upgrade --install --namespace {{ .Release.Namespace }} --create-namespace --wait {{ .Release.Name }} .
 
 {{- end}}
