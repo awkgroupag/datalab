@@ -19,13 +19,13 @@ jupyter:
   token:
   # Resources per container allocated for Jupyter
   containers:
-    resources:
-      requests:
-        memory: "1024Mi"
-        cpu: "1000m"
-      limits:
-        memory: "2048Mi"
-        cpu: "2000m"
+    # resources:
+    #   requests:
+    #     memory: "1024Mi"
+    #     cpu: "1000m"
+    #   limits:
+    #     memory: "2048Mi"
+    #     cpu: "2000m"
     # Add any additional environment variables for the Jupyter container here as a YAML list
     env:
     # Change where the data and source code directories are mounted to within Jupyter
@@ -34,9 +34,9 @@ jupyter:
         sourcecode: /home/jovyan/work
         data: /home/jovyan/data
     # Extra commands to run for the pod
-    command: []
+    command:
     # Extra security context. Will be overriden if you enable sudo above
-    securityContext: {}
+    securityContext:
 
 
 postgresql:
