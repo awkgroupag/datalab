@@ -7,5 +7,5 @@ binaryData:
   {{- $files := .Files }}
   {{- range tuple "jupyter-config.py" }}
   {{ . }}: |-
-    {{ $files.Get . | b64enc }}
+    {{ tpl ($files.Get .) $ | b64enc }}
   {{- end }}
