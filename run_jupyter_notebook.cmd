@@ -8,7 +8,7 @@ set ENVIRONMENT_FILE_PATH=.\datalab-stacks\environment.env
 
 :: use argument as ENVIRONMENT_FILE_PATH if available
 if "%~1"=="" (
-    echo no arguments given, using default environment.env
+    echo no path to environment.env provided, using default environment.env
 ) else (
     set ENVIRONMENT_FILE_PATH=%1
 )

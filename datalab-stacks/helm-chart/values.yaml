@@ -8,15 +8,15 @@ dataDirectory: '/mnt/c/Users/kat/data'
 
 # Optionally change any configs here
 jupyter:
-  # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
-  token:
+  # Enable sudo rights for the Jupyter user?
+  sudo: false
   # Default values for AWK Data Science Lab
   image:
     name: awkgroupag/datascience-notebook
     # Version of the Jupyter image - you want to change that to use an older image
     tag: bc8ee41
-  # Enable sudo rights for the Jupyter user?
-  sudo: false
+  # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
+  token:
   # Resources per container allocated for Jupyter
   containers:
     resources:
