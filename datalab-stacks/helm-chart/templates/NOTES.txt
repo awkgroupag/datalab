@@ -2,7 +2,9 @@
 {{- $secret := (lookup "v1" "Secret" .Release.Namespace (include "datasciencelab.fullname" .)) }}
 {{- if eq .Release.Namespace "default" }}
 
-!! BE AWARE THAT IT IS NOT RECOMMENDED TO INSTALL THIS CHART INTO THE DEFAULT NAMESPACE. To remove the Helm chart again immediately:
+!! BE AWARE THAT IT IS NOT RECOMMENDED TO INSTALL THIS CHART INTO THE DEFAULT NAMESPACE !!
+
+To remove the Helm chart again immediately:
 
     helm uninstall {{ include "datasciencelab.name" . }}
 
