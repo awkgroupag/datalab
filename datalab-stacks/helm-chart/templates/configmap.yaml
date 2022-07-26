@@ -1,0 +1,11 @@
+# See https://helm.sh/docs/chart_template_guide/accessing_files/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "datasciencelab.fullname" . }}
+binaryData:
+  {{- $files := .Files }}
+  {{- range tuple "jupyter-config.py" }}
+  {{ . }}: |-
+    {{ $files.Get . | b64enc }}
+  {{- end }}

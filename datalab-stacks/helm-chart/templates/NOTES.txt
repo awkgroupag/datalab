@@ -2,9 +2,9 @@ Use the following URL to access your Jupyter notebook:
 {{/* Check if there is a secret already deployed (e.g. user used helm install --wait) */}}
 {{- $secret := (lookup "v1" "Secret" .Release.Namespace (include "datasciencelab.fullname" .)) }}
 {{- if $secret }}
-  http://localhost/lab?token={{ index $secret.data "jupyterToken" | b64dec }}
+  http://localhost/{{ include "datasciencelab.fullname" . }}?token={{ index $secret.data "jupyterToken" | b64dec }}
 {{- else}}
-    http://localhost/lab?token=
+    http://localhost/{{ include "datasciencelab.fullname" . }}?token=
 
 
 You need to append Jupyter's secret token to the URL above. On Linux, use the following command:

@@ -42,10 +42,10 @@ jupyter:
 postgresql:
   enabled: false
 
-# Optionally override the fully qualified name
+# Optionally override the fully qualified name of this Helm chart
 fullnameOverride: ""
 
-# Optionally override the name
+# Optionally override the name - the one you set with helm install NAME
 nameOverride: ""
 
 # What do we do with container images?

@@ -47,8 +47,9 @@ spec:
               mountPath: {{ .containers.volumeMounts.mountPath.data | quote }}
             - name: work
               mountPath: {{ .containers.volumeMounts.mountPath.sourcecode | quote }}
-            # - name: jupyter-config
-            #   mountPath: /home/jovyan/.jupyter/jupyter_notebook_config.py
+            - name: jupyter-config
+              subPath: jupyter-config.py
+              mountPath: /home/jovyan/.jupyter/jupyter_notebook_config.py
           {{- if .sudo }}
           securityContext:
             runAsUser: 0
@@ -66,7 +67,6 @@ spec:
         hostPath:
           path: {{ .Values.sourcecodeDirectory | quote }}
           type: DirectoryOrCreate
-      # - name: jupyter-config
-      #   hostPath:
-      #     path: {{ .Values.sourcecodeDirectory }}/datalab-stacks/helm-chart/jupyter-config.py
-      #     type: File
+      - name: jupyter-config
+        configMap:
+          name: {{ include "datasciencelab.fullname" . }}
