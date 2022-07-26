@@ -8,7 +8,7 @@ dataDirectory: '/mnt/c/Users/kat/data'
 
 # Optionally change any configs here
 jupyter:
-  # If no Jupyer token is given, a random one is generated
+  # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
   token:
   # Default values for AWK Data Science Lab
   image:
@@ -17,8 +17,6 @@ jupyter:
     tag: bc8ee41
   # Enable sudo rights for the Jupyter user?
   sudo: false
-  # Show new Jupyterlab GUI instead of old Jupyter interface?
-  jupyterlab: true
   # Resources per container allocated for Jupyter
   containers:
     resources:
@@ -53,5 +51,5 @@ nameOverride: ""
 # What do we do with container images?
 pullPolicy: IfNotPresent
 
-# Annotions to add to each pod
-annotions: {}
+# Annotations to add to each pod
+annotations: {}

@@ -35,9 +35,10 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "datasciencelab.labels" -}}
-helm.sh/chart: {{ include "datasciencelab.chart" . }}
-app.kubernetes.io/version: {{ .Values.jupyter.image.tag | default .Chart.AppVersion | trunc 63 | quote }}
-app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+app.kubernetes.io/instance: {{ .Release.Name | quote }}
+app.kubernetes.io/version: {{ .Chart.AppVersion }}
+helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 {{- end }}
 
 {{/*
@@ -56,14 +57,17 @@ Create a default fully qualified app name for the postgres requirement.
 {{ include "datasciencelab.fullname" .}}-{{ include "postgresql.name" $postgresContext }}
 {{- end }}
 
+
 {{/*
-Create a secret - but only if one does not exist already
+Create a random string (different each time you call this function!) for Jupyter token - but only if one does not exist already
 */}}
 {{- define "datasciencelab.jupyterToken" }}
 {{- $secret := (lookup "v1" "Secret" .Release.Namespace (include "datasciencelab.fullname" .)) }}
-{{- if $secret }}
-{{- index $secret.data "jupyterToken" }}
+{{- if .Values.jupyter.token }}
+    {{- .Values.jupyter.token | b64enc }}
+{{- else if $secret }}
+    {{- index $secret.data "jupyterToken" }}
 {{- else }}
-{{- randAlphaNum 64 | b64enc }}
-{{- end -}}
-{{- end -}}
+    {{- randAlphaNum 64 | b64enc }}
+{{- end }}
+{{- end }}

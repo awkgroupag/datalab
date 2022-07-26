@@ -1,8 +1,7 @@
-{{- $fullName := include "datasciencelab.fullname" . -}}
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ $fullName }}
+  name: {{ include "datasciencelab.fullname" . }}
   labels:
     {{- include "datasciencelab.labels" . | nindent 4 }}
 spec:
@@ -11,6 +10,7 @@ spec:
   routes:
   - kind: Rule
     match: Host(`localhost`)
-    services:                       # [8]
+    services:
     - kind: Service
-      name: {{ $fullName }}
+      name: {{ include "datasciencelab.fullname" . }}
+      port: 80
