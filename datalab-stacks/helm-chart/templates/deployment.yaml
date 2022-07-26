@@ -48,7 +48,7 @@ spec:
             - name: work
               mountPath: {{ .containers.volumeMounts.mountPath.sourcecode | quote }}
             - name: jupyter-config
-              subPath: jupyter-config.py
+              subPath: jupyter_notebook_config.py
               mountPath: /home/jovyan/.jupyter/jupyter_notebook_config.py
           {{- if .sudo }}
           securityContext:
