@@ -1,11 +1,3 @@
-{{/* vim: set filetype=mustache: */}}
-{{/*
-Expand the name of the chart.
-*/}}
-{{- define "datasciencelab.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
 {{/*
 Create a default fully qualified app name.
 We truncate to 20 characters because this is used to set the node identifier in WildFly which is limited to
@@ -19,7 +11,7 @@ We truncate to 20 characters because this is used to set the node identifier in 
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 20 | trimSuffix "-" }}
 {{- else }}
-{{- printf "%s-%s" .Release.Name $name | trunc 20 | trimSuffix "-" }}
+{{- printf "%s-%s" $name .Release.Name | trunc 20 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 {{- end }}
@@ -35,9 +27,10 @@ Create chart name and version as used by the chart label.
 Common labels
 */}}
 {{- define "datasciencelab.labels" -}}
-app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+app.kubernetes.io/name: {{ .Chart.Name | quote }}
 app.kubernetes.io/instance: {{ .Release.Name | quote }}
 app.kubernetes.io/version: {{ .Chart.AppVersion }}
+app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
 helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 {{- end }}
 
@@ -45,7 +38,7 @@ helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 Selector labels
 */}}
 {{- define "datasciencelab.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "datasciencelab.name" . }}
+app.kubernetes.io/name: {{ include "datasciencelab.fullname" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 

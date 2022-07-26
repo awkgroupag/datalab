@@ -1,6 +1,6 @@
 apiVersion: v2
-name: eraneos-data-science-lab
-description: A Traefik based Kubernetes ingress controller
+name: data-lab
+description: The Eraneos Data Science Lab
 type: application
 version: 1.0.0
 appVersion: 1.0.0

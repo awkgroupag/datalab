@@ -131,6 +131,29 @@ foo@bar:~$ git push --set-upstream origin main
     * Use `git commit` and `git push` to push your changes to GitHub
     * Work with dedicated new branches for changes, do not work directly with the branch `main`
 
+## Usage - helm
+### Install everything using helm
+To set-up a dedicated data science lab for project
+* Using the command prompt, navigate to your source code folder
+* choose a project name (20 ASCII characters max), e.g. `my-project` and a name for its namespace, e.g. `kingdom`
+* Then:
+TODO: ADJUST PATH
+```console
+foo@bar:~$ helm install my-project --namespace kingdom --create-namespace --wait .
+```
+You can easily have several labs up and running. Be sure to use a dedicated namespace for each.
+
+### Uninstall a specific datalab
+Remove the helm release:
+```console
+foo@bar:~$ helm uninstall my-project --namespace kingdom .
+```
+To get rid of everything (including the secret containing the Jupyter token):
+```console
+foo@bar:~$ kubectl delete namespace kingdom
+namespace "kingdom" deleted
+```
+
 ## Usage - WINDOWS
 ### 1a. Start a single Jupyter Notebook directly
 In your `datalab` directory, just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome automatically. Your browser will complain that the SSL certificate is not valid.
