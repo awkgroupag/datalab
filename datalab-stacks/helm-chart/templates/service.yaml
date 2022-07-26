@@ -1,8 +1,7 @@
-{{- $fullName := include "datasciencelab.fullname" . -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $fullName }}
+  name: {{ include "datasciencelab.fullname" . }}
   labels:
     {{- include "datasciencelab.labels" . | nindent 4 }}
 spec:
