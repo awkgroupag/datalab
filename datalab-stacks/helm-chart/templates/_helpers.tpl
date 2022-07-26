@@ -1,4 +1,12 @@
 {{/*
+Reconstruct the NAME that was passed to "helm install NAME CHART"
+*/}}
+{{- define "datasciencelab.name" -}}
+{{ .Release.Name | replace .Chart.Name "" | trimPrefix "-" }}
+{{- end }}
+
+
+{{/*
 Create a default fully qualified app name.
 We truncate to 20 characters because this is used to set the node identifier in WildFly which is limited to
 23 characters. This allows for a replica suffix for up to 99 replicas.

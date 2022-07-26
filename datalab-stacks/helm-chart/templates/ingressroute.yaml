@@ -9,7 +9,7 @@ spec:
     - web
   routes:
   - kind: Rule
-    match: Host(`localhost`) && PathPrefix(`/{{ include "datasciencelab.fullname" . }}`)
+    match: Host(`localhost`) && PathPrefix(`/{{ include "datasciencelab.name" . }}`)
     services:
     - kind: Service
       name: {{ include "datasciencelab.fullname" . }}

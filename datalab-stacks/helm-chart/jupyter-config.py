@@ -143,7 +143,7 @@
 #  
 #  Leading and trailing slashes can be omitted, and will automatically be added.
 #  Default: '/'
-c.NotebookApp.base_url = '/{{ include "datasciencelab.fullname" . }}'
+c.NotebookApp.base_url = '/{{ include "datasciencelab.name" . }}'
 
 ## Specify what command to use to invoke a web browser when opening the notebook.
 #  If not specified, the default browser will be determined by the `webbrowser`

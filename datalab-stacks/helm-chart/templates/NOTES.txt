@@ -1,17 +1,20 @@
-Use the following URL to access your Jupyter notebook:
-{{/* Check if there is a secret already deployed (e.g. user used helm install --wait) */}}
+{{/*- Check if there is a secret already deployed (e.g. user used helm install --wait) */}}
 {{- $secret := (lookup "v1" "Secret" .Release.Namespace (include "datasciencelab.fullname" .)) }}
+{{- if eq .Release.Namespace "default" }}
+
+!! BE AWARE THAT IT IS NOT RECOMMENDED TO INSTALL THIS CHART INTO THE DEFAULT NAMESPACE. To remove the Helm chart again immediately:
+
+    helm uninstall {{ include "datasciencelab.name" . }}
+
+{{ end }}
 {{- if $secret }}
-  http://localhost/{{ include "datasciencelab.fullname" . }}?token={{ index $secret.data "jupyterToken" | b64dec }}
+Use the following URL to access your Jupyter notebook:
+
+  http://localhost/{{ include "datasciencelab.name" . }}?token={{ index $secret.data "jupyterToken" | b64dec }}
+
 {{- else}}
-    http://localhost/{{ include "datasciencelab.fullname" . }}?token=
+Kubernetes secret for Jupyter token has not been fully deployed yet. To get the appropriate URL, try again:
+    
+    helm upgrade --install --namespace {{ .Release.Namespace }} --create-namespace --wait {{ include "datasciencelab.name" . }} .
 
-
-You need to append Jupyter's secret token to the URL above. On Linux, use the following command:
-
-    kubectl get secret --namespace {{ .Release.Namespace }} {{ include "datasciencelab.fullname" . }} -o jsonpath={.data.jupyterToken} | base64 --decode
-
-On Windows, use the following command and then decrypt the base64-encoded token using e.g. www.base64decode.org
-
-    kubectl get secret --namespace {{ .Release.Namespace }} {{ include "datasciencelab.fullname" . }} -o jsonpath={.data.jupyterToken}
 {{- end}}
