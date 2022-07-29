@@ -47,9 +47,21 @@ spec:
               mountPath: {{ .containers.volumeMounts.mountPath.data | quote }}
             - name: work
               mountPath: {{ .containers.volumeMounts.mountPath.sourcecode | quote }}
-            - name: jupyter-config
+            - name: config-files
               subPath: jupyter_lab_config.py
               mountPath: /home/jovyan/.jupyter/jupyter_lab_config.py
+            - name: config-files
+              subPath: extensionmanager-extension.jupyterlab-settings
+              mountPath: /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension/plugin.jupyterlab-settings
+            - name: config-files
+              subPath: jupyterlab-lsp.completion.jupyterlab-settings
+              mountPath: /home/jovyan/.jupyter/lab/user-settings/@krassowski/jupyterlab-lsp/completion.jupyterlab-settings
+            - name: config-files
+              subPath: jupyterlab-lsp.plugin.jupyterlab-settings
+              mountPath: /home/jovyan/.jupyter/lab/user-settings/@krassowski/jupyterlab-lsp/plugin.jupyterlab-settings
+            - name: config-files
+              subPath: pycodestyle
+              mountPath: /home/jovyan/.config/pycodestyle
           {{- if .sudo }}
           securityContext:
             runAsUser: 0
@@ -67,6 +79,6 @@ spec:
         hostPath:
           path: {{ .Values.sourcecodeDirectory | quote }}
           type: DirectoryOrCreate
-      - name: jupyter-config
+      - name: config-files
         configMap:
           name: {{ include "datasciencelab.fullname" . }}
