@@ -53,3 +53,6 @@ imagePullPolicy: IfNotPresent
 
 # Annotations to add to each pod
 annotations: {}
+
+# Labels to add to each pod
+labels: {}

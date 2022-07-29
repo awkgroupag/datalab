@@ -64,3 +64,16 @@ Create a random string (different each time you call this function!) for Jupyter
     {{- randAlphaNum 64 | b64enc }}
 {{- end }}
 {{- end }}
+
+{{/*
+Renders a value that contains template.
+Usage:
+{{ include "datasciencelab.rendertemplate" ( dict "value" .Values.path.to.the.Value "context" $) }}
+*/}}
+{{- define "datasciencelab.rendertemplate" -}}
+    {{- if typeIs "string" .value }}
+        {{- tpl .value .context }}
+    {{- else }}
+        {{- tpl (.value | toYaml) .context }}
+    {{- end }}
+{{- end -}}
