@@ -21,15 +21,21 @@
   * In the Rancher preferences, make sure that `Enable Traefik` is activated (it is enabled by default)
 * Linux: Another Kubernetes distribution, e.g. [K3S](https://k3s.io/)
   * [Deploy Traefik](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started
+  * [Install helm](https://helm.sh/docs/intro/install/):
+```console
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
+```
 * Code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
 Open a command prompt/terminal and enter the following to install Podinfo:
 ```console
-foo@bar:~$ helm repo add podinfo https://stefanprodan.github.io/podinfo
+$ helm repo add podinfo https://stefanprodan.github.io/podinfo
 "podinfo" has been added to your repositories
 
-foo@bar:~$ helm upgrade -i my-release podinfo/podinfo
+$ helm upgrade -i my-release podinfo/podinfo
 Release "my-release" does not exist. Installing it now.
 NAME: my-release
 LAST DEPLOYED: Tue Jul 19 08:05:01 2022
@@ -43,7 +49,7 @@ NOTES:
 ```
 Check whether the Podinfo Kubernetes pod is running (`my-release-podinfo-6d4c7fcd7d-zzsv9` below); `STATUS` should be `Running`. You might need to wait a bit.
 ```console
-foo@bar:~$ kubectl get pods -A
+$ kubectl get pods -A
 
 NAMESPACE     NAME                                      READY   STATUS      RESTARTS        AGE
 kube-system   local-path-provisioner-6c79684f77-vm9hc   1/1     Running     1 (7m17s ago)   14m
@@ -57,7 +63,7 @@ default       my-release-podinfo-6d4c7fcd7d-zzsv9       1/1     Running     0   
 ```
 To actually connect to your Podinfo pod within Kubernetes, follow the `NOTES:` that the `helm upgrade` command above printed - port `9898` might be different for you! This command will **not return** (prompt seems to hang).
 ```console
-foo@bar:~$ kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
+$ kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
 Forwarding from 127.0.0.1:8080 -> 9898
 Forwarding from [::1]:8080 -> 9898
 ```
@@ -65,7 +71,7 @@ Using a browser, surf to `localhost:8080`. You should get a friendly greeting fr
 
 Once your test has been successful, return to the command prompt, hit `CTRL+C` to stop the port-forwarding and have the command prompt return. Remove Podinfo from Kubernetes:
 ```console
-foo@bar:~$ helm delete my-release
+$ helm delete my-release
 release "my-release" uninstalled
 ```
 
@@ -115,15 +121,15 @@ Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save t
 2. Open a command prompt and navigate to your source code folder
 3. Type (replacing the URL)
 ```console
-foo@bar:~$ git init
+$ git init
 # git's default branch name is master, let's change this to GitHub's main
-foo@bar:~$ git branch -M main
-foo@bar:~$ git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
+$ git branch -M main
+$ git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
 # Add the entire datalab to your first commit
-foo@bar:~$ git add .
-foo@bar:~$ git commit -m "initial commit"
+$ git add .
+$ git commit -m "initial commit"
 # Actually upload the files to GitHub.com
-foo@bar:~$ git push --set-upstream origin main
+$ git push --set-upstream origin main
 ```
 4. You should be prompted for your GitHub credentials after the last command above
 5. Check [Atlassian's Comparing Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) to get started with `git`. See the [Git-flow-Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) to understand collaboration with other team members.
@@ -139,18 +145,18 @@ To set-up a dedicated data science lab for project
 * Then:
 TODO: ADJUST PATH
 ```console
-foo@bar:~$ helm install my-project --namespace kingdom --create-namespace --wait .
+$ helm install my-project --namespace kingdom --create-namespace --wait .
 ```
 You can easily have several labs up and running. Be sure to use a dedicated namespace for each.
 
 ### Uninstall a specific datalab
 Remove the helm release:
 ```console
-foo@bar:~$ helm uninstall my-project --namespace kingdom .
+$ helm uninstall my-project --namespace kingdom .
 ```
 To get rid of everything (including the secret containing the Jupyter token):
 ```console
-foo@bar:~$ kubectl delete namespace kingdom
+$ kubectl delete namespace kingdom
 namespace "kingdom" deleted
 ```
 
