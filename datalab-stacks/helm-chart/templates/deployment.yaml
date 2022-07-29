@@ -21,7 +21,7 @@ spec:
     spec:
       terminationGracePeriodSeconds: 30
       containers:
-        - imagePullPolicy: {{ .Values.pullPolicy }}
+        - imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
           name: {{ .Chart.Name }}
           {{- with .Values.jupyter }}
           image: {{ .image.name }}:{{ .image.tag }}

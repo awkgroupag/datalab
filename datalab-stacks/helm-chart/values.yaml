@@ -49,7 +49,7 @@ fullnameOverride: ""
 nameOverride: ""
 
 # What do we do with container images?
-pullPolicy: IfNotPresent
+imagePullPolicy: IfNotPresent
 
 # Annotations to add to each pod
 annotations: {}
