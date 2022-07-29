@@ -18,6 +18,9 @@ spec:
       annotations:
         {{- include ".Values.annotations" . | nindent 8 }}
       {{- end}}
+        # Ensure that this deployment is re-rolled/re-deployed if these files change
+        checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
     spec:
       terminationGracePeriodSeconds: 30
       containers:
