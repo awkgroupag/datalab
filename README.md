@@ -236,36 +236,42 @@ Run the following stacks on your local machine or remote server:
 The following packages are installed on-top of the [jupyter/datascience-notebook](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html).
 
 Automation
-* [Featuretools](https://featuretools.alteryx.com/en/stable/), an open source python framework for automated feature engineering
-* [h2o AutoML](http://docs.h2o.ai/h2o/latest-stable/h2o-py/docs/index.html): Automatic machine learning
+* [h2o AutoML](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html): Automatic machine learning
 * [TPOT](http://epistasislab.github.io/tpot/): optimize machine learning pipelines using genetic programming
-* [auto-sklearn](https://automl.github.io/auto-sklearn/master/index.html), automated machine learning toolkit and a drop-in replacement for a scikit-learn estimator
+* [auto-sklearn](https://automl.github.io/auto-sklearn/master/), automated machine learning toolkit and a drop-in replacement for a scikit-learn estimator
+
+Feature Engineering
+* [Featuretools](https://featuretools.alteryx.com/en/stable/), an open source python framework for automated feature engineering
+* [TsFresh](https://tsfresh.readthedocs.io/en/latest/) best open source Python tool available for time series classification and regression. Integrates with Featuretools
 
 Explainable AI
-* [SHAP (SHapley Additive exPlanations)](https://github.com/slundberg/shap): game theoretic approach to explain the output of any machine learning model
 * [Lime](https://github.com/marcotcr/lime): Explaining the predictions of any machine learning classifier
-* [ELI5](https://eli5.readthedocs.io/en/latest/overview.html): debug machine learning classifiers and explain their predictions
+* [SHAP (SHapley Additive exPlanations)](https://github.com/slundberg/shap): game theoretic approach to explain the output of any machine learning model
 
-NLP
-* [spaCy](https://spacy.io/): Industrial-strength NLP
+Natural Language Processing
 * [Natural Language Toolkit (NLTK)](https://www.nltk.org/): leading platform for building Python programs to work with human language data
+* [spaCy](https://spacy.io/): Industrial-strength NLP. Includes pretrained [English](https://spacy.io/models/en#en_core_web_md) and [German](https://spacy.io/models/de#de_core_news_md) model
+* [Wordcloud](https://github.com/amueller/word_cloud): fill any space with a word cloud
 
 Visualizations
 * [Plotly](https://plotly.com/python/): Graphing library for interactive, publication-quality graphs
 * [Altair](https://altair-viz.github.io/): Declarative Visualization in Python
-* [Wordcloud](https://github.com/amueller/word_cloud): fill any space with a word cloud
 
 Frontend and apps
 * [Streamlit](https://docs.streamlit.io/en/stable/): The fastest way to build and share data apps
 
-Database stuff
-* [sqlalchemy-utils](https://sqlalchemy-utils.readthedocs.io/en/latest/)
-* [sqlalchemy_schemadisplay](https://github.com/fschulze/sqlalchemy_schemadisplay)
-* [psycopg2 PostgreSQL Connector](https://www.psycopg.org/docs/)
+Databases:
+* [psycopg2 PostgreSQL Connector](https://www.psycopg.org/docs/): most popular PostgreSQL database adapter for the Python
+* [sqlalchemy-utils](https://sqlalchemy-utils.readthedocs.io/en/latest/): custom data types and various utility functions for SQLAlchemy
+* [sqlalchemy_schemadisplay](https://github.com/fschulze/sqlalchemy_schemadisplay): Turn SQLAlchemy DB Model into a graph
 * [mysql-connector-python MySQL Connector](https://dev.mysql.com/doc/connector-python/en/)
 
+Web scraping
+* [Scrapy](https://scrapy.org/): framework for extracting data from websites
+* [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/): pull data out of HTML and XML files
+
 Tools
-* [Pandas Profiling](https://pandas-profiling.github.io/pandas-profiling/docs/master/rtd/): Create profiling reports from pandas DataFrame objects
+* [Pandas Profiling](https://pandas-profiling.ydata.ai/docs/master/index.html): Create profiling reports from pandas DataFrame objects
 * [lxml](https://lxml.de/): secure and fast XML and HTML with Python
 
 JupyterLab plugins
