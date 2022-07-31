@@ -41,6 +41,7 @@ jupyter:
 
 postgresql:
   enabled: false
+  existingSecret: {{ include "datasciencelab.fullname" . }}-postgresql
 
 # Optionally override the fully qualified name of this Helm chart
 fullnameOverride: ""
