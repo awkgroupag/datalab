@@ -11,7 +11,7 @@ We truncate to 20 characters because this is used to set the node identifier in 
 {{- if contains $name .Release.Name }}
 {{- .Release.Name | trunc 20 | trimSuffix "-" }}
 {{- else }}
-{{- printf "%s-%s" $name .Release.Name | trunc 20 | trimSuffix "-" }}
+{{- printf .Release.Name | trunc 20 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 {{- end }}
