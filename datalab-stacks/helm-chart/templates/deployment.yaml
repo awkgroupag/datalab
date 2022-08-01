@@ -1,28 +1,28 @@
-{{- $fullName := include "datasciencelab.fullname" . -}}
+{{- $fullName := include "common.names.fullname" . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ $fullName }}-jupyter
   labels:
-    {{- include "datasciencelab.labels" . | nindent 4 }}
+    {{- include "common.labels.standard" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "datasciencelab.selectorLabels" . | nindent 6 }}
+      {{- include "common.labels.matchLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "datasciencelab.selectorLabels" . | nindent 8 }}
-        {{- if .Values.labels}}
-        {{- include "datasciencelab.rendertemplate" ( dict "value" .Values.labels "context" $ ) | nindent 8 }}
+        {{- include "common.labels.standard" . | nindent 8 }}
+        {{- if .Values.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
         {{- end}}
       annotations:
         # Ensure that this deployment is re-rolled/re-deployed if these files change
         checksum/configmap: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
         checksum/secret: {{ include (print $.Template.BasePath "/secret.yaml") . | sha256sum }}
         {{- if .Values.annotations}}
-        {{- include "datasciencelab.rendertemplate" ( dict "value" .Values.annotations "context" $ ) | nindent 8 }}
+        {{- include "common.tplvalues.render" ( dict "value" .Values.annotations "context" $ ) | nindent 8 }}
         {{- end}}
     spec:
       terminationGracePeriodSeconds: 30
@@ -87,4 +87,4 @@ spec:
           type: DirectoryOrCreate
       - name: config-files
         configMap:
-          name: {{ include "datasciencelab.fullname" . }}
+          name: {{ include "common.names.fullname" . }}

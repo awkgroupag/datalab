@@ -15,6 +15,9 @@ sources:
   - https://github.com/traefik/traefik
   - https://github.com/traefik/traefik-helm-chart
 dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 1.x.x
   - name: postgresql
     version: 11.6.18
     repository: https://charts.bitnami.com/bitnami

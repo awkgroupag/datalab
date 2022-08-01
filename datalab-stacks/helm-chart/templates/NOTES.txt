@@ -1,5 +1,5 @@
 {{/*- Check if there is a secret already deployed (e.g. user used helm install --wait) */}}
-{{- $secret := (lookup "v1" "Secret" .Release.Namespace (include "datasciencelab.fullname" .)) }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (include "common.names.fullname" .)) }}
 {{- if eq .Release.Namespace "default" }}
 
 !! BE AWARE THAT IT IS NOT RECOMMENDED TO INSTALL THIS CHART INTO THE DEFAULT NAMESPACE !!

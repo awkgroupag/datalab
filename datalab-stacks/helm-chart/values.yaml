@@ -5,6 +5,8 @@ sourcecodeDirectory: '/mnt/c/GitHub/datalab'
 # MUST: Data directory  on your HOST machine
 dataDirectory: '/mnt/c/Users/kat/data'
 
+postgresql:
+  enabled: false
 
 # Optionally change any configs here
 jupyter:
@@ -39,10 +41,6 @@ jupyter:
     securityContext:
 
 
-postgresql:
-  enabled: false
-  existingSecret: {{ include "datasciencelab.fullname" . }}-postgresql
-
 # Optionally override the fully qualified name of this Helm chart
 fullnameOverride: ""
 
@@ -55,5 +53,11 @@ imagePullPolicy: IfNotPresent
 # Annotations to add to each pod
 annotations: {}
 
-# Labels to add to each pod
-labels: {}
+# Additional labels to add to each pod
+podLabels: {}
+
+postgresql:
+  # Secret will automatically be generated if it does not exist
+  existingSecret: postgresql
+  commonLabels: {}
+  commonAnnotations: {}

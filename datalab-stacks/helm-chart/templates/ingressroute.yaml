@@ -1,9 +1,9 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ include "datasciencelab.fullname" . }}-jupyter
+  name: {{ include "common.names.fullname" . }}-jupyter
   labels:
-    {{- include "datasciencelab.labels" . | nindent 4 }}
+    {{- include "common.labels.standard" . | nindent 4 }}
 spec:
   entryPoints:
     - web
@@ -13,5 +13,5 @@ spec:
     match: Host(`localhost`) && PathPrefix(`/{{ .Release.Name }}`)
     services:
     - kind: Service
-      name: {{ include "datasciencelab.fullname" . }}-jupyter
+      name: {{ include "common.names.fullname" . }}-jupyter
       port: 80
