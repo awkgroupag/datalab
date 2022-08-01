@@ -39,22 +39,28 @@ jupyter:
     command:
     # Extra security context. Will be overriden if you enable sudo above
     securityContext:
+  # Additional annotations to add to each pod
+  podAnnotations: {}
+  # Additional labels to add to each pod
+  podLabels: {}
 
 
-# Optionally override the fully qualified name of this Helm chart
+# String to fully override common.names.fullname template 
 fullnameOverride: ""
 
-# Optionally override the name - the one you set with helm install NAME
+# String to partially override common.names.fullname template (will maintain the release name)  
 nameOverride: ""
 
 # What do we do with container images?
 imagePullPolicy: IfNotPresent
 
-# Annotations to add to each pod
-annotations: {}
+# Add labels to all the deployed resources
+commonLabels: {}
 
-# Additional labels to add to each pod
-podLabels: {}
+# Add annotations to all the deployed resources
+commonAnnotations: {}
+
+
 
 postgresql:
   # Secret will automatically be generated if it does not exist
