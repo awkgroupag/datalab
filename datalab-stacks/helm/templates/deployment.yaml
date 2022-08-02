@@ -93,11 +93,11 @@ spec:
       volumes:
       - name: data
         hostPath:
-          path: {{ .Values.dataDirectory | quote }}
+          path: {{ required "You need to set the path for dataDirectory in myvalues.yaml!" .Values.dataDirectory | quote }}
           type: DirectoryOrCreate
       - name: work
         hostPath:
-          path: {{ .Values.sourcecodeDirectory | quote }}
+          path: {{ required "You need to set the path for sourcecodeDirectory in myvalues.yaml!" .Values.sourcecodeDirectory | quote }}
           type: DirectoryOrCreate
       - name: config-files
         configMap:

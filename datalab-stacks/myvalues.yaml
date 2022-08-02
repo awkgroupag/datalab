@@ -1,0 +1,24 @@
+# This file overrides the default values.yaml
+# Simply copy-paste any entries and change them here, not in values.yaml
+
+# DIRECTORIES
+#############
+# Make sure the user with userId, userGroup below has write access. A
+# directory will be created by Kubernetes f it does not exist (BUT with the
+# user root, hence you will have permission issues when trying to create
+# files within Jupyter)
+
+# Sourcecode directory on your HOST machine
+sourcecodeDirectory: '/home/tom/Repos/datalab'
+dataDirectory: '/home/tom/testsource'
+
+# LINUX PERMISSIONS
+###################
+# The Linux user id ("uid") for the main Jupyter user "Jovyan" to use inside
+# Jupyter Set it to your host user id (get it on the host by typing "id"). Do
+# NOT remove the "&uid"; only replace the integer
+userId: &uid 1000
+# The Linux main user group id ("gid") to use within the Jupyter container Set
+# it to your own host Linux gid (command: id, entry for gid). Do NOT remove
+# the "&gid"
+userGroup: &gid 1000

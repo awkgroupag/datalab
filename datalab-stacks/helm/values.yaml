@@ -6,8 +6,8 @@
 # files within Jupyter)
 
 # Sourcecode directory on your HOST machine
-sourcecodeDirectory: '/home/tom/Repos/datalab'
-dataDirectory: '/home/tom/testsource'
+sourcecodeDirectory: ''
+dataDirectory: ''
 
 # LINUX PERMISSIONS
 ###################
