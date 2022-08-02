@@ -29,9 +29,11 @@ Use the following URL to access your Jupyter notebook:
   http://localhost/{{ .Release.Name }}?token={{ index $secret.data "jupyterToken" | b64dec }}
 
 {{- else}}
-Kubernetes secret for Jupyter token has not been fully deployed yet. To get the appropriate URL, try again:
-    
-    helm upgrade --install --namespace {{ .Release.Namespace }} --create-namespace --wait {{ .Release.Name }} .
+
+Kubernetes secret for Jupyter token has not been fully deployed yet. To get
+the correct URL for your Jupyter notebook, simply re-try the exact same
+command you just used, e.g. "helm install" or "helm upgrade", in a few
+seconds
 
 {{- end}}
 {{- if .Values.postgresql.enabled }}
@@ -54,7 +56,10 @@ Use the following credentials to connect from your Jupyter notebook:
 You set the PostgreSQL passwords yourself, so you should know what you're doing.
 {{- else }}
 
-Kubernetes secret for your PostgreSQL password has not been fully deployed yet. Try "helm upgrade --install" again in a few seconds to display your PostgreSQL credentials. 
+Kubernetes secret for your PostgreSQL password has not been fully deployed
+yet. Try the exact same "helm install" or "helm upgrade --install" command
+again in a few seconds to display your PostgreSQL credentials. 
+
 {{- end }}
 {{- end }}
 {{- if .Values.mysql.enabled }}
@@ -77,7 +82,10 @@ Use the following credentials to connect from your Jupyter notebook:
 You set the MySQL passwords yourself, so you should know what you're doing.
 {{- else }}
 
-Kubernetes secret for your MySQL password has not been fully deployed yet. Try "helm upgrade --install" again in a few seconds to display your MySQL credentials. 
+Kubernetes secret for your MySQL password has not been fully deployed
+yet. Try the exact same "helm install" or "helm upgrade --install" command
+again in a few seconds to display your MySQL credentials. 
+
 {{- end }}
 {{- end }}
 {{- if ne .Release.Namespace "default" }}
@@ -89,7 +97,8 @@ If you want to completely clean up your Kubernetes resources, do the following:
 
     helm uninstall -n {{ .Release.Namespace }} {{ .Release.Name }}
 
-2) Delete the entire namespace (to also delete e.g. secrets and PVCs):
+2) Delete the entire namespace (to also delete e.g. secrets with the Jupyter
+   token or database credentials as well as PVCs):
 
     kubectl delete namespace {{ .Release.Namespace }}
 
