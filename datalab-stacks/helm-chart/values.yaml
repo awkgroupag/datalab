@@ -42,10 +42,7 @@ jupyter:
     # Linux User Group ID for the Jupyter user
     runAsGroup: *gid
     # Additional group membership so the Jupyter user is still able to use pip and anaconda within the container. Don't change this
-    fsGroup: 100
-    # By default, Kubernetes tries to recursively change ownership and permissions for the contents of each volume to match the fsGroup
-    # specified in a Pod's securityContext when that volume is mounted. This setting improves pod start-up time
-    fsGroupChangePolicy: "OnRootMismatch"
+    supplementalGroups: [100]
   containers:
     # Tell Kubernetes how much CPU and RAM/Memory Jupyter may use for its calculations by default (requests) and at max (limits)
     # resources:
