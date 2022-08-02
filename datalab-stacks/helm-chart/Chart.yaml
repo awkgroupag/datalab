@@ -19,9 +19,13 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     version: 1.x.x
   - name: postgresql
-    version: 11.6.18
+    version: 11.6.21
     repository: https://charts.bitnami.com/bitnami
     condition: postgresql.enabled
+  - name: mysql
+    version: 9.2.3
+    repository: https://charts.bitnami.com/bitnami
+    condition: mysql.enabled
 maintainers:
   - name: Thomas Kathriner
     email: thomas.kathriner@awk.ch

@@ -87,7 +87,8 @@ commonLabels: {}
 commonAnnotations: {}
 
 
-
+# POSTGRESQL
+# ==========
 postgresql:
   enabled: true
   auth:
@@ -107,3 +108,8 @@ postgresql:
   fullnameOverride: "postgresql"
   commonLabels: {}
   commonAnnotations: {}
+
+# MySQL
+# =====
+mysql:
+  enabled: false
