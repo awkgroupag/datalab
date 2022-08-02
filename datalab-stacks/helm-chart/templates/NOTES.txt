@@ -8,7 +8,21 @@ To remove the Helm chart again immediately:
 
     helm uninstall {{ .Release.Name }}
 
+You might have to delete additional Kubernetes secrets, PVCs and other ressources MANUALLY. Especially PVCs might prevent you to redeploy the Helm chart later. Check the remaining ressources with
+
+    kubectl get secrets -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
+    kubectl get pvc -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
+
+Then delete all of them with
+
+    kubectl delete secrets -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
+    kubectl delete pvc -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
+
+
 {{ end }}
+
+Jupyterlab
+==========
 {{- if $secret }}
 Use the following URL to access your Jupyter notebook:
 
@@ -21,18 +35,39 @@ Kubernetes secret for Jupyter token has not been fully deployed yet. To get the 
 
 {{- end}}
 {{- if .Values.postgresql.enabled }}
+
+PostgreSQL
+==========
+Use the following credentials to connect from your Jupyter notebook:
+
+    PostgreSQL host: {{ include "postgresql.primary.fullname" . }}
+    PostgreSQL port: {{ .Values.postgresql.primary.service.ports.postgresql }}
+
 {{- $secretpostgresql := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.auth.existingSecret)) }}
 {{- if and ($secretpostgresql) (.Values.postgresql.auth.existingSecret) }}
-
-For your PostgreSQL database, use the following credentials to connect from your Jupyter notebook:
-
     Admin: password for user "admin": {{ index $secretpostgresql.data "postgres-password" | b64dec }}
     Normal user: password for user "{{ .Values.postgresql.auth.username }}": {{ index $secretpostgresql.data "password" | b64dec }}
     Replication: password for user "{{ .Values.postgresql.auth.replicationUsername }}": {{ index $secretpostgresql.data "replication-password" | b64dec }}
 
 {{- else if not (.Values.postgresql.auth.existingSecret) }}
+
 You set the PostgreSQL passwords yourself, so you should know what you're doing.
 {{- else }}
-Kubernetes secret for your PostgreSQL password has not been fully deployed yet. Try helm upgrade --install again in a few seconds to display your PostgreSQL credentials. 
+
+Kubernetes secret for your PostgreSQL password has not been fully deployed yet. Try "helm upgrade --install" again in a few seconds to display your PostgreSQL credentials. 
 {{- end }}
 {{- end }}
+{{- if ne .Release.Namespace "default" }}
+
+CLEANUP
+=======
+If you want to completely clean up your Kubernetes resources, do the following:
+1) Delete the helm chart (this will leave secrets and PVCs intact):
+
+    helm uninstall -n {{ .Release.Namespace }} {{ .Release.Name }}
+
+2) Delete the entire namespace (to also delete e.g. secrets and PVCs):
+
+    kubectl delete namespace {{ .Release.Namespace }}
+
+{{ end }}

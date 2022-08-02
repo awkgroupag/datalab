@@ -5,7 +5,7 @@
 # hence you will have permission issues when trying to create files within Jupyter)
 
 # Sourcecode directory on your HOST machine
-sourcecodeDirectory: '/home/tom/testsource'
+sourcecodeDirectory: '/home/tom/Repos/datalab'
 dataDirectory: '/home/tom/testsource'
 
 # LINUX PERMISSIONS
@@ -92,12 +92,18 @@ postgresql:
   enabled: true
   auth:
     # The name of the new database created when Postgresql is first used
-    database: "my-database"
+    # database: "my-new-database"
     # Name for a custom user to create. "admin" user is always created.
     username: "dbuser"
     # Name of the replication user
     replicationUsername: "repl_user"
     # Secret will automatically be generated if it does not exist
     existingSecret: postgresql
+  primary:
+    service:
+      ports:
+        # Port to connect to the PostgreSQL service
+        postgresql: 5432
+  fullnameOverride: "postgresql"
   commonLabels: {}
   commonAnnotations: {}
