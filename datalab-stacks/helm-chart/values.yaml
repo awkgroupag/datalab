@@ -16,7 +16,7 @@ dataDirectory: '/home/tom/testsource'
 userId: &uid 1000
 # The Linux main user group id ("gid") to use within the Jupyter container
 # Set it to your own host Linux gid (command: id, entry for gid)
-# Do NOT remove the "&uid"
+# Do NOT remove the "&gid"
 userGroup: &gid 1000
 
 
@@ -30,6 +30,7 @@ jupyter:
     # Version of the Jupyter image - you want to change that to use an older image
     tag: 36ea37b
   # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
+  # Whatever token you enter here takes precedence; an existing secret is thus overwritten with the value here
   token:
   # Security context for the pod. Will be overriden if you enable sudo above and you will run the container as root
   # Resources per container allocated for Jupyter
@@ -46,6 +47,7 @@ jupyter:
     # specified in a Pod's securityContext when that volume is mounted. This setting improves pod start-up time
     fsGroupChangePolicy: "OnRootMismatch"
   containers:
+    # Tell Kubernetes how much CPU and RAM/Memory Jupyter may use for its calculations by default (requests) and at max (limits)
     # resources:
     #   requests:
     #     memory: "1024Mi"
