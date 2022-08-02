@@ -1,16 +1,28 @@
-# MUST: Sourcecode directory on your HOST machine
-# You MUST have a subfolder in that directory called "datascience-lab"
-sourcecodeDirectory: '/mnt/c/GitHub/datalab'
+# DIRECTORIES
+#############
+# Make sure the user with userId, userGroup below has write access
+# Directory will be created if it does not exist (BUT with the user root,
+# hence you will have permission issues when trying to create files within Jupyter)
 
-# MUST: Data directory  on your HOST machine
-dataDirectory: '/mnt/c/Users/kat/data'
+# Sourcecode directory on your HOST machine
+sourcecodeDirectory: '/home/tom/testsource'
+dataDirectory: '/home/tom/testsource'
 
-postgresql:
-  enabled: false
+# LINUX PERMISSIONS
+###################
+# The Linux user id ("uid") for the main Jupyter user "Jovyan" to use inside Jupyter
+# Set it to your host user id (get it on the host by typing "id")
+# Do NOT remove the "&uid"; only replace the integer
+userId: &uid 1000
+# The Linux main user group id ("gid") to use within the Jupyter container
+# Set it to your own host Linux gid (command: id, entry for gid)
+# Do NOT remove the "&uid"
+userGroup: &gid 1000
+
 
 # Optionally change any configs here
 jupyter:
-  # Enable sudo rights for the Jupyter user?
+  # Enable sudo rights for the Jupyter user? (run as root within container; not recommended)
   sudo: false
   # Default values for AWK Data Science Lab
   image:
@@ -19,7 +31,20 @@ jupyter:
     tag: 36ea37b
   # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
   token:
+  # Security context for the pod. Will be overriden if you enable sudo above and you will run the container as root
   # Resources per container allocated for Jupyter
+  # Issues with permissions? Try to change the ids here
+  securityContext:
+    # Linux User ID of Jupyter user, (NB_UID value in the Jupyter doc https://jupyter-docker-stacks.readthedocs.io)
+    # Will be set to 0 if sudo is enabled above
+    runAsUser: *uid
+    # Linux User Group ID for the Jupyter user
+    runAsGroup: *gid
+    # Additional group membership so the Jupyter user is still able to use pip and anaconda within the container. Don't change this
+    fsGroup: 100
+    # By default, Kubernetes tries to recursively change ownership and permissions for the contents of each volume to match the fsGroup
+    # specified in a Pod's securityContext when that volume is mounted. This setting improves pod start-up time
+    fsGroupChangePolicy: "OnRootMismatch"
   containers:
     # resources:
     #   requests:
@@ -37,8 +62,6 @@ jupyter:
         data: /home/jovyan/data
     # Extra commands to run for the pod
     command:
-    # Extra security context. Will be overriden if you enable sudo above
-    securityContext:
   # Additional annotations to add to each pod
   podAnnotations: {}
   # Additional labels to add to each pod
@@ -63,6 +86,7 @@ commonAnnotations: {}
 
 
 postgresql:
+  enabled: false
   # Secret will automatically be generated if it does not exist
   existingSecret: postgresql
   commonLabels: {}
