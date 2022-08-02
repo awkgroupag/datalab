@@ -40,8 +40,8 @@ PostgreSQL
 ==========
 Use the following credentials to connect from your Jupyter notebook:
 
-    PostgreSQL host: {{ include "postgresql.primary.fullname" . }}
-    PostgreSQL port: {{ .Values.postgresql.primary.service.ports.postgresql }}
+    host: postgresql (name of the Kubernetes mysql Service in the namespace {{ .Release.Namespace }})
+    port: {{ .Values.postgresql.primary.service.ports.postgresql }}
 
 {{- $secretpostgresql := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.auth.existingSecret)) }}
 {{- if and ($secretpostgresql) (.Values.postgresql.auth.existingSecret) }}
@@ -55,6 +55,29 @@ You set the PostgreSQL passwords yourself, so you should know what you're doing.
 {{- else }}
 
 Kubernetes secret for your PostgreSQL password has not been fully deployed yet. Try "helm upgrade --install" again in a few seconds to display your PostgreSQL credentials. 
+{{- end }}
+{{- end }}
+{{- if .Values.mysql.enabled }}
+
+MySQL
+=====
+Use the following credentials to connect from your Jupyter notebook:
+
+    host: mysql (name of the Kubernetes mysql Service in the namespace {{ .Release.Namespace }})
+    port: {{ .Values.mysql.primary.service.ports.mysql }}
+
+{{- $secretmysql := (lookup "v1" "Secret" .Release.Namespace (.Values.mysql.auth.existingSecret)) }}
+{{- if and ($secretmysql) (.Values.mysql.auth.existingSecret) }}
+    Admin: password for user "root": {{ index $secretmysql.data "mysql-root-password" | b64dec }}
+    Normal user: password for user "{{ .Values.mysql.auth.username }}": {{ index $secretmysql.data "mysql-password" | b64dec }}
+    Replication: password for user "{{ .Values.mysql.auth.replicationUser }}": {{ index $secretmysql.data "mysql-replication-password" | b64dec }}
+
+{{- else if not (.Values.mysql.auth.existingSecret) }}
+
+You set the MySQL passwords yourself, so you should know what you're doing.
+{{- else }}
+
+Kubernetes secret for your MySQL password has not been fully deployed yet. Try "helm upgrade --install" again in a few seconds to display your MySQL credentials. 
 {{- end }}
 {{- end }}
 {{- if ne .Release.Namespace "default" }}

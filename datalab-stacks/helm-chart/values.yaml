@@ -90,7 +90,7 @@ commonAnnotations: {}
 # POSTGRESQL
 # ==========
 postgresql:
-  enabled: true
+  enabled: false
   auth:
     # The name of the new database created when Postgresql is first used
     # database: "my-new-database"
@@ -113,3 +113,20 @@ postgresql:
 # =====
 mysql:
   enabled: false
+  auth:
+    # The name of the new database created when the DB is first used/container is first created
+    # database: "my-new-database"
+    # Name for a custom user to create. "root" user is always created.
+    username: "dbuser"
+    # Name of the replication user
+    replicationUser: "replicator"
+    # Secret will automatically be generated if it does not exist
+    existingSecret: mysql
+  primary:
+    service:
+      ports:
+        # Port to connect to the PostgreSQL service
+        mysql: 3306
+  fullnameOverride: "mysql"
+  commonLabels: {}
+  commonAnnotations: {}

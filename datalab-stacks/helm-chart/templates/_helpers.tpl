@@ -42,3 +42,34 @@ Secret for Postgresql, same logic
     {{- randAlphaNum 24 | b64enc }}
 {{- end }}
 {{- end }}
+
+
+{{/*
+Secret for MySQL, same logic
+*/}}
+{{- define "datasciencelab.mysql.root-password" }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.mysql.auth.existingSecret | quote )) }}
+{{- if $secret }}
+    {{- index $secret.data "root-password" }}
+{{- else }}
+    {{- randAlphaNum 24 | b64enc }}
+{{- end }}
+{{- end }}
+
+{{- define "datasciencelab.mysql.password" }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.mysql.auth.existingSecret | quote )) }}
+{{- if $secret }}
+    {{- index $secret.data "password" }}
+{{- else }}
+    {{- randAlphaNum 24 | b64enc }}
+{{- end }}
+{{- end }}
+
+{{- define "datasciencelab.mysql.replication-password" }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.mysql.auth.existingSecret | quote )) }}
+{{- if $secret }}
+    {{- index $secret.data "replication-password" }}
+{{- else }}
+    {{- randAlphaNum 24 | b64enc }}
+{{- end }}
+{{- end }}
