@@ -20,3 +20,19 @@ Kubernetes secret for Jupyter token has not been fully deployed yet. To get the 
     helm upgrade --install --namespace {{ .Release.Namespace }} --create-namespace --wait {{ .Release.Name }} .
 
 {{- end}}
+{{- if .Values.postgresql.enabled }}
+{{- $secretpostgresql := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.auth.existingSecret)) }}
+{{- if and ($secretpostgresql) (.Values.postgresql.auth.existingSecret) }}
+
+For your PostgreSQL database, use the following credentials to connect from your Jupyter notebook:
+
+    Admin: password for user "admin": {{ index $secretpostgresql.data "postgres-password" | b64dec }}
+    Normal user: password for user "{{ .Values.postgresql.auth.username }}": {{ index $secretpostgresql.data "password" | b64dec }}
+    Replication: password for user "{{ .Values.postgresql.auth.replicationUsername }}": {{ index $secretpostgresql.data "replication-password" | b64dec }}
+
+{{- else if not (.Values.postgresql.auth.existingSecret) }}
+You set the PostgreSQL passwords yourself, so you should know what you're doing.
+{{- else }}
+Kubernetes secret for your PostgreSQL password has not been fully deployed yet. Try helm upgrade --install again in a few seconds to display your PostgreSQL credentials. 
+{{- end }}
+{{- end }}

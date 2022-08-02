@@ -20,6 +20,8 @@ userId: &uid 1000
 userGroup: &gid 1000
 
 
+
+
 # Optionally change any configs here
 jupyter:
   # Enable sudo rights for the Jupyter user? (run as root within container; not recommended)
@@ -87,8 +89,15 @@ commonAnnotations: {}
 
 
 postgresql:
-  enabled: false
-  # Secret will automatically be generated if it does not exist
-  existingSecret: postgresql
+  enabled: true
+  auth:
+    # The name of the new database created when Postgresql is first used
+    database: "my-database"
+    # Name for a custom user to create. "admin" user is always created.
+    username: "dbuser"
+    # Name of the replication user
+    replicationUsername: "repl_user"
+    # Secret will automatically be generated if it does not exist
+    existingSecret: postgresql
   commonLabels: {}
   commonAnnotations: {}

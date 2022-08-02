@@ -17,7 +17,7 @@ Create a random string (different each time you call this function!) for Jupyter
 Secret for Postgresql, same logic
 */}}
 {{- define "datasciencelab.postgres.postgres-password" }}
-{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.existingSecret | quote )) }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.auth.existingSecret | quote )) }}
 {{- if $secret }}
     {{- index $secret.data "postgres-password" }}
 {{- else }}
@@ -26,7 +26,7 @@ Secret for Postgresql, same logic
 {{- end }}
 
 {{- define "datasciencelab.postgres.password" }}
-{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.existingSecret | quote )) }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.auth.existingSecret | quote )) }}
 {{- if $secret }}
     {{- index $secret.data "password" }}
 {{- else }}
@@ -35,7 +35,7 @@ Secret for Postgresql, same logic
 {{- end }}
 
 {{- define "datasciencelab.postgres.replication-password" }}
-{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.existingSecret | quote )) }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.auth.existingSecret | quote )) }}
 {{- if $secret }}
     {{- index $secret.data "replication-password" }}
 {{- else }}
