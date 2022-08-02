@@ -3,7 +3,7 @@ name: data-lab
 description: The Eraneos Data Science Lab
 type: application
 version: 1.0.0
-appVersion: 1.0.0
+appVersion: 36ea37b
 keywords:
   - jupyterlab
   - jupyter
@@ -12,8 +12,10 @@ keywords:
   - python
 home: https://github.com/awkgroupag
 sources:
-  - https://github.com/traefik/traefik
-  - https://github.com/traefik/traefik-helm-chart
+  - https://github.com/awkgroupag
+  - https://github.com/bitnami/charts/tree/master/bitnami/common
+  - https://github.com/bitnami/charts/tree/master/bitnami/postgresql
+  - https://github.com/bitnami/charts/tree/master/bitnami/mysql
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
@@ -29,4 +31,3 @@ dependencies:
 maintainers:
   - name: Thomas Kathriner
     email: thomas.kathriner@awk.ch
-icon: https://raw.githubusercontent.com/traefik/traefik/v2.3/docs/content/assets/img/traefik.logo.png
