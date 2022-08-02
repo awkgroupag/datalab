@@ -52,10 +52,10 @@ jupyter:
     #   limits:
     #     memory: "2048Mi"
     #     cpu: "2000m"
-    # Add any additional environment variables for the Jupyter container here as a YAML list. One entry looks like this (strings only!)
+    # Add any additional environment variables for the Jupyter container here
+    # extraEnvVars:
     # - name: MY_NEW_ENVIRONMENT_VARIABLE
     #   value: "1234"
-    env: []
     # Change where the data and source code directories are mounted to within Jupyter
     volumeMounts:
       mountPath:

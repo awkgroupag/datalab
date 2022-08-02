@@ -66,8 +66,8 @@ spec:
             - name: GRANT_SUDO
               value: "yes"
             {{- end }}
-            {{- if .containers.env }}
-            {{- toYaml .containers.env | nindent 12 }}
+            {{- if .containers.extraEnvVars }}
+            {{- toYaml .containers.extraEnvVars | nindent 12 }}
             {{- end }}
           volumeMounts:
             - name: data
