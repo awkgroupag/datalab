@@ -116,7 +116,8 @@ postgresql:
         # Port to connect to the PostgreSQL service
         postgresql: 5432
   fullnameOverride: "postgresql"
-  commonLabels: {}
+  commonLabels:
+    app.kubernetes.io/part-of: data-lab
   commonAnnotations: {}
 
 # =====
@@ -139,5 +140,6 @@ mysql:
         # Port to connect to the PostgreSQL service
         mysql: 3306
   fullnameOverride: "mysql"
-  commonLabels: {}
+  commonLabels:
+    app.kubernetes.io/part-of: data-lab
   commonAnnotations: {}
