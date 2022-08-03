@@ -42,7 +42,7 @@ PostgreSQL
 ==========
 Use the following credentials to connect from your Jupyter notebook:
 
-    host: postgresql (name of the Kubernetes mysql Service in the namespace {{ .Release.Namespace }})
+    host: postgresql (name of the Kubernetes postgresql Service in the namespace {{ .Release.Namespace }})
     port: {{ .Values.postgresql.primary.service.ports.postgresql }}
 
 {{- $secretpostgresql := (lookup "v1" "Secret" .Release.Namespace (.Values.postgresql.auth.existingSecret)) }}
