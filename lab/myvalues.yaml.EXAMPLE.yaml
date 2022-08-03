@@ -9,12 +9,12 @@
 # files within Jupyter)
 
 # Sourcecode directory on your HOST machine
-sourcecodeDirectory: '/home/tom/Repos/datalab'
-dataDirectory: '/home/tom/testsource'
+sourcecodeDirectory: '/mnt/c/GitHub/datalab'
+dataDirectory: '/mnt/c/Users/kat/data'
 
 # These two keys are ONLY used for ugly Windows batch scripting, not helm or Kubernetes
 namespace: 'kingdom'
-projectname: 'test'
+projectname: 'testproject'
 
 # LINUX PERMISSIONS
 ###################

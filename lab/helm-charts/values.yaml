@@ -9,6 +9,10 @@
 sourcecodeDirectory: ''
 dataDirectory: ''
 
+# These two keys are ONLY used for ugly Windows batch scripting, not helm or Kubernetes
+namespace: 
+projectname: 
+
 # LINUX PERMISSIONS
 ###################
 # The Linux user id ("uid") for the main Jupyter user "Jovyan" to use inside
