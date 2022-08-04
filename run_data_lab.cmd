@@ -9,11 +9,7 @@ setlocal
 set VALUES_PATH=.\lab\myvalues.yaml
 
 :: Use command line argument as VALUES_PATH if available
-if "%~1"=="" (
-    echo No path to myvalues.yaml provided, using default myvalues.yaml
-) else (
-    set VALUES_PATH=%1
-)
+if not "%~1"=="" (set VALUES_PATH=%1)
 echo Using values file %VALUES_PATH%
 
 if not exist %VALUES_PATH% (
@@ -125,6 +121,9 @@ if "%URL%" == "" goto error_empty_url
 echo Use the following URL to access %PROJECTNAME%'s Jupyter Notebook:
 echo.
 echo    %URL%
+echo.
+echo If you get an error "bad gateway", just refresh the page after a couple
+echo of seconds
 echo.
 :: Start Chrome
 start chrome %URL%
