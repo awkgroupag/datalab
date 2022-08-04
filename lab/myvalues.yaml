@@ -1,26 +1,33 @@
-# This file overrides the default values.yaml
-# Simply copy-paste any entries and change them here, not in values.yaml
-
 # DIRECTORIES
 #############
+# Linux host:
 # Make sure the user with userId, userGroup below has write access. A
-# directory will be created by Kubernetes f it does not exist (BUT with the
-# user root, hence you will have permission issues when trying to create
+# directory will be created by Kubernetes if it does not exist (BUT with the
+# user root, hence you will have permission issues e.g. when trying to create
 # files within Jupyter)
 
-# Sourcecode directory on your HOST machine
-sourcecodeDirectory: '/home/tom/Repos/datalab'
-dataDirectory: '/home/tom/testsource'
+# Windows host:
+# No need to worry about permissions
+# BUT: a path C:\GitHub\datalab' must be entered as '/mnt/c/GitHub/datalab'
 
-# These two keys are ONLY used for ugly Windows batch scripting, not helm or Kubernetes
+# Sourcecode directory on your HOST machine
+# Will by default be mounted as /home/jovyan/work
+sourcecodeDirectory: ''
+# Data directory on your HOST machine
+# Will by default be mounted as /home/jovyan/data
+dataDirectory: ''
+
+# These two arbitrary keys are ONLY used for ugly Windows batch scripting,
+# not helm or Kubernetes
 namespace: 'kingdom'
-projectname: 'test'
+projectname: 'testproject'
 
 # LINUX PERMISSIONS
 ###################
+# Windows host: just leave the defaults
 # The Linux user id ("uid") for the main Jupyter user "Jovyan" to use inside
-# Jupyter Set it to your host user id (get it on the host by typing "id"). Do
-# NOT remove the "&uid"; only replace the integer
+# Jupyter. Best to set it to your host user id (get it on the host by typing
+# "id"). Do NOT remove the "&uid"; only replace the integer 1000
 userId: &uid 1000
 # The Linux main user group id ("gid") to use within the Jupyter container Set
 # it to your own host Linux gid (command: id, entry for gid). Do NOT remove
