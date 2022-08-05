@@ -79,7 +79,7 @@ if "%root%"=="" (
 :: Mind the additional space after projectname: !!!
 SET divider=projectname: 
 CALL SET PROJECTNAME=%%root:*%divider%=%%
-echo Using projectname (Kubernetes release): %PROJECTNAME% 
+echo Using projectname (helm release): %PROJECTNAME% 
 
 :: Fire up helm & Kubernetes
 echo.
