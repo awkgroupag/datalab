@@ -64,6 +64,8 @@ echo Using Kubernetes namespace: %NAMESPACE%
 :: Same ugly hack for "projectname:"
 ::::::::::::::::::::::::::::::::
 for /f "tokens=*" %%i in ('"FINDSTR /B projectname: %VALUES_PATH%"') do set root=%%i
+:: Switch codepage back. In the author's case, codepage 850 was used
+chcp %CHCP_CURRENT% >nul
 :: Remove any ' from the string
 set root=%root:'=%
 :: Remove any " from the string
