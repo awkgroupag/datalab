@@ -38,6 +38,7 @@ spec:
         {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 8 }}
         {{- end }}
     spec:
+      serviceAccountName: kubernetes-full-namespace-access
       terminationGracePeriodSeconds: 30
       {{- with .Values.jupyter }}
       securityContext:
