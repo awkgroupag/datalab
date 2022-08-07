@@ -1,0 +1,54 @@
+{{/*- Check if there is a secret already deployed (e.g. user used helm install --wait) */}}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace (include "common.names.fullname" .)) }}
+{{- if eq .Release.Namespace "default" }}
+
+!! BE AWARE THAT IT IS NOT RECOMMENDED TO INSTALL THIS CHART INTO THE DEFAULT NAMESPACE !!
+
+To remove the Helm chart again immediately:
+
+    helm uninstall {{ .Release.Name }}
+
+You might have to delete additional Kubernetes secrets, PVCs and other ressources MANUALLY. Especially PVCs might prevent you to redeploy the Helm chart later. Check the remaining ressources with
+
+    kubectl get secrets -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
+    kubectl get pvc -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
+
+Then delete all of them with
+
+    kubectl delete secrets -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
+    kubectl delete pvc -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
+
+
+{{ end }}
+
+Jupyterlab
+==========
+{{- if $secret }}
+Use the following URL to access your Jupyter notebook:
+
+  Jupyterlab: http://localhost/{{ .Release.Name }}?token={{ index $secret.data "jupyterToken" | b64dec }}
+
+{{- else}}
+
+Kubernetes secret for Jupyter token has not been fully deployed yet. To get
+the correct URL for your Jupyter notebook, simply re-try the exact same
+command you just used, e.g. "helm install" or "helm upgrade", in a few
+seconds
+
+{{- end}}
+
+{{- if ne .Release.Namespace "default" }}
+
+CLEANUP
+=======
+If you want to completely clean up your Kubernetes resources, do the following:
+1) Delete the helm chart (this will leave secrets and PVCs intact):
+
+    helm uninstall -n {{ .Release.Namespace }} {{ .Release.Name }}
+
+2) Delete the entire namespace (to also delete e.g. secrets with the Jupyter
+   token or database credentials as well as PVCs):
+
+    kubectl delete namespace {{ .Release.Namespace }}
+
+{{ end }}

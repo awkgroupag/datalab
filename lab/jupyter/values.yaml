@@ -1,0 +1,113 @@
+# DIRECTORIES
+#############
+# Linux host:
+# Make sure the user with userId, userGroup below has write access. A
+# directory will be created by Kubernetes if it does not exist (BUT with the
+# user root, hence you will have permission issues e.g. when trying to create
+# files within Jupyter)
+
+# Windows host:
+# No need to worry about permissions
+# BUT: a path C:\GitHub\datalab' must be entered as '/mnt/c/GitHub/datalab'
+
+# Sourcecode directory on your HOST machine
+# Will by default be mounted as /home/jovyan/work
+sourcecodeDirectory: ''
+# Data directory on your HOST machine
+# Will by default be mounted as /home/jovyan/data
+dataDirectory: ''
+
+# These two arbitrary keys are ONLY used for ugly Windows batch scripting,
+# not helm or Kubernetes
+namespace: 
+projectname: 
+
+# LINUX PERMISSIONS
+###################
+# Windows host: just leave the defaults
+# The Linux user id ("uid") for the main Jupyter user "Jovyan" to use inside
+# Jupyter. Best to set it to your host user id (get it on the host by typing
+# "id"). Do NOT remove the "&uid"; only replace the integer 1000
+userId: &uid 1000
+# The Linux main user group id ("gid") to use within the Jupyter container Set
+# it to your own host Linux gid (command: id, entry for gid). Do NOT remove
+# the "&gid"
+userGroup: &gid 1000
+
+
+####################
+# OPTIONAL CONFIGS #
+####################
+# No need to change anything below
+# If you want to enable a certain tech-stack, simply set it's "enabled" key
+# from false to true
+
+# ================
+# JUPYTER NOTEBOOK
+# ================
+# Optionally change any configs here
+jupyter:
+  # Enable sudo rights for the Jupyter user? (run as root within container; not recommended)
+  sudo: false
+  # Default values for AWK Data Science Lab
+  image:
+    name: awkgroupag/datascience-notebook
+    # Version of the Jupyter image - you want to change that to use an older image
+    tag: a40584f
+  # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
+  # Whatever token you enter here takes precedence; an existing secret is thus overwritten with the value here
+  token:
+  # Security context for the pod. Will be overriden if you enable sudo above and you will run the container as root
+  # Resources per container allocated for Jupyter
+  # Issues with permissions? Try to change the ids here
+  securityContext:
+    # Linux User ID of Jupyter user, (NB_UID value in the Jupyter doc https://jupyter-docker-stacks.readthedocs.io)
+    # Will be set to 0 if sudo is enabled above
+    runAsUser: *uid
+    # Linux User Group ID for the Jupyter user
+    runAsGroup: *gid
+    # Additional group membership so the Jupyter user is still able to use pip and anaconda within the container. Don't change this
+    supplementalGroups: [100]
+  containers:
+    # Tell Kubernetes how much CPU and RAM/Memory Jupyter may use for its calculations by default (requests) and at max (limits)
+    # resources:
+    #   requests:
+    #     memory: "1024Mi"
+    #     cpu: "1000m"
+    #   limits:
+    #     memory: "2048Mi"
+    #     cpu: "2000m"
+    # Add any additional environment variables for the Jupyter container here
+    # extraEnvVars:
+    # - name: MY_NEW_ENVIRONMENT_VARIABLE
+    #   value: "1234"
+    # Change where the data and source code directories are mounted to within Jupyter
+    volumeMounts:
+      mountPath:
+        sourcecode: /home/jovyan/work
+        data: /home/jovyan/data
+    # Extra commands to run for the pod
+    command: []
+  # Additional annotations to add to each pod
+  podAnnotations: {}
+  # Additional labels to add to each pod
+  podLabels: {}
+  # Hook whether this is the "normal" Jupyter notebook without any special priviledges
+  # ("False") or our controlboard ("True"). Do not change this
+  isControlboard: False
+
+
+# String to fully override common.names.fullname template 
+fullnameOverride: ""
+
+# String to partially override common.names.fullname template (will maintain the release name)  
+nameOverride: ""
+
+# What do we do with container images?
+imagePullPolicy: IfNotPresent
+
+# Add labels to all the deployed resources
+commonLabels: {}
+
+# Add annotations to all the deployed resources
+commonAnnotations: {}

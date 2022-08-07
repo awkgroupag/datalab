@@ -1,0 +1,25 @@
+apiVersion: v2
+name: datalab-jupyter
+description: The Eraneos Data Science Lab - Jupyter Notebook
+type: application
+version: 1.0.0
+appVersion: 36ea37b
+keywords:
+  - jupyterlab
+  - jupyter
+  - notebook
+  - workspace
+  - python
+home: https://www.eraneos.com/
+sources:
+  - https://github.com/awkgroupag
+  - https://github.com/bitnami/charts/tree/master/bitnami/common
+  - https://github.com/bitnami/charts/tree/master/bitnami/postgresql
+  - https://github.com/bitnami/charts/tree/master/bitnami/mysql
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 1.x.x
+maintainers:
+  - name: Thomas Kathriner
+    email: thomas.kathriner@awk.ch

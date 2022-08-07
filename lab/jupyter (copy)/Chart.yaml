@@ -1,5 +1,5 @@
 apiVersion: v2
-name: data-lab
+name: datalab-jupyter
 description: The Eraneos Data Science Lab
 type: application
 version: 1.0.0

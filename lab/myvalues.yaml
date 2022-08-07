@@ -12,10 +12,10 @@
 
 # Sourcecode directory on your HOST machine
 # Will by default be mounted as /home/jovyan/work
-sourcecodeDirectory: ''
+sourcecodeDirectory: '/home/tom/Repos/datalab'
 # Data directory on your HOST machine
 # Will by default be mounted as /home/jovyan/data
-dataDirectory: ''
+dataDirectory: '/home/tom/testdata'
 
 # These two arbitrary keys are ONLY used for ugly Windows batch scripting,
 # not helm or Kubernetes

@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ include "common.names.fullname" . }}-jupyter
+  name: {{ include "common.names.fullname" . }}
   labels:
     {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.commonLabels }}
@@ -20,5 +20,5 @@ spec:
     match: Host(`localhost`) && PathPrefix(`/{{ .Release.Name }}`)
     services:
     - kind: Service
-      name: {{ include "common.names.fullname" . }}-jupyter
+      name: {{ include "common.names.fullname" . }}
       port: 80
