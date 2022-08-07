@@ -17,7 +17,7 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: Host(`localhost`) && PathPrefix(`/{{ .Release.Name }}`)
+    match: Host(`localhost`) && PathPrefix(`/{{ .Release.Namespace }}/controlboard`)
     services:
     - kind: Service
       name: {{ include "common.names.fullname" . }}
