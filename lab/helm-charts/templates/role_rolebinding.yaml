@@ -3,7 +3,7 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: kubernetes-full-namespace-access
 rules:
 - apiGroups: [""]
   resources: ["*"]
@@ -18,12 +18,12 @@ rules:
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: kubernetes-full-namespace-access
 subjects:
 - kind: ServiceAccount
   name: kubernetes-full-namespace-access
   namespace: {{ .Release.Namespace }}
 roleRef:
   kind: Role
-  name: {{ include "common.names.fullname" . }}
+  name: kubernetes-full-namespace-access
   apiGroup: rbac.authorization.k8s.io
