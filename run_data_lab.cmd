@@ -89,7 +89,7 @@ echo.
 
 :: This command will display helm's NOTES.txt
 :: helm might still fail due to a variety of reasons - but should say why
-helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% .\lab\helm-charts
+helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% .\lab\jupyter
 
 echo.
 echo.
@@ -106,7 +106,7 @@ set COUNTER=0
 timeout /t 1 /nobreak >nul 2>nul
 :: Try to grab the Jupyter URL (output of exactly the same "helm upgrade..." command above)
 :: We look for any line containing the string "Jupyterlab:"
-for /F "tokens=* USEBACKQ" %%F IN (`"helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% .\lab\helm-charts | findstr "Jupyterlab:""`) DO (
+for /F "tokens=* USEBACKQ" %%F IN (`"helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% .\lab\jupyter | findstr "Jupyterlab:""`) DO (
     set URL=%%F
 )
 :: Mind the extra space after Jupyterlab: !!!
