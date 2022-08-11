@@ -7,9 +7,7 @@
 setlocal
 
 set VALUES_PATH=.\lab\myvalues.yaml
-set HELM_PATH=.\lab\jupyter
-:: Mind the extra space after Jupyterlab: !!!
-set URL_DIVIDER=Jupyterlab: 
+set PROJECTNAME=controlboard
 
 :: Use command line argument as VALUES_PATH if available
 if not "%~1"=="" (set VALUES_PATH=%1)
@@ -63,81 +61,20 @@ if "%NAMESPACE%"=="default" (
     goto end_of_file
 )
 echo Using Kubernetes namespace: %NAMESPACE%
+echo Using projectname (Kubernetes release): %PROJECTNAME% 
 
-:: Same ugly hack for "projectname:"
-::::::::::::::::::::::::::::::::
-for /f "tokens=*" %%i in ('"FINDSTR /B projectname: %VALUES_PATH%"') do set root=%%i
-:: Switch codepage back. In the author's case, codepage 850 was used
-chcp %CHCP_CURRENT% >nul
-:: Remove any ' from the string
-set root=%root:'=%
-:: Remove any " from the string
-set root=%root:"=%
-if "%root%"=="" (
-    echo ERROR: You must provide a value for projectname in myvalues.yaml!
-    echo Please edit %VALUES_PATH% and add a string value for projectname
-    pause
-    goto end_of_file
-)
-:: Mind the additional space after projectname: !!!
-SET divider=projectname: 
-CALL SET PROJECTNAME=%%root:*%divider%=%%
-echo Using projectname (helm release): %PROJECTNAME% 
-
-:: Fire up helm & Kubernetes
-echo.
-echo Firing up Kubernetes with helm
-echo If you haven't downloaded any images yet, this could take a while (need to download a couple of GB)
-echo.
-
-:: This command will display helm's NOTES.txt
 :: helm might still fail due to a variety of reasons - but should say why
-helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% %HELM_PATH%
+helm delete -n %NAMESPACE% %PROJECTNAME%
 
-echo.
-echo.
-echo ....waiting for the Kubernetes secret to be deployed....
-echo.
-echo.
-
-::
-:: Wait until the Kubernetes secret is really ready (--wait above is not enough)
-::
-set COUNTER=0
-:wait_for_token
-:: Wait for a second
-timeout /t 1 /nobreak >nul 2>nul
-:: Try to grab the Jupyter URL (output of exactly the same "helm upgrade..." command above)
-:: We look for any line containing the string "Jupyterlab:"
-for /F "tokens=* USEBACKQ" %%F IN (`"helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% %HELM_PATH% | findstr "%URL_DIVIDER%""`) DO (
-    set URL=%%F
+if not "%NAMESPACE%"=="default" (
+    echo.
+    echo Almost all Kubernetes resources have been deleted
+    echo If you want to also delete Secrets and PVCs, e.g.
+    echo to really start from scratch, type:
+    echo.
+    echo    kubectl delete namespace %NAMESPACE%
+    echo.
 )
-:: Get the URL piece only
-CALL SET URL=%%URL:*%URL_DIVIDER%=%%
-
-set /A COUNTER=COUNTER+1
-if "%URL%" == "" if %COUNTER% LSS 30 goto wait_for_token
-:: Once counter is reached, we did not get a token
-if "%URL%" == "" goto error_empty_url
-
-:: output the full URL for access with ingress on k3s
-echo Use the following URL to access %PROJECTNAME%'s Jupyter Notebook:
-echo.
-echo    %URL%
-echo.
-echo If you get an error "bad gateway", just refresh the page after a couple
-echo of seconds
-echo.
-:: Start Chrome
-start chrome %URL%
-goto end_of_file
-
-
-:error_empty_url
-echo.
-echo ERROR: Something went wront: no URL found for %PROJECTNAME% :-(
-echo.
-pause
 
 :end_of_file
 IF NOT %CHCP_CURRENT%=="" (

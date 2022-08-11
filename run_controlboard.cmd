@@ -7,9 +7,11 @@
 setlocal
 
 set VALUES_PATH=.\lab\myvalues.yaml
-set HELM_PATH=.\lab\jupyter
+set HELM_PATH=.\lab\controlboard
 :: Mind the extra space after Jupyterlab: !!!
 set URL_DIVIDER=Jupyterlab: 
+:: This helm release will always be called controlboard
+set PROJECTNAME=controlboard
 
 :: Use command line argument as VALUES_PATH if available
 if not "%~1"=="" (set VALUES_PATH=%1)
@@ -64,24 +66,6 @@ if "%NAMESPACE%"=="default" (
 )
 echo Using Kubernetes namespace: %NAMESPACE%
 
-:: Same ugly hack for "projectname:"
-::::::::::::::::::::::::::::::::
-for /f "tokens=*" %%i in ('"FINDSTR /B projectname: %VALUES_PATH%"') do set root=%%i
-:: Switch codepage back. In the author's case, codepage 850 was used
-chcp %CHCP_CURRENT% >nul
-:: Remove any ' from the string
-set root=%root:'=%
-:: Remove any " from the string
-set root=%root:"=%
-if "%root%"=="" (
-    echo ERROR: You must provide a value for projectname in myvalues.yaml!
-    echo Please edit %VALUES_PATH% and add a string value for projectname
-    pause
-    goto end_of_file
-)
-:: Mind the additional space after projectname: !!!
-SET divider=projectname: 
-CALL SET PROJECTNAME=%%root:*%divider%=%%
 echo Using projectname (helm release): %PROJECTNAME% 
 
 :: Fire up helm & Kubernetes
