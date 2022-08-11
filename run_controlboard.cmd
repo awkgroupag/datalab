@@ -8,8 +8,8 @@ setlocal
 
 set VALUES_PATH=.\lab\myvalues.yaml
 set HELM_PATH=.\lab\controlboard
-:: Mind the extra space after Jupyterlab: !!!
-set URL_DIVIDER=Jupyterlab: 
+:: Mind the extra space after Controlboard: !!!
+set URL_DIVIDER=Controlboard: 
 :: This helm release will always be called controlboard
 set PROJECTNAME=controlboard
 
