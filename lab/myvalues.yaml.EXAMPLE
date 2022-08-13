@@ -17,10 +17,14 @@ sourcecodeDirectory: ''
 # Will by default be mounted as /home/jovyan/data
 dataDirectory: ''
 
-# These two arbitrary keys are ONLY used for ugly Windows batch scripting,
-# not helm or Kubernetes
-namespace: 'kingdom'
-projectname: 'testproject'
+
+# These two keys can have arbitrary values. Choose the same namespace
+# for a specific project, but different jupyterReleaseName if you have
+# several Jupyter notebooks running in parallel for a specific project
+# Kubernetes namespace = project name
+namespace: myproject
+# Helm release name for Jupyter
+jupyterReleaseName: jupyter
 
 # LINUX PERMISSIONS
 ###################

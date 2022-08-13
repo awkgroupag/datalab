@@ -62,11 +62,11 @@ if "%NAMESPACE%"=="default" (
     pause
     goto end_of_file
 )
-echo Using Kubernetes namespace: %NAMESPACE%
+echo Using Kubernetes namespace/project name: %NAMESPACE%
 
-:: Same ugly hack for "projectname:"
+:: Same ugly hack for "jupyterReleaseName:"
 ::::::::::::::::::::::::::::::::
-for /f "tokens=*" %%i in ('"FINDSTR /B projectname: %VALUES_PATH%"') do set root=%%i
+for /f "tokens=*" %%i in ('"FINDSTR /B jupyterReleaseName: %VALUES_PATH%"') do set root=%%i
 :: Switch codepage back. In the author's case, codepage 850 was used
 chcp %CHCP_CURRENT% >nul
 :: Remove any ' from the string
@@ -74,15 +74,15 @@ set root=%root:'=%
 :: Remove any " from the string
 set root=%root:"=%
 if "%root%"=="" (
-    echo ERROR: You must provide a value for projectname in myvalues.yaml!
-    echo Please edit %VALUES_PATH% and add a string value for projectname
+    echo ERROR: You must provide a value for jupyterReleaseName in myvalues.yaml!
+    echo Please edit %VALUES_PATH% and add a string value for jupyterReleaseName
     pause
     goto end_of_file
 )
-:: Mind the additional space after projectname: !!!
-SET divider=projectname: 
-CALL SET PROJECTNAME=%%root:*%divider%=%%
-echo Using projectname (helm release): %PROJECTNAME% 
+:: Mind the additional space after jupyterReleaseName: !!!
+SET divider=jupyterReleaseName: 
+CALL SET JUPYTERRELEASENAME=%%root:*%divider%=%%
+echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME%
 
 :: Fire up helm & Kubernetes
 echo.
@@ -92,7 +92,7 @@ echo.
 
 :: This command will display helm's NOTES.txt
 :: helm might still fail due to a variety of reasons - but should say why
-helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% %HELM_PATH%
+helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %JUPYTERRELEASENAME% %HELM_PATH%
 
 echo.
 echo.
@@ -109,7 +109,7 @@ set COUNTER=0
 timeout /t 1 /nobreak >nul 2>nul
 :: Try to grab the Jupyter URL (output of exactly the same "helm upgrade..." command above)
 :: We look for any line containing the string "Jupyterlab:"
-for /F "tokens=* USEBACKQ" %%F IN (`"helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% %HELM_PATH% | findstr "%URL_DIVIDER%""`) DO (
+for /F "tokens=* USEBACKQ" %%F IN (`"helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %JUPYTERRELEASENAME% %HELM_PATH% | findstr "%URL_DIVIDER%""`) DO (
     set URL=%%F
 )
 :: Get the URL piece only
@@ -121,12 +121,11 @@ if "%URL%" == "" if %COUNTER% LSS 30 goto wait_for_token
 if "%URL%" == "" goto error_empty_url
 
 :: output the full URL for access with ingress on k3s
-echo Use the following URL to access %PROJECTNAME%'s Jupyter Notebook:
+echo Use the following URL to access %NAMESPACE% / %JUPYTERRELEASENAME%'s Jupyter Notebook:
 echo.
 echo    %URL%
 echo.
-echo If you get an error "bad gateway", just refresh the page after a couple
-echo of seconds
+echo If you get an error "bad gateway", just refresh the page after a couple of seconds
 echo.
 :: Start Chrome
 start chrome %URL%
@@ -135,7 +134,7 @@ goto end_of_file
 
 :error_empty_url
 echo.
-echo ERROR: Something went wront: no URL found for %PROJECTNAME% :-(
+echo ERROR: Something went wront: no URL found for %NAMESPACE% / %JUPYTERRELEASENAME% :-(
 echo.
 pause
 

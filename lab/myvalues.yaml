@@ -12,15 +12,19 @@
 
 # Sourcecode directory on your HOST machine
 # Will by default be mounted as /home/jovyan/work
-sourcecodeDirectory: '/home/tom/Repos/datalab'
+sourcecodeDirectory: '/mnt/c/GitHub/datalab'
 # Data directory on your HOST machine
 # Will by default be mounted as /home/jovyan/data
-dataDirectory: '/home/tom/testdata'
+dataDirectory: '/mnt/c/Users/kat/data'
 
-# These two arbitrary keys are ONLY used for ugly Windows batch scripting,
-# not helm or Kubernetes
-namespace: 'kingdom'
-projectname: 'testproject'
+
+# These two keys can have arbitrary values. Choose the same namespace
+# for a specific project, but different jupyterReleaseName if you have
+# several Jupyter notebooks running in parallel for a specific project
+# Kubernetes namespace = project name
+namespace: myproject
+# Helm release name for Jupyter
+jupyterReleaseName: jupyter
 
 # LINUX PERMISSIONS
 ###################

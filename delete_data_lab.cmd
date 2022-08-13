@@ -59,28 +59,28 @@ if "%NAMESPACE%"=="default" (
     pause
     goto end_of_file
 )
-:: echo Using Kubernetes namespace: %NAMESPACE%
+echo Using Kubernetes namespace/project name: %NAMESPACE%
 
-:: Same ugly hack for "projectname:"
+:: Same ugly hack for "jupyterReleaseName:"
 ::::::::::::::::::::::::::::::::
-for /f "tokens=*" %%i in ('"FINDSTR /B projectname: %VALUES_PATH%"') do set root=%%i
+for /f "tokens=*" %%i in ('"FINDSTR /B jupyterReleaseName: %VALUES_PATH%"') do set root=%%i
 :: Remove any ' from the string
 set root=%root:'=%
 :: Remove any " from the string
 set root=%root:"=%
 if "%root%"=="" (
-    echo ERROR: You must provide a value for projectname in myvalues.yaml!
-    echo Please edit %VALUES_PATH% and add a string value for projectname
+    echo ERROR: You must provide a value for jupyterReleaseName in myvalues.yaml!
+    echo Please edit %VALUES_PATH% and add a string value for jupyterReleaseName
     pause
     goto end_of_file
 )
-:: Mind the additional space after projectname: !!!
-SET divider=projectname: 
-CALL SET PROJECTNAME=%%root:*%divider%=%%
-:: echo Using projectname (Kubernetes release): %PROJECTNAME% 
+:: Mind the additional space after jupyterReleaseName: !!!
+SET divider=jupyterReleaseName: 
+CALL SET JUPYTERRELEASENAME=%%root:*%divider%=%%
+echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME%
 
 :: helm might still fail due to a variety of reasons - but should say why
-helm delete -n %NAMESPACE% %PROJECTNAME%
+helm delete -n %NAMESPACE% %JUPYTERRELEASENAME%
 
 if not "%NAMESPACE%"=="default" (
     echo.
