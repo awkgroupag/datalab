@@ -11,7 +11,7 @@ set HELM_PATH=.\lab\controlboard
 :: Mind the extra space after Controlboard: !!!
 set URL_DIVIDER=Controlboard: 
 :: This helm release will always be called controlboard
-set PROJECTNAME=controlboard
+set JUPYTERRELEASENAME=controlboard
 
 :: Use command line argument as VALUES_PATH if available
 if not "%~1"=="" (set VALUES_PATH=%1)
@@ -65,8 +65,7 @@ if "%NAMESPACE%"=="default" (
     goto end_of_file
 )
 echo Using Kubernetes namespace: %NAMESPACE%
-
-echo Using projectname (helm release): %PROJECTNAME% 
+echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME% 
 
 :: Fire up helm & Kubernetes
 echo.
@@ -76,7 +75,7 @@ echo.
 
 :: This command will display helm's NOTES.txt
 :: helm might still fail due to a variety of reasons - but should say why
-helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% %HELM_PATH%
+helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %JUPYTERRELEASENAME% %HELM_PATH%
 
 echo.
 echo.
@@ -93,7 +92,7 @@ set COUNTER=0
 timeout /t 1 /nobreak >nul 2>nul
 :: Try to grab the Jupyter URL (output of exactly the same "helm upgrade..." command above)
 :: We look for any line containing the string "Jupyterlab:"
-for /F "tokens=* USEBACKQ" %%F IN (`"helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %PROJECTNAME% %HELM_PATH% | findstr "%URL_DIVIDER%""`) DO (
+for /F "tokens=* USEBACKQ" %%F IN (`"helm upgrade --install -n %NAMESPACE% --create-namespace -f %VALUES_PATH% --wait %JUPYTERRELEASENAME% %HELM_PATH% | findstr "%URL_DIVIDER%""`) DO (
     set URL=%%F
 )
 :: Get the URL piece only
@@ -105,7 +104,7 @@ if "%URL%" == "" if %COUNTER% LSS 30 goto wait_for_token
 if "%URL%" == "" goto error_empty_url
 
 :: output the full URL for access with ingress on k3s
-echo Use the following URL to access %PROJECTNAME%'s Jupyter Notebook:
+echo Use the following URL to access %JUPYTERRELEASENAME%'s Jupyter Notebook:
 echo.
 echo    %URL%
 echo.
@@ -119,7 +118,7 @@ goto end_of_file
 
 :error_empty_url
 echo.
-echo ERROR: Something went wront: no URL found for %PROJECTNAME% :-(
+echo ERROR: Something went wront: no URL found for %JUPYTERRELEASENAME% :-(
 echo.
 pause
 

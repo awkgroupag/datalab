@@ -7,7 +7,7 @@
 setlocal
 
 set VALUES_PATH=.\lab\myvalues.yaml
-set PROJECTNAME=controlboard
+set JUPYTERRELEASENAME=controlboard
 
 :: Use command line argument as VALUES_PATH if available
 if not "%~1"=="" (set VALUES_PATH=%1)
@@ -61,10 +61,10 @@ if "%NAMESPACE%"=="default" (
     goto end_of_file
 )
 echo Using Kubernetes namespace: %NAMESPACE%
-echo Using projectname (Kubernetes release): %PROJECTNAME% 
+echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME% 
 
 :: helm might still fail due to a variety of reasons - but should say why
-helm delete -n %NAMESPACE% %PROJECTNAME%
+helm delete -n %NAMESPACE% %JUPYTERRELEASENAME%
 
 if not "%NAMESPACE%"=="default" (
     echo.
