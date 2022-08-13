@@ -18,6 +18,8 @@ sourcecodeDirectory: ''
 dataDirectory: ''
 
 
+# NAMING OF KUBERNETES RESOURCES
+################################
 # These two keys can have arbitrary values. Choose the same namespace
 # for a specific project, but different jupyterReleaseName if you have
 # several Jupyter notebooks running in parallel for a specific project
@@ -25,6 +27,7 @@ dataDirectory: ''
 namespace: 
 # Helm release name for Jupyter
 jupyterReleaseName: 
+
 
 # LINUX PERMISSIONS
 ###################
