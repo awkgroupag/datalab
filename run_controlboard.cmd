@@ -103,6 +103,15 @@ if "%URL%" == "" if %COUNTER% LSS 30 goto wait_for_token
 :: Once counter is reached, we did not get a token
 if "%URL%" == "" goto error_empty_url
 
+:: Adjust the URL path to open controlboard.ipynb immediately
+SET divider=?token
+:: Get only the part of the string AFTER the divider
+CALL SET TOKEN=%%URL:*%divider%=%%
+:: Get only the part of the string BEFORE ?token
+SET "URL=%URL:?token="&rem %
+:: Append path to controlboard.ipynb and token
+SET URL=%URL%/lab/tree/work/lab/controlboard.ipynb?token%TOKEN%
+
 :: output the full URL for access with ingress on k3s
 echo Use the following URL to access %JUPYTERRELEASENAME%'s Jupyter Notebook:
 echo.
