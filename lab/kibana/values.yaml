@@ -1,0 +1,12 @@
+kibana:
+  elasticsearch:
+    hosts:
+      - elasticsearch
+    port: 9200
+  configuration:
+    server:
+      # Because this is dependent on the namespace, it needs to be
+      # supplied by the user using
+      #   helm upgrade --install ... --set kibana.configuration.server.basePath=..."
+      # basePath: "/myproject/kibana"
+      rewriteBasePath: true
