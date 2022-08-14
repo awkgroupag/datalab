@@ -46,8 +46,8 @@ If you want to completely clean up your Kubernetes resources, do the following:
 
     helm uninstall -n {{ .Release.Namespace }} {{ .Release.Name }}
 
-2) Delete the entire namespace (to also delete e.g. secrets with the Jupyter
-   token or database credentials as well as PVCs):
+2) Delete the entire namespace. This will also delete any other helm
+   releases such as PostgreSQL, INCLUDING Kubernetes secrets and your database data (stored in PVCs):
 
     kubectl delete namespace {{ .Release.Namespace }}
 
