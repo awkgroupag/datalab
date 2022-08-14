@@ -88,8 +88,8 @@ spec:
               subPath: pycodestyle
               mountPath: /home/jovyan/.config/pycodestyle
             - name: config-files
-              subPath: DO-NOT-SAFE-ANYTHING-HERE.txt
-              mountPath: "/home/jovyan/DO NOT SAFE ANYTHING HERE.txt"
+              subPath: DO-NOT-SAVE-ANYTHING-HERE.md
+              mountPath: "/home/jovyan/DO NOT SAVE ANYTHING HERE.md"
             {{- if .isControlboard }}
             - name: config-files
               subPath: overrides.json

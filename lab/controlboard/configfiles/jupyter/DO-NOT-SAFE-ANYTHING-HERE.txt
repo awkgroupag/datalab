@@ -1,1 +1,0 @@
-Anything not saved in either the 'data' or 'work' directory will be lost if the Kubernetes jupyter container is restarted or deleted.
