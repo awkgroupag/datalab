@@ -18,18 +18,22 @@ Then delete all of them with
     kubectl delete secrets -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
     kubectl delete pvc -n {{ .Release.Namespace }} -l 'app.kubernetes.io/instance={{ .Release.Name }}'
 
-
 {{ end }}
-
+{{ if .Values.controlboard }}
+Controlboard
+============
+{{- else -}}
 Jupyterlab
 ==========
+{{- end -}}
 {{- if $secret }}
 Use the following URL to access your Jupyter notebook:
-
+{{ if .Values.controlboard }}
+  Controlboard: http://localhost/{{ .Release.Namespace }}/{{ .Release.Name }}/lab/tree/work/lab/controlboard.ipynb?token={{ index $secret.data "jupyterToken" | b64dec }}
+{{- else -}}
   Jupyterlab: http://localhost/{{ .Release.Namespace }}/{{ .Release.Name }}?token={{ index $secret.data "jupyterToken" | b64dec }}
-
+{{- end -}}
 {{- else}}
-
 Kubernetes secret for Jupyter token has not been fully deployed yet. To get
 the correct URL for your Jupyter notebook, simply re-try the exact same
 command you just used, e.g. "helm install" or "helm upgrade", in a few
@@ -41,13 +45,13 @@ seconds
 
 CLEANUP
 =======
-If you want to completely clean up your Kubernetes resources, do the following:
-1) Delete the helm chart (this will leave secrets and PVCs intact):
+If you want to completely clean up your Kubernetes resources using the command line, do the following:
+1) Delete the helm chart (this will leave secrets and PVCs (=your data) intact):
 
     helm uninstall -n {{ .Release.Namespace }} {{ .Release.Name }}
 
 2) Delete the entire namespace. This will also delete any other helm
-   releases such as PostgreSQL, INCLUDING Kubernetes secrets and your database data (stored in PVCs):
+   releases such as PostgreSQL, INCLUDING Kubernetes secrets and your data (stored in PVCs):
 
     kubectl delete namespace {{ .Release.Namespace }}
 

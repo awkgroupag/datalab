@@ -1,3 +1,4 @@
+{{- if .Values.controlboard -}}
 # In order to be able to use the Python API
 # See: https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
 kind: Role
@@ -20,3 +21,4 @@ rules:
 - apiGroups: ["apps","extensions", "traefik.containo.us"]
   resources: ["*"]
   verbs: ["*"]
+{{ end }}

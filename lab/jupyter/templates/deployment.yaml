@@ -35,7 +35,7 @@ spec:
         {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 8 }}
         {{- end }}
     spec:
-      serviceAccountName: {{ if .Values.jupyter.isControlboard }}kubernetes-full-namespace-access{{- else }}default{{- end }}
+      serviceAccountName: {{ if .Values.controlboard }}kubernetes-full-namespace-access{{- else }}default{{- end }}
       terminationGracePeriodSeconds: 30
       {{- with .Values.jupyter }}
       securityContext:
@@ -88,7 +88,7 @@ spec:
             - name: config-files
               subPath: DO-NOT-SAVE-ANYTHING-HERE.md
               mountPath: "/home/jovyan/DO NOT SAVE ANYTHING HERE.md"
-            {{- if .isControlboard }}
+            {{- if $.Values.controlboard }}
             - name: config-files
               subPath: overrides.json
               mountPath: "/opt/conda/share/jupyter/lab/settings/overrides.json"

@@ -12,10 +12,10 @@
 
 # Sourcecode directory on your HOST machine
 # Will by default be mounted as /home/jovyan/work
-sourcecodeDirectory: '/mnt/c/GitHub/datalab'
+sourcecodeDirectory: '/home/tom/Repos/datalab'
 # Data directory on your HOST machine
 # Will by default be mounted as /home/jovyan/data
-dataDirectory: '/mnt/c/Users/kat/data'
+dataDirectory: '/home/tom/testdata'
 
 
 # NAMING OF KUBERNETES RESOURCES

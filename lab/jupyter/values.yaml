@@ -42,6 +42,17 @@ userId: &uid 1000
 userGroup: &gid 1000
 
 
+# CONTROLBOARD OR NORMAL JUPYTER NOTEBOOK?
+##########################################
+# Hook whether this is the "normal" Jupyter notebook without any special priviledges
+# ("false") or our controlboard ("true")
+# To run a Jupyter notebook as a controlboard with Kubernetes priviledges,
+# either use 
+#   helm upgrade --install ... jupyter --set controlboard=true
+# or use a dedicated values.yaml to override this setting.
+controlboard: false
+
+
 ####################
 # OPTIONAL CONFIGS #
 ####################
@@ -99,9 +110,6 @@ jupyter:
   podAnnotations: {}
   # Additional labels to add to each pod
   podLabels: {}
-  # Hook whether this is the "normal" Jupyter notebook without any special priviledges
-  # ("False") or our controlboard ("True"). Do not change this
-  isControlboard: False
 
 
 # String to fully override common.names.fullname template 

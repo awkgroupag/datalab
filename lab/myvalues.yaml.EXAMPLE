@@ -24,9 +24,9 @@ dataDirectory: ''
 # for a specific project, but different jupyterReleaseName if you have
 # several Jupyter notebooks running in parallel for a specific project
 # Kubernetes namespace = project name
-namespace: myproject
+namespace: 
 # Helm release name for Jupyter
-jupyterReleaseName: jupyter
+jupyterReleaseName: 
 
 
 # LINUX PERMISSIONS
