@@ -1,23 +1,26 @@
 apiVersion: v2
-name: datalab-kibana
-description: The Eraneos Data Science Lab - Kibana
+name: datalab-elastic
+description: The Eraneos Data Science Lab - elastic stack including elasticsearch and Kibana
 type: application
-version: 1.0.0
+version: 19.1.11
 appVersion: 8.3.3
 keywords:
+  - elastic
+  - elasticsearch
   - kibana
 home: https://www.eraneos.com/
 sources:
   - https://github.com/awkgroupag
   - https://github.com/bitnami/charts/tree/master/bitnami/common
+  - https://github.com/bitnami/charts/tree/master/bitnami/elasticsearch
   - https://github.com/bitnami/charts/tree/master/bitnami/kibana
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     version: 1.x.x
-  - name: kibana
+  - name: elasticsearch
     repository: https://charts.bitnami.com/bitnami
-    version: 10.1.20
+    version: 19.1.11
 maintainers:
   - name: Thomas Kathriner
     email: thomas.kathriner@awk.ch

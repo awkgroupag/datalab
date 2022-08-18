@@ -1,4 +1,0 @@
-You can reach the Kibana dashboard using the following URL. It might take a while until Kibana is ready; you might receive a "Service Unavailable".
-
-    http://localhost{{ .Values.kibana.configuration.server.basePath }}
-

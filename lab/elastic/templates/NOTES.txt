@@ -1,0 +1,12 @@
+You can reach the Kibana dashboard using the following URL. It might take a while until Kibana is ready: if you receive a "Service Unavailable" or "404 page not found", just try again a bit later.
+
+    http://localhost{{ .Values.elasticsearch.kibana.configuration.server.basePath }}
+
+From a Jupyter notebook, you can reach the elasticsearch API under
+
+    http://{{ .Release.Name }}-elasticsearch:{{ .Values.elasticsearch.service.ports.restAPI }}
+
+On your host machine, you can reach the elasticsearch API under
+
+    http://localhost/{{ .Release.Namespace }}/elasticsearch
+

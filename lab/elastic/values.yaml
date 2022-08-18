@@ -1,0 +1,14 @@
+global:
+  kibanaEnabled: true
+
+elasticsearch:
+  # See values.yaml for customizations here:
+  # https://github.com/bitnami/charts/tree/master/bitnami/kibana
+  kibana:
+    configuration:
+      server:
+        # Because this is dependent on the namespace, it needs to be
+        # supplied by the user using
+        #   helm upgrade --install ... --set kibana.configuration.server.basePath=...
+        # basePath:
+        rewriteBasePath: true

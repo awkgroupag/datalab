@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: {{ .Release.Name }}-elasticsearch
   labels:
     {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.commonLabels }}
@@ -17,8 +17,8 @@ spec:
     - websecure
   routes:
   - kind: Rule
-    match: Host(`localhost`) && PathPrefix(`{{ required "ERROR You need to specify the URL path where Kibana shall be reachable by --set kibana.configuration.server.basePath=..." .Values.kibana.configuration.server.basePath }}`)
+    match: Host(`localhost`) && PathPrefix(`/{{ .Release.Namespace }}/elasticsearch`)
     services:
     - kind: Service
-      name: kibana
-      port: {{ .Values.kibana.service.ports.http }}
+      name: {{ .Release.Name }}-elasticsearch
+      port: {{ .Values.elasticsearch.service.ports.restAPI }}
