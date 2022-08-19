@@ -136,7 +136,7 @@ If you need to fine-tune your Jupyter Kubernetes pod, check `lab/jupyter/values.
 
 > :warning: If you enter the wrong paths, Kubernetes will create them using the Linux user `root`. You won't get any errors. You will run into permission issues using Jupyter Notebook as you won't have the rights to write to these new folders. 
 
-#### Windows: get the correct paths!
+#### Windows: you need to adjust your Windows paths for Rancher Desktop!
 Rancher Desktop Kubernetes runs inside a Linux VM. You need to thus adjust your paths for `sourcecodeDirectory` and `dataDirectory` for your Linux VM to find anything on the Windows side:
 > :warning: `C:\GitHub\Repos\datalab` wird zu `/mnt/c/GitHub/Repos/datalab`
 
