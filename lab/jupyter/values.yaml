@@ -71,7 +71,7 @@ jupyter:
   image:
     name: awkgroupag/datascience-notebook
     # Version of the Jupyter image - you want to change that to use an older image
-    tag: a40584f
+    tag: b2520f4
   # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
   # Whatever token you enter here takes precedence; an existing secret is thus overwritten with the value here
   token:
