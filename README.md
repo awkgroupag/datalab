@@ -144,7 +144,7 @@ Rancher Desktop Kubernetes runs inside a Linux VM. You need to thus adjust your 
 Check the comments in `myvalues.yaml` and be sure to set the following numbers correctly. In the authors case, `id` returned the following:
 ```console
 $ id
-uid=1000(tom) gid=1010(tom) groups=1000(tom),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),122(lpadmin),133(lxd)
+uid=1000(tom) gid=1010(tom) groups=1010(tom),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),122(lpadmin),133(lxd)
 ```
 We need only `uid` and `gid`, thus `values.yaml` needs to look like this:
 ```yaml
