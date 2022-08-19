@@ -1,0 +1,23 @@
+apiVersion: v2
+name: datalab-airflow
+description: The Eraneos Data Science Lab - Airflow
+type: application
+version: 13.0.5
+appVersion: 2.3.3
+keywords:
+  - airflow
+home: https://www.eraneos.com/
+sources:
+  - https://github.com/awkgroupag
+  - https://github.com/bitnami/charts/tree/master/bitnami/common
+  - https://github.com/bitnami/charts/tree/master/bitnami/airflow
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 1.x.x
+  - name: airflow
+    repository: https://charts.bitnami.com/bitnami
+    version: 13.0.5
+maintainers:
+  - name: Thomas Kathriner
+    email: thomas.kathriner@awk.ch

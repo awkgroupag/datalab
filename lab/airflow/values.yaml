@@ -1,0 +1,21 @@
+airflow:
+  service:
+    ports:
+      # Needs to be set to 80 (or 443) otherwise Bitnami's chart breaks down and results in a URL like
+      #   AIRFLOW_BASE_URL: http://localhost/myproject/airflow:8080 (!!!)
+      # See fucked up airflow.baseUrl function here:
+      # https://github.com/bitnami/charts/blob/master/bitnami/airflow/templates/_helpers.tpl
+      # Check the airflow web pod and its value for AIRFLOW_BASE_URL!
+      http: 80
+  auth:
+    username: airflow
+    existingSecret: airflow
+  web:
+    # MUST be set with helm upgrade -i ...
+    # baseUrl: http://localhost/{{ .Release.Namespace }}/airflow
+  externalDatabase:
+    existingSecret: airflow
+    existingSecretPasswordKey: postgresql-password
+  externalRedis:
+    existingSecret: airflow
+    existingSecretPasswordKey: redis-password
