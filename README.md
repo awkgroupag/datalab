@@ -122,10 +122,12 @@ my_new_project
 ```
 
 ### 2. Define your project in a `myvalues.yaml`
-Change the values in the file `./lab/myvalues.yaml.EXAMPLE`. Save the customized file as a new file `./lab/myvalues.yaml`. Normally, you will need to set only three variables:
+Change the values in the file `./lab/myvalues.yaml.EXAMPLE`. Save the customized file as a new file `./lab/myvalues.yaml`. `myvalues.yaml` will not be saved, version-tracked and uploaded by git/GitHub - edit `.gitignore` if you don't want that. 
+
+Normally, you will need to set only 4 variables:
 * `sourcecodeDirectory`: the new directory you just created above, containing all your source code, including the folder `datalab`. The folder you map here will appear as `/home/jovyan/work` in the Jupyter Notebook
 * `dataDirectory`: the directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
-* `namespace`: The Kubernetes namespace to use. Think of it as a project name. Use a dedicated namespace per project (you can run several in parallel.
+* `namespace`: The Kubernetes namespace to use. Think of it as a project name. Use a dedicated namespace per project (you can run several in parallel. `myproject` is fine if you are uninspired
   * Use ASCII characters only, no spaces, no underscores or such!
 * `jupyterReleaseName`: name the Jupyter Notebook will receive (=helm release name). `jupyter` is fine. You can run several Notebook per namespace, e.g. if your project team consists of several data scientists. 
   * Use ASCII characters only, no spaces, no underscores or such!
