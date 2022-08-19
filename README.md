@@ -90,17 +90,19 @@ release "testrelease" uninstalled
 * Create another dedicated directory for your data - NOT within the source code directory since you don't want to upload your data to the internet
 
 Resulting example folder structure for a new project - **only the directory `datalab` is tracked with `git`/GitHub!**
-```
+```console
 my_new_project
-|-  datalab
-|   |-  datalab-stacks
-|   |   |-  controlboard
-|   |   |   | ...
-|   |   |-  elk
+├──datalab
+   ├──lab
+elastic
 |   |   |   | ...
 |   |   |-  jupyter
 |   |   |   | ...
-|   |   ControlBoard.ipynb
+|   |   |-  modules
+|   |   |   | ...
+|   |   |-  resources
+|   |   |   | ...
+|   |   controlboard.ipynb
 |   |   database_SAP_S4HANA.ipynb
 |   |   database_getting_started.ipynb
 |   |   environment.env.EXAMPLE
