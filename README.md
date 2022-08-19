@@ -5,7 +5,6 @@
   * [Linux and helm](#linux-and-helm)
 * [Supported Stacks](#supported-stacks)
 * [Additions/Tweaks to JupyerLab](#additionstweaks-to-jupyerlab)
-* [Good to know & troubleshooting](#good-to-know--troubleshooting)
 
 
 # Eraneos Data Science Lab
@@ -274,7 +273,7 @@ If you want to completely clean up your Kubernetes resources using the command l
 
 ```
 
-### 4. Delete Jupyter Notebook
+#### 4. Delete Jupyter Notebook
 To delete the normal Jupyter Notebook named `jupyter` that you installed above for your project named `myproject`:
 ```console
 $ helm uninstall -n myproject jupyter
@@ -285,20 +284,18 @@ To delete your controlboard named `controlboard`:
 $ helm uninstall -n myproject controlboard
 release "controlboard" uninstalled
 ```
-To also delete any left-over [Kubernetes secrets](https://kubernetes.io/docs/concepts/configuration/secret/) and/or [Kubernetes Persistent Volume Claims (PVCs)](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) (including e.g. your PostgreSQL data!!) and really start from scratch, delete the entire namespace (=project)
+To also delete any left-over [Kubernetes secrets](https://kubernetes.io/docs/concepts/configuration/secret/) and/or [Kubernetes Persistent Volume Claims (PVCs)](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) and really start from scratch, delete the entire namespace (=project). Be aware that this will also remove your data for e.g. PostgreSQL.
 ```console
 $ kubectl delete namespace myproject
 namespace "myproject" deleted
 ```
 
 ## Supported Stacks
-Run the following stacks on your local machine or remote server:
-* ["Vanilla" Jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
->NOTE: TODO .. the script run_jupyter_controlboard.cmd is **NOT** yet rewritten as a Linux shell script. Therefore, this will still use **Docker** and **docker-compose**
+Run the following stacks:
+* [Jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
 * [PostgreSQL Database](https://www.postgresql.org/)
-* [Neo4j](https://neo4j.com/)
 * [MySQL Database](https://www.mysql.com/)
-* [Elastic Stack (formerly ELK-Stack)](https://www.elastic.co/de/products/)
+* [Elastic Stack including Elasticsearch and Kibana](https://www.elastic.co/de/products/)
 
 ## Additions/Tweaks to JupyerLab
 
@@ -308,29 +305,36 @@ Data engineering
 * [dbt](https://docs.getdbt.com/docs/introduction): the "T" in ELT
   - Usage: **YOU HAVE TO USE THE DEDICATED ANACONDA ENVIRONMENT dbt**: switch the Jupyter Notebook kernel to `dbt`
 
+
 Automation
 * [h2o AutoML](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html): Automatic machine learning
 * [TPOT](http://epistasislab.github.io/tpot/): optimize machine learning pipelines using genetic programming
+
 
 Feature Engineering
 * [Featuretools](https://featuretools.alteryx.com/en/stable/), an open source python framework for automated feature engineering
 * [TsFresh](https://tsfresh.readthedocs.io/en/latest/) best open source Python tool available for time series classification and regression. Integrates with Featuretools
 
+
 Explainable AI
 * [Lime](https://github.com/marcotcr/lime): Explaining the predictions of any machine learning classifier
 * [SHAP (SHapley Additive exPlanations)](https://github.com/slundberg/shap): game theoretic approach to explain the output of any machine learning model
+
 
 Natural Language Processing
 * [Natural Language Toolkit (NLTK)](https://www.nltk.org/): leading platform for building Python programs to work with human language data
 * [spaCy](https://spacy.io/): Industrial-strength NLP. Includes pretrained [English](https://spacy.io/models/en#en_core_web_md) and [German](https://spacy.io/models/de#de_core_news_md) model
 * [Wordcloud](https://github.com/amueller/word_cloud): fill any space with a word cloud
 
+
 Visualizations
 * [Plotly](https://plotly.com/python/): Graphing library for interactive, publication-quality graphs
 * [Altair](https://altair-viz.github.io/): Declarative Visualization in Python
 
+
 Frontend and apps
 * [Streamlit](https://docs.streamlit.io/en/stable/): The fastest way to build and share data apps
+
 
 Databases:
 * [psycopg2 PostgreSQL Connector](https://www.psycopg.org/docs/): most popular PostgreSQL database adapter for the Python
@@ -338,23 +342,18 @@ Databases:
 * [sqlalchemy_schemadisplay](https://github.com/fschulze/sqlalchemy_schemadisplay): Turn SQLAlchemy DB Model into a graph
 * [mysql-connector-python MySQL Connector](https://dev.mysql.com/doc/connector-python/en/)
 
+
 Web scraping
 * [Scrapy](https://scrapy.org/): framework for extracting data from websites
 * [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/): pull data out of HTML and XML files
+
 
 Tools
 * [Pandas Profiling](https://pandas-profiling.ydata.ai/docs/master/index.html): Create profiling reports from pandas DataFrame objects
 * [lxml](https://lxml.de/): secure and fast XML and HTML with Python
 
+
 JupyterLab plugins
 * [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git): Version control using Git within Jupyter
 * [Language Server Protocol integration](https://github.com/krassowski/jupyterlab-lsp): Coding assistance for JupyterLab - code navigation + hover suggestions + linters + autocompletion + rename
 * [jupyter-resource-usage](https://github.com/jupyter-server/jupyter-resource-usage): Monitor RAM and CPU usage within a Jupyter notebook
-
-
-## Good to know & troubleshooting
->NOTE: TODO .. this is work in progress and is not yet rewritten for **Rancher Desktop**
-* Docker containers such as this controlboard or the different stacks will keep on running forever, even if you restart your machine. So remember [to stop them](#5-stop-andor-remove-the-containers-when-done).
-* Jupyter will not start; container restarts all the time
-  - Your Docker images might take up a lot of space. Type `docker image ls` to view your images
-  - `docker image rm <IMAGE>` deletes a specific image, `docker image prune` deletes all unused images
