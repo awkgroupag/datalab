@@ -9,15 +9,16 @@
 * [Good to know & troubleshooting](#good-to-know--troubleshooting)
 
 
-# AWK Data Science Lab
-* Get your Data Analytics environment up and running in seconds
+# Eraneos Data Science Lab
+* Get your Data Analytics environment up and running in seconds, using Kubernetes
 * Add and remove technology stacks as needed
 * Collaborate and share your environment easily even years later - being sure that everything still runs
-* Control your docker environment through a Jupyter notebook instead of command line arguments
+* Control your Kubernetes environment through the Jupyter Notebook `controlboard` instead of command line arguments
 
 ## Requirements
-* WSL setup on your Windows machine (see [ACL Onboarding, setup for WSL](https://github.com/awkgroupag/ITA-ACL-Onboarding/blob/main/General_topics/dev-setup.md#wsl)) for instructions on how to get WSL ready
-* Windows: Rancher Desktop installed on your system, e.g. [Rancher Desktop](https://rancherdesktop.io/)
+* Windows:
+  * WSL set-up (see [ACL Onboarding, setup for WSL](https://github.com/awkgroupag/ITA-ACL-Onboarding/blob/main/General_topics/dev-setup.md#wsl) for instructions on how to get WSL ready)
+  * [Rancher Desktop](https://docs.rancherdesktop.io/getting-started/installation) installed
   * In the Rancher preferences, make sure that `Enable Traefik` is activated (it is enabled by default)
 * Linux: Another Kubernetes distribution, e.g. [K3S](https://k3s.io/)
   * [Deploy Traefik](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started
