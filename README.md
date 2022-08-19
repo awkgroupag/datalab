@@ -161,45 +161,45 @@ $ git push --set-upstream origin main
     * Use `git commit` and `git push` to push your changes to GitHub
     * Work with dedicated new branches for changes, do not work directly with the branch `main`!
 
-## Usage - Windows
+## Usage
 
 > ### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
 
-### 1a. Start a single Jupyter Notebook directly
+> :info: You can easily have several Notebook running within a namespace (=project). And several namespaces (projects) in parallel. Until you run out of CPU or RAM.
+
+### Windows
+#### 1a. Start a single Jupyter Notebook directly
 In your `datalab` directory, just run `run_jupyter.cmd` directly. JupyterLab will open in Chrome automatically.
 
-### 1b. Start the controlboard if it gets more complicated
+#### 1b. Start the controlboard if it gets more complicated
 * Run `run_controlboard.cmd`.
 * Once the controlboard is up, it will be opened within Chrome.
 * Just follow the instructions in the notebook `controlboard.ipynb` which is opened automatically.
   * The controlboard is granted priviledges to configure Kubernetes. To remind you of the fact that you're NOT dealing with a "normal" Jupyter Notebook, the Notebook's GUI is dark
 
-### 2. Do your work
+#### 2. Do your work
 As everything else will be **deleted** when the Notebook Kubernetes pod is deleted: Make sure that
 * your source code is saved to `/home/jovyan/work`
 * your data lives in `/home/jovyan/data`
 * if you installed additional Python packages, be sure to read `controlboard.ipynb` and safe your computational PIP and/or Anaconda context!
 
-### 3. If you stop working: Shut down Rancher Desktop 
+#### 3. If you stop working: Shut down Rancher Desktop 
 * You can simply stop all your running notebooks by stopping **Rancher Desktop**. They will all restart once you start Rancher Desktop again.
 
-### 4. Cleaning up: Remove the Kubernetes pods when done
+#### 4. Cleaning up: Remove the Kubernetes pods when done
 * Calling `delete_jupyter.cmd` removes the pod, thus resetting everything
 * If you used the controlboard to start other tech stacks like PostgreSQL: Be sure to stop any other stacks (=delete their helm releases) you might have started from within the controlboard first. Then run `delete_controlboard.cmd`.
 
 
-## Usage - Linux and helm
-
-> ### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
-
-### Use helm to start your Jupyter Notebook
+### Linux and helm
+####  Use helm to start your Jupyter Notebook
 * Using the command prompt, navigate to your source code folder, `datalab` above. Then cd into `lab` so you're actually working within `datalab/lab`
 * We assume you used the following values in your `myvalues.yaml`:
   ```yaml
   namespace: myproject
   jupyterReleaseName: jupyter
   ```
-* Start your Jupyter Notebook:
+* Start your Jupyter Notebook by passing it `myvalues.yaml`:
 ```console
 $ helm upgrade -i -n myproject --create-namespace -f myvalues.yaml --wait jupyter jupyter/
 Release "jupyter" does not exist. Installing it now.
@@ -230,7 +230,7 @@ If you want to completely clean up your Kubernetes resources using the command l
     kubectl delete namespace myproject
 
 ```
-You can easily have several labs up and running. Be sure to use a dedicated namespace for each.
+
 
 ### Uninstall a specific datalab
 Remove the helm release:
