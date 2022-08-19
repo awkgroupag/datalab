@@ -165,6 +165,16 @@ $ git push --set-upstream origin main
 
 > ### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
 
+<div class="panel panel-info">
+**Note**
+{: .panel-heading}
+<div class="panel-body">
+
+NOTE DESCRIPTION
+
+</div>
+</div>
+
 > :information: You can easily have several Notebooks running within a namespace (=project). And several namespaces (projects) running simultaneously. Until you run out of CPU or RAM.
 
 ### Windows
