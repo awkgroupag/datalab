@@ -23,12 +23,15 @@
 * Linux:
   * Another Kubernetes distribution up and running, e.g. [K3S](https://k3s.io/):
     ```console
+    $ curl -sfL https://get.k3s.io | sh -
+    ```
+  * [Traefik deployed](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started. If you use K3S, Traefik should already have been deployed.
+  * [helm](https://helm.sh/docs/intro/install/) installed:
+    ```console
     $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
     $ chmod 700 get_helm.sh
     $ ./get_helm.sh
     ```
-  * [Traefik deployed](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started. If you use K3S, Traefik should already have been deployed.
-  * [Install helm](https://helm.sh/docs/intro/install/):
 * Code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
