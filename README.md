@@ -138,6 +138,7 @@ If you need to fine-tune your Jupyter Kubernetes pod, check `lab/jupyter/values.
 ### 3. Set-up GitHub repository for backup, version-control & collaboration
 1. Create a new **empty** repository (usually a private one, thus visible for AWK employees only) on the [AWK GitHub page](https://github.com/awkgroupag) (the green `New`-button). Note the new URL to your new repo, e.g. https://github.com/awkgroupag/MY-NEW-REPO
 2. Open a command prompt and navigate to your source code folder (`datalab` in the diagram above)
+  * :warning: Be sure to NOT have any data in the directory you are currently in! See above :warning:
 3. Type (replacing the URL)
 ```console
 $ git init
