@@ -193,15 +193,42 @@ As everything else will be **deleted** when the Notebook Kubernetes pod is delet
 > ### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
 
 ### Use helm to start your Jupyter Notebook
-* Using the command prompt, navigate to your source code folder, `datalab` above. Then cd into `lab`
+* Using the command prompt, navigate to your source code folder, `datalab` above. Then cd into `lab` so you're actually working within `datalab/lab`
 * We assume you used the following values in your `myvalues.yaml`:
   ```yaml
   namespace: myproject
   jupyterReleaseName: jupyter
   ```
-* Then:
+* Start your Jupyter Notebook:
 ```console
-$ helm install my-project --namespace kingdom --create-namespace --wait .
+$ helm upgrade -i -n myproject --create-namespace -f myvalues.yaml --wait jupyter jupyter/
+Release "jupyter" does not exist. Installing it now.
+NAME: jupyter
+LAST DEPLOYED: Fri Aug 19 15:54:31 2022
+NAMESPACE: myproject
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Jupyterlab
+==========
+Kubernetes secret for Jupyter token has not been fully deployed yet. To get
+the correct URL for your Jupyter notebook, simply re-try the exact same
+command you just used, e.g. "helm install" or "helm upgrade", in a few
+seconds
+
+CLEANUP
+=======
+If you want to completely clean up your Kubernetes resources using the command line, do the following:
+1) Delete the helm chart (this will leave secrets and PVCs (=your data) intact):
+
+    helm uninstall -n myproject jupyter
+
+2) Delete the entire namespace. This will also delete any other helm
+   releases such as PostgreSQL, INCLUDING Kubernetes secrets and your data (stored in PVCs):
+
+    kubectl delete namespace myproject
+
 ```
 You can easily have several labs up and running. Be sure to use a dedicated namespace for each.
 
