@@ -159,6 +159,28 @@ $ git push --set-upstream origin main
     * Use `git commit` and `git push` to push your changes to GitHub
     * Work with dedicated new branches for changes, do not work directly with the branch `main`!
 
+## Usage - WINDOWS
+### 1a. Start a single Jupyter Notebook directly
+In your `datalab` directory, just run `run_jupyter.cmd` directly. JupyterLab will open in Chrome automatically.
+
+### 1b. Start the controlboard if it gets more complicated
+* Run `run_controlboard.cmd`.
+* Once the controlboard is up, it will be opened within Chrome.
+* Just follow the instructions in the notebook `controlboard.ipynb` which is opened automatically.
+  * The controlboard is granted priviledges to configure Kubernetes. To remind you of the fact that you're NOT dealing with a "normal" Jupyter Notebook, the Notebook's GUI is dark
+
+### 2. Do your work
+As everything else will be **deleted** when the Notebook Kubernetes pod is deleted: Make sure that
+* your source code is saved to `/home/jovyan/work`
+* your data lives in `/home/jovyan/data`
+* if you installed additional Python packages, be sure to read `controlboard.ipynb` and safe your computational PIP and/or Anaconda context!
+
+### 3. Remove the Kubernetes pods when done
+* You can simply stop all your running notebooks by stopping **Rancher Desktop**. They will all restart once you start Rancher Desktop again.
+* Calling `delete_jupyter.cmd` removes the pod, thus resetting everything
+* If you used the controlboard to start other tech stacks like PostgreSQL: Be sure to stop any other stacks (=delete their helm releases) you might have started from within the controlboard first. Then run `delete_controlboard.cmd`.
+
+
 ## Usage - helm
 ### Install everything using helm
 To set-up a dedicated data science lab for project
@@ -181,25 +203,6 @@ To get rid of everything (including the secret containing the Jupyter token):
 $ kubectl delete namespace kingdom
 namespace "kingdom" deleted
 ```
-
-## Usage - WINDOWS
-### 1a. Start a single Jupyter Notebook directly
-In your `datalab` directory, just run `run_jupyter_notebook.cmd` directly. JupyterLab will open in Chrome automatically. Your browser will complain that the SSL certificate is not valid.
-
-### 1b. Start the controlboard if it gets more complicated
-* Run `run_controlboard.cmd`.
-* Once the controlboard is up, it will be opened within Chrome.
-* Just follow the instructions in the notebook `ControlBoard.ipynb` which is opened automatically.
-
-### 2. Do your work
-As everything else will be **deleted** when recreating the Jupyter container: Make sure that
-* your source code is saved to `/home/jovyan/work`
-* your data lives in `/home/jovyan/data`
-
-### 3. Stop and/or remove the containers when done
-* You can simply stop all your running notebooks by stopping **Rancher Desktop**. They will all restart once you start Rancher Desktop again.
-* Calling `rm_jupyter_notebook.cmd` removes the container, thus resetting everything. Note that the configuration for it will be retained in your `DATALAB_DATA_DIR` (Notbook configuration file and pod deployment specification)
-* If you used the controlboard (4b): Be sure to stop any other stacks you might have started from within the controlboard first. Then run `rm_controlboard.cmd`.
 
 ## Installation - LINUX
 >Note: TODO not sure **Rancher Desktop** exists for Linux .. but you should be able to use [k3s](https://k3s.io/), as this is what is used under the hood of Rancher Desktop.
