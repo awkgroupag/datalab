@@ -80,7 +80,7 @@ $ helm delete testrelease
 release "testrelease" uninstalled
 ```
 
-## Installation - WINDOWS
+## Installation
 ### 1. Create the directory structure for your new project
 * Create a new dedicated directory for your source code on your local machine where you want the Data Science Lab to run
 * Download this entire data science lab's sourcecode:
@@ -89,7 +89,7 @@ release "testrelease" uninstalled
   3. **Important**: rename the folder you justed unzipped from `datalab-master` to `datalab`
 * Create another dedicated directory for your data - NOT within the source code directory since you don't want to upload your data to the internet
 
-Resulting example folder structure for a new project - **only the directory `datalab` is tracked with `git`/GitHub!**
+Resulting example folder structure for a new project `my_new_project` - **only the directory `datalab` is tracked with `git`/GitHub!**
 > :warning: This prevents you uploading customer data to GitHub, potentially open for everyone to see :warning:
 ```
 my_new_project
@@ -104,9 +104,9 @@ my_new_project
 |  |  ├──resources
 |  |  |  └──...
 |  |  ├──controlboard.ipynb
-|  |  ├──database_SAP_S4HANA.ipynb
 |  |  ├──database_getting_started.ipynb
-|  |  ├──environment.env.EXAMPLE
+|  |  ├──database_SAP_S4HANA.ipynb
+|  |  ├──myvalues.yaml.EXAMPLE
 |  ├──resources
 |  |  └──...
 |  ├──.gitignore
@@ -121,11 +121,14 @@ my_new_project
 |  └──...
 ```
 
-### 2. Set-up environment variables for your new project once
-Change the values in the file `./datalab-stacks/environment.env.EXAMPLE`. Save the customized file as a new file `./datalab-stacks/environment.env`. Normally, you will need to set only three variables:
-* `PROJECT_NAME`: name of this project. Will show up in all resource names associated with this project. No spaces or special characters allowed
-* `DATALAB_SOURCECODE_DIR`: the new directory you just created above, containing all your source code. Will appear as `/home/jovyan/work` in the Jupyter Notebook
-* `DATALAB_DATA_DIR`: your directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
+### 2. Set-up environment variables in a `myvalues.yaml` for your new project once
+Change the values in the file `./lab/myvalues.yaml.EXAMPLE`. Save the customized file as a new file `./lab/myvalues.yaml`. Normally, you will need to set only three variables:
+* `sourcecodeDirectory`: the new directory you just created above, containing all your source code, including the folder `datalab`. The folder you map here will appear as `/home/jovyan/work` in the Jupyter Notebook
+* `dataDirectory`: the directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
+* `namespace`: The Kubernetes namespace to use. Think of it as a project name. Use a dedicated namespace per project (you can run several in parallel.
+  * Use ASCII characters only, no spaces, no underscores or such!
+* `jupyterReleaseName`: name the Jupyter Notebook will receive (=helm release name). `jupyter` is fine. You can run several Notebook per namespace, e.g. if your project team consists of several data scientists. 
+  * Use ASCII characters only, no spaces, no underscores or such!
 
 
 ### 3. Set-up GitHub repository for backup, version-control & collaboration
