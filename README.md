@@ -90,6 +90,7 @@ release "testrelease" uninstalled
 * Create another dedicated directory for your data - NOT within the source code directory since you don't want to upload your data to the internet
 
 Resulting example folder structure for a new project - **only the directory `datalab` is tracked with `git`/GitHub!**
+> :warning: This prevents you uploading customer data to GitHub, potentially open for everyone to see :warning:
 ```
 my_new_project
 ├──datalab
