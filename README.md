@@ -165,9 +165,12 @@ $ git push --set-upstream origin main
 
 > #### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
 
+> #### :cyclone: You can start a `controlboard` with special priviledges to configure Kubernetes. This is really handy to start additional Kubernetes stacks from a Jupyter Notebook - without using the command line. 
+
 > #### :information_source: You can easily have several Notebooks running within a namespace (=project). And several namespaces (projects) running simultaneously. Until you run out of CPU or RAM.
 
-> #### :information_source: Any Linux commands will also work using the Windows command prompt.
+> #### :rainbow: Any Linux commands will also work using the Windows command prompt.
+
 
 ### Windows
 #### 1a. Start a single Jupyter Notebook directly
@@ -232,8 +235,15 @@ If you want to completely clean up your Kubernetes resources using the command l
     kubectl delete namespace myproject
 
 ```
+The first time you run this command, you will NOT get an URL, just like you see above. In that case, simply re-run exactly the same command again. 
 
-####  2. Use helm to start your controlboard if you need more than a single Notebook
+#### 2. Get the Notebooks URL e.g. after a restart
+Simply type exactly the same command as above again:
+```console
+$ helm upgrade -i -n myproject --create-namespace -f myvalues.yaml --wait jupyter jupyter/
+```
+
+#### 3. Start your controlboard if you need more than a single Notebook
 Same command as above, simply append `--set controlboard=true` and change the release name to `controlboard` (or anything, really):
 ```console
 $ helm upgrade -i -n myproject --create-namespace -f myvalues.yaml --wait controlboard jupyter/ --set controlboard=true
