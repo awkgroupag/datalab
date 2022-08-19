@@ -20,14 +20,15 @@
   * WSL set-up (see [ACL Onboarding, setup for WSL](https://github.com/awkgroupag/ITA-ACL-Onboarding/blob/main/General_topics/dev-setup.md#wsl) for instructions on how to get WSL ready)
   * [Rancher Desktop](https://docs.rancherdesktop.io/getting-started/installation) installed
   * In the Rancher preferences, make sure that `Enable Traefik` is activated (it is enabled by default)
-* Linux: Another Kubernetes distribution, e.g. [K3S](https://k3s.io/)
-  * [Deploy Traefik](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started
-  * [Install helm](https://helm.sh/docs/intro/install/):
+* Linux:
+  * Another Kubernetes distribution up and running, e.g. [K3S](https://k3s.io/):
 ```console
 $ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 $ chmod 700 get_helm.sh
 $ ./get_helm.sh
 ```
+  * [Traefik deployed](https://doc.traefik.io/traefik/getting-started/install-traefik/) in your cluster before getting started. If you use K3S, Traefik should already have been deployed.
+  * [Install helm](https://helm.sh/docs/intro/install/):
 * Code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
