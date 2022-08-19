@@ -178,8 +178,10 @@ As everything else will be **deleted** when the Notebook Kubernetes pod is delet
 * your data lives in `/home/jovyan/data`
 * if you installed additional Python packages, be sure to read `controlboard.ipynb` and safe your computational PIP and/or Anaconda context!
 
-### 3. Remove the Kubernetes pods when done
+### 3. If you stop working: Shut down Rancher Desktop 
 * You can simply stop all your running notebooks by stopping **Rancher Desktop**. They will all restart once you start Rancher Desktop again.
+
+### 4. Cleaning up: Remove the Kubernetes pods when done
 * Calling `delete_jupyter.cmd` removes the pod, thus resetting everything
 * If you used the controlboard to start other tech stacks like PostgreSQL: Be sure to stop any other stacks (=delete their helm releases) you might have started from within the controlboard first. Then run `delete_controlboard.cmd`.
 
