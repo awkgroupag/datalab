@@ -32,7 +32,7 @@
     $ chmod 700 get_helm.sh
     $ ./get_helm.sh
     ```
-* Code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
+* A code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
 Open a command prompt/terminal and enter the following to install Podinfo:
@@ -40,9 +40,9 @@ Open a command prompt/terminal and enter the following to install Podinfo:
 $ helm repo add podinfo https://stefanprodan.github.io/podinfo
 "podinfo" has been added to your repositories
 
-$ helm upgrade -i my-release podinfo/podinfo
-Release "my-release" does not exist. Installing it now.
-NAME: my-release
+$ helm upgrade -i testrelease podinfo/podinfo
+Release "testrelease" does not exist. Installing it now.
+NAME: testrelease
 LAST DEPLOYED: Tue Jul 19 08:05:01 2022
 NAMESPACE: default
 STATUS: deployed
@@ -50,9 +50,9 @@ REVISION: 1
 NOTES:
 1. Get the application URL by running these commands:
   echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
+  kubectl -n default port-forward deploy/testrelease-podinfo 8080:9898
 ```
-Check whether the Podinfo Kubernetes pod is running (`my-release-podinfo-6d4c7fcd7d-zzsv9` below); `STATUS` should be `Running`. You might need to wait a bit.
+Check whether the Podinfo Kubernetes pod is running (`testrelease-podinfo-6d4c7fcd7d-zzsv9` below); `STATUS` should be `Running`. You might need to wait a bit.
 ```console
 $ kubectl get pods -A
 
@@ -64,20 +64,20 @@ kube-system   helm-install-traefik-crd-2qjhl            0/1     Completed   0   
 kube-system   helm-install-traefik-hsrgq                0/1     Completed   0               5m38s
 kube-system   metrics-server-7cd5fcb6b7-h5g98           1/1     Running     1 (7m17s ago)   14m
 kube-system   traefik-df4ff85d6-wx9nt                   1/1     Running     1 (7m17s ago)   13m
-default       my-release-podinfo-6d4c7fcd7d-zzsv9       1/1     Running     0               46s
+default       testrelease-podinfo-6d4c7fcd7d-zzsv9       1/1     Running     0               46s
 ```
-To actually connect to your Podinfo pod within Kubernetes, follow the `NOTES:` that the `helm upgrade` command above printed - port `9898` might be different for you! This command will **not return** (prompt seems to hang).
+To actually connect to your Podinfo pod within Kubernetes, follow the `NOTES:` that the `helm upgrade -i` command above printed - port `9898` might be different for you! The next command will **not return** (prompt seems to hang).
 ```console
-$ kubectl -n default port-forward deploy/my-release-podinfo 8080:9898
+$ kubectl -n default port-forward deploy/testrelease-podinfo 8080:9898
 Forwarding from 127.0.0.1:8080 -> 9898
 Forwarding from [::1]:8080 -> 9898
 ```
-Using a browser, surf to `localhost:8080`. You should get a friendly greeting from a kraken.
+Using a browser, go to `localhost:8080`. You should get a friendly greeting from a kraken.
 
 Once your test has been successful, return to the command prompt, hit `CTRL+C` to stop the port-forwarding and have the command prompt return. Remove Podinfo from Kubernetes:
 ```console
-$ helm delete my-release
-release "my-release" uninstalled
+$ helm delete testrelease
+release "testrelease" uninstalled
 ```
 
 ## Installation - WINDOWS
