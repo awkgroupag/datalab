@@ -160,9 +160,9 @@ $ git push --set-upstream origin main
     * Work with dedicated new branches for changes, do not work directly with the branch `main`!
 
 ## Usage - WINDOWS
+> ## :warning: be aware that if you run this the first time, >8GB will have to be downloaded! :warning:
 ### 1a. Start a single Jupyter Notebook directly
 In your `datalab` directory, just run `run_jupyter.cmd` directly. JupyterLab will open in Chrome automatically.
-> :warning: be aware that if you run this the first time, >8GB will have to be downloaded! :warning:
 
 ### 1b. Start the controlboard if it gets more complicated
 * Run `run_controlboard.cmd`.
