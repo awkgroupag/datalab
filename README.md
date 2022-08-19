@@ -242,7 +242,6 @@ Data engineering
 Automation
 * [h2o AutoML](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html): Automatic machine learning
 * [TPOT](http://epistasislab.github.io/tpot/): optimize machine learning pipelines using genetic programming
-* [auto-sklearn](https://automl.github.io/auto-sklearn/master/), automated machine learning toolkit and a drop-in replacement for a scikit-learn estimator
 
 Feature Engineering
 * [Featuretools](https://featuretools.alteryx.com/en/stable/), an open source python framework for automated feature engineering
