@@ -3,7 +3,6 @@
 * [Usage](#usage)
   * [Windows](#windows)
   * [Linux and helm](#linux-and-helm)
-* [Run several projects simultaneously](#run-several-projects-simultaneously)
 * [Supported Stacks](#supported-stacks)
 * [Additions/Tweaks to JupyerLab](#additionstweaks-to-jupyerlab)
 * [Good to know & troubleshooting](#good-to-know--troubleshooting)
@@ -237,8 +236,8 @@ If you want to completely clean up your Kubernetes resources using the command l
 ```
 The first time you run this command, you will NOT get an URL, just like you see above. In that case, simply re-run exactly the same command again. 
 
-#### 2. Get the Notebooks URL e.g. after a restart
-Simply type exactly the same command as above again:
+#### 2. Restart linux & get the Notebooks URL
+If you restart Linux, you're Jupyter pod should automatically be restarted as well. To retreive its URL, type exactly the same command as above:
 ```console
 $ helm upgrade -i -n myproject --create-namespace -f myvalues.yaml --wait jupyter jupyter/
 ```
@@ -275,60 +274,22 @@ If you want to completely clean up your Kubernetes resources using the command l
 
 ```
 
-
-### Uninstall a specific datalab
-Remove the helm release:
+### 4. Delete Jupyter Notebook
+To delete the normal Jupyter Notebook named `jupyter` that you installed above for your project named `myproject`:
 ```console
-$ helm uninstall my-project --namespace kingdom .
+$ helm uninstall -n myproject jupyter
+release "jupyter" uninstalled
 ```
-To get rid of everything (including the secret containing the Jupyter token):
+To delete your controlboard named `controlboard`:
 ```console
-$ kubectl delete namespace kingdom
-namespace "kingdom" deleted
+$ helm uninstall -n myproject controlboard
+release "controlboard" uninstalled
 ```
-
-## Installation - LINUX
->Note: TODO not sure **Rancher Desktop** exists for Linux .. but you should be able to use [k3s](https://k3s.io/), as this is what is used under the hood of Rancher Desktop.
-
-Just follow the instructions for the Windows installation above and do the following extra step at the end:
-
-### 4. Load environment variables (necessary once e.g. per SSH-session start)
-Load the environment variables you just declared for this project.
-```bash
-cd datalab-stacks
-set -a
-. environment.env
-set +a
+To also delete any left-over [Kubernetes secrets](https://kubernetes.io/docs/concepts/configuration/secret/) and/or [Kubernetes Persistent Volume Claims (PVCs)](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) (including e.g. your PostgreSQL data!!) and really start from scratch, delete the entire namespace (=project)
+```console
+$ kubectl delete namespace myproject
+namespace "myproject" deleted
 ```
-
-## Usage - LINUX & HELM
-### 1a. Start a single Jupyter Notebook directly
->NOTE: TODO .. the script run_jupyter_controlboard.cmd is **NOT** yet rewritten as a Linux shell script. Therefore, this will still use **Docker** and **docker-compose**
-* Navigate to the folder `datalab-stacks/jupyter`
-* Run `docker-compose up -d`
-* Copy the URL of the log output when you enter `docker-compose logs`. The log output will end with something like this:
-```
-jupyter_1  |     To access the server, open this file in a browser:
-jupyter_1  |         file:///home/jovyan/.local/share/jupyter/runtime/jpserver-7-open.html
-jupyter_1  |     Or copy and paste one of these URLs:
-jupyter_1  |         http://bc1a7b9a832a:8888/lab?token=d5d6cb3f75aeee90cad00959ce588c8050da53900bc948b1
-jupyter_1  |      or http://127.0.0.1:8888/lab?token=d5d6cb3f75aeee90cad00959ce588c8050da53900bc948b1
-```
-In this case, use `http://127.0.0.1:8888/lab?token=d5d6cb3f75aeee90cad00959ce588c8050da53900bc948b1` to access Jupyter.
-* **WARNING**: if you changed Jupyter's port `DATALAB_JUPYTER_PORT`, adjust port `8888` accordingly!
-
-### 1b. Start the controlboard if it gets more complicated
->NOTE: TODO .. this is work in progress and will not yet work with **Rancher Desktop**, but still use **Docker** and **docker-compose**
-* Navigate to the root folder of this repository.
-* Run `docker-compose -f controlboard.yml up -d`
-* Copy the URL of the log output when you enter `docker-compose -f controlboard.yml logs`, see 3a. above.
-* Replace port `8888` with your `DATALAB_CONTROLBOARD_PORT`, most likely `12334`
-* Once you have opened JupyterLab using your browser, open the notebook `datalab-stacks/ControlBoard.ipynb`
-
-
-## Run several projects simultaneously
-Easily run several projects at the same time. Make sure that you choose different project-names in `./datalab-stacks/environment.env` and also set different, **unique** values for all variables of services you plan to use simultaneously.
-
 
 ## Supported Stacks
 Run the following stacks on your local machine or remote server:
