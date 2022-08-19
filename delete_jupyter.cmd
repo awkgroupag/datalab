@@ -46,7 +46,6 @@ if not exist %values_file% (
     goto end_of_file
 )
 
-
 :: Switch the windows codepage to utf-8 to let us read files correctly
 :: Do this temporarily to not mess with other programs - safe the current value
 FOR /F "tokens=2 delims=:" %%i IN ('chcp') DO SET "CHCP_CURRENT=%%i"
@@ -106,6 +105,13 @@ if "%CONTROLBOARD%"=="Y" (
 )
 echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME%
 
+
+echo Are you sure you want to delete %JUPYTERRELEASENAME% in namespace %NAMESPACE%?
+set /p "userinput=Type yes: "
+if not "%userinput%"=="yes" (
+    echo aborting
+    goto :end_of_file
+)
 
 :: helm might still fail due to a variety of reasons - but should say why
 echo.
