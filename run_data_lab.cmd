@@ -25,11 +25,11 @@ if not exist %VALUES_PATH% (
 
 :: Switch the windows codepage to utf-8 to let us read files correctly
 :: Do this temporarily to not mess with other programs - safe the current value
-FOR /F "tokens=2 delims=:" %%i IN ('chcp') DO SET "CHCP_CURRENT=%%i"
+for /F "tokens=2 delims=:" %%i in ('chcp') do set "CHCP_CURRENT=%%i"
 :: Get rid of the period. at the end
-SET CHCP_CURRENT=%CHCP_CURRENT:~0,-1%
+set CHCP_CURRENT=%CHCP_CURRENT:~0,-1%
 :: Change codepage to utf-8
-CHCP 65001 >nul
+chcp 65001 >nul
 
 :: Ugly hack: find the line(s) starting with "namespace:", then
 :: safe the value in environment variable
@@ -53,9 +53,9 @@ if "%root%"=="" (
 )
 :: Extract the actual value for the key
 :: Mind the additional space after namespace: !!!
-SET divider=namespace: 
+set divider=namespace: 
 :: Get only the part of the string AFTER the divider
-CALL SET NAMESPACE=%%root:*%divider%=%%
+call set NAMESPACE=%%root:*%divider%=%%
 if "%NAMESPACE%"=="default" (
     echo ERROR: do NOT use the default Kubernetes namespace "default"!
     echo Please edit %VALUES_PATH% and change the namespace
@@ -80,8 +80,8 @@ if "%root%"=="" (
     goto end_of_file
 )
 :: Mind the additional space after jupyterReleaseName: !!!
-SET divider=jupyterReleaseName: 
-CALL SET JUPYTERRELEASENAME=%%root:*%divider%=%%
+set divider=jupyterReleaseName: 
+call set JUPYTERRELEASENAME=%%root:*%divider%=%%
 echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME%
 
 :: Fire up helm & Kubernetes
@@ -113,7 +113,7 @@ for /F "tokens=* USEBACKQ" %%F IN (`"helm upgrade --install -n %NAMESPACE% --cre
     set URL=%%F
 )
 :: Get the URL piece only
-CALL SET URL=%%URL:*%URL_DIVIDER%=%%
+call set URL=%%URL:*%URL_DIVIDER%=%%
 
 set /A COUNTER=COUNTER+1
 if "%URL%" == "" if %COUNTER% LSS 30 goto wait_for_token
@@ -139,7 +139,7 @@ echo.
 pause
 
 :end_of_file
-IF NOT %CHCP_CURRENT%=="" (
+if not %CHCP_CURRENT%=="" (
     :: Switch codepage back. In the author's case, codepage 850 was used
     chcp %CHCP_CURRENT% >nul
 )
