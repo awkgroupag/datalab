@@ -106,14 +106,18 @@ my_new_project
 |  |  ├──database_SAP_S4HANA.ipynb
 |  |  ├──database_getting_started.ipynb
 |  |  ├──environment.env.EXAMPLE
-|   |-  resources
-|   |   | ...
-|   |   .gitignore
-|   |   README.md
-|   |   ...
-|   |   run_jupyter_notebook.cmd
-|-  data
-|   | ...
+|  ├──resources
+|  |  └──...
+|  ├──.gitignore
+|  ├──delete_controlboard.cmd
+|  ├──delete_jupyter.cmd
+|  ├──README.md
+|  ├──run_controlboard.cmd
+|  ├──run_jupyter.cmd
+|
+|
+├──data
+|  └──...
 ```
 
 ### 2. Set-up environment variables for your new project once
