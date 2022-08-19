@@ -1,8 +1,8 @@
 * [Requirements](#requirements)
 * [Installation](#installation)
-* [Usage - WINDOWS](#usage---windows)
-* [Installation - LINUX](#installation---linux)
-* [Usage - LINUX](#usage---linux)
+* [Usage](#usage)
+  * [Windows](#windows)
+  * [Linux and helm](#linux-and-helm)
 * [Run several projects simultaneously](#run-several-projects-simultaneously)
 * [Supported Stacks](#supported-stacks)
 * [Additions/Tweaks to JupyerLab](#additionstweaks-to-jupyerlab)
@@ -167,6 +167,8 @@ $ git push --set-upstream origin main
 
 > #### :information_source: You can easily have several Notebooks running within a namespace (=project). And several namespaces (projects) running simultaneously. Until you run out of CPU or RAM.
 
+> #### :information_source: Any Linux commands will also work using the Windows command prompt.
+
 ### Windows
 #### 1a. Start a single Jupyter Notebook directly
 In your `datalab` directory, just run `run_jupyter.cmd` directly. JupyterLab will open in Chrome automatically.
@@ -192,7 +194,7 @@ As everything else will be **deleted** when the Notebook Kubernetes pod is delet
 
 
 ### Linux and helm
-####  Use helm to start your Jupyter Notebook
+####  1. Use helm to start your Jupyter Notebook
 * Using the command prompt, navigate to your source code folder, `datalab` above. Then cd into `lab` so you're actually working within `datalab/lab`
 * We assume you used the following values in your `myvalues.yaml`:
   ```yaml
@@ -223,6 +225,38 @@ If you want to completely clean up your Kubernetes resources using the command l
 1) Delete the helm chart (this will leave secrets and PVCs (=your data) intact):
 
     helm uninstall -n myproject jupyter
+
+2) Delete the entire namespace. This will also delete any other helm
+   releases such as PostgreSQL, INCLUDING Kubernetes secrets and your data (stored in PVCs):
+
+    kubectl delete namespace myproject
+
+```
+
+####  2. Use helm to start your controlboard if you need more than a single Notebook
+Same command as above, simply append `--set controlboard=true` and change the release name to `controlboard` (or anything, really):
+```console
+$ helm upgrade -i -n myproject --create-namespace -f myvalues.yaml --wait controlboard jupyter/ --set controlboard=true
+Release "controlboard" does not exist. Installing it now.
+NAME: controlboard
+LAST DEPLOYED: Fri Aug 19 16:07:10 2022
+NAMESPACE: myproject
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Controlboard
+============
+Use the following URL to access your Jupyter notebook:
+
+  Controlboard: http://localhost/myproject/controlboard/lab/tree/work/lab/controlboard.ipynb?token=RyrrkfAodMV3QpMJmIV64rkJxAOdV77vzdvVm1lt9cf3PMXAps4t3IrXSyZj7Vfp
+
+CLEANUP
+=======
+If you want to completely clean up your Kubernetes resources using the command line, do the following:
+1) Delete the helm chart (this will leave secrets and PVCs (=your data) intact):
+
+    helm uninstall -n myproject controlboard
 
 2) Delete the entire namespace. This will also delete any other helm
    releases such as PostgreSQL, INCLUDING Kubernetes secrets and your data (stored in PVCs):
