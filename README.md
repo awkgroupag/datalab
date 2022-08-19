@@ -165,7 +165,7 @@ $ git push --set-upstream origin main
 
 > ### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
 
-> :info: You can easily have several Notebook running within a namespace (=project). And several namespaces (projects) in parallel. Until you run out of CPU or RAM.
+> :information: You can easily have several Notebooks running within a namespace (=project). And several namespaces (projects) running simultaneously. Until you run out of CPU or RAM.
 
 ### Windows
 #### 1a. Start a single Jupyter Notebook directly
