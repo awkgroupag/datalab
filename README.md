@@ -93,19 +93,19 @@ Resulting example folder structure for a new project - **only the directory `dat
 ```console
 my_new_project
 ├──datalab
-   ├──lab
-elastic
-|   |   |   | ...
-|   |   |-  jupyter
-|   |   |   | ...
-|   |   |-  modules
-|   |   |   | ...
-|   |   |-  resources
-|   |   |   | ...
-|   |   controlboard.ipynb
-|   |   database_SAP_S4HANA.ipynb
-|   |   database_getting_started.ipynb
-|   |   environment.env.EXAMPLE
+|  ├──lab
+|  |  ├──elastic
+|  |  |  └──...
+|  |  ├──jupyter
+|  |  |  └──...
+|  |  ├──modules
+|  |  |  └──...
+|  |  ├──resources
+|  |  |  └──...
+|  |  ├──controlboard.ipynb
+|  |  ├──database_SAP_S4HANA.ipynb
+|  |  ├──database_getting_started.ipynb
+|  |  ├──environment.env.EXAMPLE
 |   |-  resources
 |   |   | ...
 |   |   .gitignore
