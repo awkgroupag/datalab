@@ -3,10 +3,10 @@
 :: Usage: you can optionally call this script with --values_file and/or 
 :: --controlboard:
 ::
-::      run_jupyter.cmd --values_file=<PATH TO myvalues.yaml> --controlboard
+::      delete_jupyter.cmd --values_file=<PATH TO myvalues.yaml> --controlboard
 ::
-:: --controlboard will grant the Jupyter Notebook Kubernetes priviledges
-:: to e.g. run any Kubernetes helm chart
+:: --controlboard will delete the helm chart named "controlboard"
+
 
 @echo off
 :: ensure that environment variables will be deleted after programm termination
@@ -43,34 +43,22 @@ if not exist %values_file% (
     pause
     goto end_of_file
 )
-if "%controlboard%"=="Y" (
-    echo This Jupyter Notebook can function as "Controlboard". It will be
-    echo granted special Kubernetes priviledges for your Kubernetes namespace.
-    echo The Jupyter Notebook's GUI will be black to remind you of that fact.
-    echo.
-    :: Mind the extra space after Controlboard: !!!
-    set URL_DIVIDER=Controlboard: 
-) else (
-    echo This Jupyter Notebook will NOT function as controlboard.
-    :: Mind the extra space after Jupyterlab: !!!
-    set URL_DIVIDER=Jupyterlab: 
-)
 
 
 :: Switch the windows codepage to utf-8 to let us read files correctly
 :: Do this temporarily to not mess with other programs - safe the current value
-for /F "tokens=2 delims=:" %%i in ('chcp') do set "CHCP_CURRENT=%%i"
+FOR /F "tokens=2 delims=:" %%i IN ('chcp') DO SET "CHCP_CURRENT=%%i"
 :: Get rid of the period. at the end
-set CHCP_CURRENT=%CHCP_CURRENT:~0,-1%
+SET CHCP_CURRENT=%CHCP_CURRENT:~0,-1%
 :: Change codepage to utf-8
-chcp 65001 >nul
+CHCP 65001 >nul
 
 :: Ugly hack: find the line(s) starting with "namespace:", then
 :: safe the value in environment variable
 :::::::::::::::::::::::::::::::::::::::::
 :: Loop through all the lines of the myvalues.yaml file that start with
 :: the string "namespace:" (lines starting with spaces are ignored)
-for /f "tokens=*" %%i in ('"FINDSTR /B namespace: %values_file%"') do set root=%%i
+for /f "tokens=*" %%i in ('"FINDSTR /B namespace: %VALUES_PATH%"') do set root=%%i
 :: A "string" on YAML side could come along like this:
 ::      namespace: my-namespace
 ::      namespace: 'my-namespace'
@@ -81,21 +69,15 @@ set root=%root:'=%
 set root=%root:"=%
 if "%root%"=="" (
     echo ERROR: You must provide a value for namespace in myvalues.yaml!
-    echo Please edit %values_file% and add a string value for namespace
+    echo Please edit %VALUES_PATH% and add a string value for namespace
     pause
     goto end_of_file
 )
 :: Extract the actual value for the key
 :: Mind the additional space after namespace: !!!
-set divider=namespace: 
+SET divider=namespace: 
 :: Get only the part of the string AFTER the divider
-call set NAMESPACE=%%root:*%divider%=%%
-if "%NAMESPACE%"=="default" (
-    echo ERROR: do NOT use the default Kubernetes namespace "default"!
-    echo Please edit %values_file% and change the namespace
-    pause
-    goto end_of_file
-)
+CALL SET NAMESPACE=%%root:*%divider%=%%
 echo Using Kubernetes namespace/project name: %NAMESPACE%
 
 :: Same ugly hack for "jupyterReleaseName:"
@@ -122,67 +104,21 @@ if "%CONTROLBOARD%"=="Y" (
 )
 echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME%
 
-:: Fire up helm & Kubernetes
-echo.
-echo Firing up Kubernetes with helm
-echo If you haven't downloaded any images yet, this could take a while (need to download a couple of GB)
-echo.
 
-set CMD=helm upgrade --install -n %NAMESPACE% --create-namespace -f %values_file% --wait %JUPYTERRELEASENAME% %HELM_PATH%
-if "%controlboard%"=="Y" (
-    set "CMD=%CMD% --set controlboard=true"
-)
-echo.
-echo ======================================================================================
-echo.
-
-:: This command will display helm's NOTES.txt
 :: helm might still fail due to a variety of reasons - but should say why
-%CMD%
+echo.
+helm delete -n %NAMESPACE% %JUPYTERRELEASENAME%
 
-echo.
-echo ======================================================================================
-echo.
-echo.
-echo ....waiting for the Kubernetes secret to be deployed....
-echo.
-echo.
-
-::
-:: Wait until the Kubernetes secret is really ready (--wait above is not enough)
-::
-set COUNTER=0
-:::::::::::::::
-:wait_for_token
-:::::::::::::::
-:: Wait for a second
-timeout /t 1 /nobreak >nul 2>nul
-:: Try to grab the Jupyter URL (output of exactly the same "helm upgrade..." command above)
-:: We look for any line containing the string "Jupyterlab:"
-for /F "tokens=* USEBACKQ" %%F IN (`"%CMD% | findstr "%URL_DIVIDER%""`) DO (
-    set URL=%%F
+if not "%NAMESPACE%"=="default" (
+    echo.
+    echo Almost all Kubernetes resources have been deleted
+    echo If you want to also delete Secrets and PVCs to e.g.
+    echo really start from scratch, type:
+    echo.
+    echo    kubectl delete namespace %NAMESPACE%
+    echo.
 )
-:: Get the URL piece only
-call set URL=%%URL:*%URL_DIVIDER%=%%
-
-set /A COUNTER=COUNTER+1
-if "%URL%" == "" if %COUNTER% LSS 30 goto wait_for_token
-:: Once counter is reached, we did not get a token
-if "%URL%" == "" goto error_empty_url
-
-:: output the full URL for access with ingress on k3s
-echo.
-echo Use the following URL to access %NAMESPACE% / %JUPYTERRELEASENAME%'s Jupyter Notebook:
-echo.
-echo    %URL%
-echo.
-echo If you get an error "bad gateway", just refresh the page after a couple of seconds
-echo.
-:: Start Chrome
-start chrome %URL%
-goto end_of_file
-
-
+goto :end_of_file
 
 ::::::::::::
 :readoptions
@@ -207,16 +143,6 @@ goto :optlp
 
 
 
-::::::::::::::::
-:error_empty_url
-::::::::::::::::
-echo.
-echo ERROR: Something went wront: no URL found for %NAMESPACE% / %JUPYTERRELEASENAME% :-(
-echo.
-pause
-goto :end_of_file
-
-
 ::::::::::::
 :end_of_file
 ::::::::::::
@@ -224,3 +150,4 @@ if not "%CHCP_CURRENT%"=="" (
     :: Switch codepage back. In the author's case, codepage 850 was used
     chcp %CHCP_CURRENT% >nul
 )
+
