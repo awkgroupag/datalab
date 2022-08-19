@@ -96,29 +96,32 @@ if "%NAMESPACE%"=="default" (
     pause
     goto end_of_file
 )
+set root=
 echo Using Kubernetes namespace/project name: %NAMESPACE%
 
 :: Same ugly hack for "jupyterReleaseName:"
 :::::::::::::::::::::::::::::::::::::::::::
+for /f "tokens=*" %%i in ('"FINDSTR /B jupyterReleaseName: %values_file%"') do set root=%%i
+:: Switch codepage back. In the author's case, codepage 850 was used
+chcp %CHCP_CURRENT% >nul
+:: Remove any ' from the string
+set root=%root:'=%
+:: Remove any " from the string
+set root=%root:"=%
+if "%root%"=="" (
+    echo ERROR: You must provide a value for jupyterReleaseName in myvalues.yaml!
+    echo Please edit %values_file% and add a string value for jupyterReleaseName
+    pause
+    goto end_of_file
+)
+:: Mind the additional space after jupyterReleaseName: !!!
+set divider=jupyterReleaseName: 
+call set JUPYTERRELEASENAME=%%root:*%divider%=%%
+:: WARNING: you can't set variables in () and then use them further, hence no
+:: "smarter" if ... else clause here.
+:: See: https://stackoverflow.com/questions/9681863/windows-batch-variables-wont-set
 if "%CONTROLBOARD%"=="Y" (
     set JUPYTERRELEASENAME=controlboard
-) else (
-    for /f "tokens=*" %%i in ('"FINDSTR /B jupyterReleaseName: %values_file%"') do set root=%%i
-    :: Switch codepage back. In the author's case, codepage 850 was used
-    chcp %CHCP_CURRENT% >nul
-    :: Remove any ' from the string
-    set root=%root:'=%
-    :: Remove any " from the string
-    set root=%root:"=%
-    if "%root%"=="" (
-        echo ERROR: You must provide a value for jupyterReleaseName in myvalues.yaml!
-        echo Please edit %values_file% and add a string value for jupyterReleaseName
-        pause
-        goto end_of_file
-    )
-    :: Mind the additional space after jupyterReleaseName: !!!
-    set divider=jupyterReleaseName: 
-    call set JUPYTERRELEASENAME=%%root:*%divider%=%%
 )
 echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME%
 
