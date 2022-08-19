@@ -129,13 +129,15 @@ Normally, you will need to set only 4 variables:
 * `dataDirectory`: the directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
 * `namespace`: The Kubernetes namespace to use. Think of it as a project name. Use a dedicated namespace per project (you can run several in parallel. `myproject` is fine if you are uninspired
   * Use ASCII characters only, no spaces, no underscores or such!
-* `jupyterReleaseName`: name the Jupyter Notebook will receive (=helm release name). `jupyter` is fine. You can run several Notebook per namespace, e.g. if your project team consists of several data scientists. 
+* `jupyterReleaseName`: name the Jupyter Notebook will receive (=helm release name). `jupyter` is fine. You can run several Notebooks per namespace, e.g. if your project team consists of several data scientists. 
   * Use ASCII characters only, no spaces, no underscores or such!
+
+If you need to fine-tune your Jupyter Kubernetes pod, check `lab/jupyter/values.yaml` for further customization. Copy anything you want changed into `myvalues.yaml` and set new values.
 
 
 ### 3. Set-up GitHub repository for backup, version-control & collaboration
 1. Create a new **empty** repository (usually a private one, thus visible for AWK employees only) on the [AWK GitHub page](https://github.com/awkgroupag) (the green `New`-button). Note the new URL to your new repo, e.g. https://github.com/awkgroupag/MY-NEW-REPO
-2. Open a command prompt and navigate to your source code folder
+2. Open a command prompt and navigate to your source code folder (`datalab` in the diagram above)
 3. Type (replacing the URL)
 ```console
 $ git init
@@ -146,13 +148,15 @@ $ git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
 $ git add .
 $ git commit -m "initial commit"
 # Actually upload the files to GitHub.com
+# Save GitHub credentials so you don't need to auth again and again
+$ git config --global credential.helper store
 $ git push --set-upstream origin main
 ```
 4. You should be prompted for your GitHub credentials after the last command above
 5. Check [Atlassian's Comparing Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) to get started with `git`. See the [Git-flow-Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) to understand collaboration with other team members.
     * Use `git pull` to get the latest changes from GitHub
     * Use `git commit` and `git push` to push your changes to GitHub
-    * Work with dedicated new branches for changes, do not work directly with the branch `main`
+    * Work with dedicated new branches for changes, do not work directly with the branch `main`!
 
 ## Usage - helm
 ### Install everything using helm
