@@ -235,6 +235,10 @@ Run the following stacks on your local machine or remote server:
 
 The following packages are installed on-top of the [jupyter/datascience-notebook](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html).
 
+Data engineering
+* [dbt](https://docs.getdbt.com/docs/introduction): the "T" in ELT
+  - Usage: **YOU HAVE TO USE THE DEDICATED ANACONDA ENVIRONMENT dbt**: switch the Jupyter Notebook kernel to `dbt`
+
 Automation
 * [h2o AutoML](https://docs.h2o.ai/h2o/latest-stable/h2o-docs/automl.html): Automatic machine learning
 * [TPOT](http://epistasislab.github.io/tpot/): optimize machine learning pipelines using genetic programming
