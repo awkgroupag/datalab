@@ -28,8 +28,10 @@ for %%i in (%OPTIONS% %SWITCHES% BADOPTIONS) do if defined %%i (
 if not "%BADOPTIONS%"=="" (
     echo.
     echo     WARNING: unknown command line arguments: %BADOPTIONS%
-    echo     Ignoring them!
+    echo     Aborting!
     echo.
+    pause
+    goto end_of_file
 )
 set HELM_PATH=.\lab\jupyter
 if "%values_file%"=="" (
