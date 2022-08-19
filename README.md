@@ -1,5 +1,5 @@
 * [Requirements](#requirements)
-* [Installation - WINDOWS](#installation---windows)
+* [Installation](#installation)
 * [Usage - WINDOWS](#usage---windows)
 * [Installation - LINUX](#installation---linux)
 * [Usage - LINUX](#usage---linux)
@@ -114,14 +114,14 @@ my_new_project
 |  ├──delete_jupyter.cmd
 |  ├──README.md
 |  ├──run_controlboard.cmd
-|  ├──run_jupyter.cmd
+|  └──run_jupyter.cmd
 |
 |
 ├──data
 |  └──...
 ```
 
-### 2. Set-up environment variables in a `myvalues.yaml` for your new project once
+### 2. Define your project in a `myvalues.yaml`
 Change the values in the file `./lab/myvalues.yaml.EXAMPLE`. Save the customized file as a new file `./lab/myvalues.yaml`. Normally, you will need to set only three variables:
 * `sourcecodeDirectory`: the new directory you just created above, containing all your source code, including the folder `datalab`. The folder you map here will appear as `/home/jovyan/work` in the Jupyter Notebook
 * `dataDirectory`: the directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
