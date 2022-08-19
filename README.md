@@ -134,6 +134,23 @@ Normally, you will need to set only 4 variables:
 
 If you need to fine-tune your Jupyter Kubernetes pod, check `lab/jupyter/values.yaml` for further customization. Copy anything you want changed into `myvalues.yaml` and set new values.
 
+> :warning: If you enter the wrong paths, Kubernetes will create them using the Linux user `root`. You won't get any errors. You will run into permission issues using Jupyter Notebook as you won't have the rights to write to these new folders. 
+
+#### Windows: get the correct paths!
+Rancher Desktop Kubernetes runs inside a Linux VM. You need to thus adjust your paths for `sourcecodeDirectory` and `dataDirectory` for your Linux VM to find anything on the Windows side:
+> :warning: `C:\GitHub\Repos\datalab` wird zu `/mnt/c/GitHub/Repos/datalab`
+
+#### Linux: Mind the permissions for your folders!
+Check the comments in `myvalues.yaml` and be sure to set the following numbers correctly. In the authors case, `id` returned the following:
+```console
+$ id
+uid=1000(tom) gid=1010(tom) groups=1000(tom),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),122(lpadmin),133(lxd)
+```
+We need only `uid` and `gid`, thus `values.yaml` needs to look like this:
+```yaml
+userId: &uid 1000
+userGroup: &gid 1010
+```
 
 ### 3. Set-up GitHub repository for backup, version-control & collaboration
 1. Create a new **empty** repository (usually a private one, thus visible for Eraneos employees only) on the [AWK GitHub page](https://github.com/awkgroupag) (the green `New`-button). Note the new URL to your new repo, e.g. https://github.com/awkgroupag/MY-NEW-REPO
