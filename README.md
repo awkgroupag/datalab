@@ -129,8 +129,10 @@ Normally, you will need to set only 4 variables:
 * `dataDirectory`: the directory containing all data. Will be mounted as `/home/jovyan/data` in the Notebook
 * `namespace`: The Kubernetes namespace to use. Think of it as a project name. Use a dedicated namespace per project (you can run several in parallel. `myproject` is fine if you are uninspired
   * Use ASCII characters only, no spaces, no underscores or such!
+  * There's a limit of about 20 characters max!
 * `jupyterReleaseName`: name the Jupyter Notebook will receive (=helm release name). `jupyter` is fine. You can run several Notebooks per namespace, e.g. if your project team consists of several data scientists. 
   * Use ASCII characters only, no spaces, no underscores or such!
+  * There's a limit of about 20 characters max!
 
 If you need to fine-tune your Jupyter Kubernetes pod, check `lab/jupyter/values.yaml` for further customization. Copy anything you want changed into `myvalues.yaml` and set new values.
 
@@ -159,7 +161,7 @@ $ git push --set-upstream origin main
     * Use `git commit` and `git push` to push your changes to GitHub
     * Work with dedicated new branches for changes, do not work directly with the branch `main`!
 
-## Usage - WINDOWS
+## Usage - Windows
 
 > ### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
 
@@ -186,13 +188,18 @@ As everything else will be **deleted** when the Notebook Kubernetes pod is delet
 * If you used the controlboard to start other tech stacks like PostgreSQL: Be sure to stop any other stacks (=delete their helm releases) you might have started from within the controlboard first. Then run `delete_controlboard.cmd`.
 
 
-## Usage - helm
-### Install everything using helm
-To set-up a dedicated data science lab for project
-* Using the command prompt, navigate to your source code folder
-* choose a project name (20 ASCII characters max), e.g. `my-project` and a name for its namespace, e.g. `kingdom`
+## Usage - Linux and helm
+
+> ### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
+
+### Use helm to start your Jupyter Notebook
+* Using the command prompt, navigate to your source code folder, `datalab` above. Then cd into `lab`
+* We assume you used the following values in your `myvalues.yaml`:
+  ```yaml
+  namespace: myproject
+  jupyterReleaseName: jupyter
+  ```
 * Then:
-TODO: ADJUST PATH
 ```console
 $ helm install my-project --namespace kingdom --create-namespace --wait .
 ```
@@ -223,7 +230,7 @@ set -a
 set +a
 ```
 
-## Usage - LINUX
+## Usage - LINUX & HELM
 ### 1a. Start a single Jupyter Notebook directly
 >NOTE: TODO .. the script run_jupyter_controlboard.cmd is **NOT** yet rewritten as a Linux shell script. Therefore, this will still use **Docker** and **docker-compose**
 * Navigate to the folder `datalab-stacks/jupyter`
