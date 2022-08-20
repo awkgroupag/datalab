@@ -1,4 +1,10 @@
 airflow:
+  git:
+    dags:
+      enabled: true
+    sync:
+      # Interval in seconds to pull the git repository containing the plugins and/or DAG files
+      interval: 60
   postgresql:
     enabled: false
   service:
