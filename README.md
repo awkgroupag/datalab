@@ -70,7 +70,7 @@ $ kubectl -n default port-forward deploy/testrelease-podinfo 8080:9898
 Forwarding from 127.0.0.1:8080 -> 9898
 Forwarding from [::1]:8080 -> 9898
 ```
-Using a browser, go to `localhost:8080`. You should get a friendly greeting from a kraken.
+Using a browser, go to [http://localhost:8080](http://localhost:8080). You should get a friendly greeting from a kraken.
 
 Once your test has been successful, return to the command prompt, hit `CTRL+C` to stop the port-forwarding and have the command prompt return. Remove Podinfo from Kubernetes:
 ```console
