@@ -15,10 +15,7 @@ metadata:
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
     {{- end }}
 rules:
-- apiGroups: [""]
-  resources: ["*"]
-  verbs: ["*"]
-- apiGroups: ["apps","extensions", "traefik.containo.us"]
+- apiGroups: ["", "apps","extensions", "traefik.containo.us"]
   resources: ["*"]
   verbs: ["*"]
 {{ end }}
