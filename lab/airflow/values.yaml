@@ -1,4 +1,6 @@
 airflow:
+  postgresql:
+    enabled: false
   service:
     ports:
       # Needs to be set to 80 (or 443) otherwise Bitnami's chart breaks down and results in a URL like
@@ -8,5 +10,5 @@ airflow:
       # Check the airflow web pod and its value for AIRFLOW_BASE_URL!
       http: 80
   web:
-    # MUST be set with helm upgrade -i ...
+    # MUST be set with helm upgrade -i ... --set airflow.web.baseUrl=http://...
     # baseUrl: http://localhost/{{ .Release.Namespace }}/airflow
