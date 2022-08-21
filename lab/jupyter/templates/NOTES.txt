@@ -56,3 +56,5 @@ If you want to completely clean up your Kubernetes resources using the command l
     kubectl delete namespace {{ .Release.Namespace }}
 
 {{ end }}
+
+{{ include "datasciencelab.validateValues" . }}
