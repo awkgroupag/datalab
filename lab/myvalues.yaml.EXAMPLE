@@ -23,6 +23,10 @@ dataDirectory: ''
 # These two keys can have arbitrary values. Choose the same namespace
 # for a specific project, but different jupyterReleaseName if you have
 # several Jupyter notebooks running in parallel for a specific project
+
+# lower case alphanumeric characters or '-', and must start and end with an
+# alphanumeric character
+
 # Kubernetes namespace = project name
 namespace: myproject
 # Helm release name for Jupyter
