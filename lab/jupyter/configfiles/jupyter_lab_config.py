@@ -1111,3 +1111,9 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 #          Should be in the form of an HTTP origin: ws[s]://hostname[:port]
 #  Default: ''
 # c.ServerApp.websocket_url = ''
+
+
+# Allow access to hidden files
+c.ContentsManager.allow_hidden = True
+# Allow access to hidden files
+c.FileContentsManager.allow_hidden = True
