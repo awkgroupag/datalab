@@ -48,11 +48,18 @@ if not exist %values_file% (
 
 :: Switch the windows codepage to utf-8 to let us read files correctly
 :: Do this temporarily to not mess with other programs - safe the current value
-FOR /F "tokens=2 delims=:" %%i IN ('chcp') DO SET "CHCP_CURRENT=%%i"
-:: Get rid of the period. at the end
-SET CHCP_CURRENT=%CHCP_CURRENT:~0,-1%
+for /F "tokens=2 delims=:" %%i in ('chcp') do set "CHCP_CURRENT=%%i"
+:: Thank you Microsoft. A German Windows (and others?) returns e.g.
+::     Aktive Codepage: 65001.
+:: An English Windows (others?) does NOT return the period at the end!!
+set LASTCHARACTER=%CHCP_CURRENT:~-1%
+set "ISNOTNUMBER="&for /f "delims=0123456789" %%i in ("LASTCHARACTER") do set ISNOTNUMBER=%%i
+if defined ISNOTNUMBER (
+    :: Get rid of the period. at the end
+    set CHCP_CURRENT=%CHCP_CURRENT:~0,-1%
+)
 :: Change codepage to utf-8
-CHCP 65001 >nul
+chcp 65001 >nul
 
 :: Ugly hack: find the line(s) starting with "namespace:", then
 :: safe the value in environment variable
