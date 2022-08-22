@@ -178,7 +178,14 @@ $ git push --set-upstream origin main
 
 ## Usage
 
-> #### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded!
+> #### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded! To check the current status, use the command prompt: `ContainerCreating` means Kubernetes is still downloading.
+
+```console
+$ kubectl get pods -n myproject
+NAME                                           READY   STATUS              RESTARTS   AGE
+controlboard-datalab-jupyter-d76c7bcb4-z8bf4   0/1     ContainerCreating   0          2m30s
+```
+
 
 > #### :cyclone: You can start a `controlboard` with special priviledges to configure Kubernetes. This is really handy to start additional Kubernetes stacks from a Jupyter Notebook - without using the command line. 
 
