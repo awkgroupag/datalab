@@ -1,0 +1,6 @@
+On your host machine, use the following URL to access the Web GUI. It might
+take a looooong while (several minutes!) until Airflow is ready: if you
+receive a "Service Unavailable" or "404 page not found" or "Bad gateway",
+just try again a bit later.
+
+    http://{{ required "ERROR You need to set airflow.web.baseUrl!" .Values.airflow.web.baseUrl }}

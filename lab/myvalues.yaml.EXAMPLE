@@ -1,0 +1,46 @@
+# DIRECTORIES
+#############
+# Linux host:
+# Make sure the user with userId, userGroup below has write access. A
+# directory will be created by Kubernetes if it does not exist (BUT with the
+# user root, hence you will have permission issues e.g. when trying to create
+# files within Jupyter)
+
+# Windows host:
+# No need to worry about permissions
+# BUT: a path C:\GitHub\datalab' must be entered as '/mnt/c/GitHub/datalab'
+
+# Sourcecode directory on your HOST machine
+# Will by default be mounted as /home/jovyan/work
+sourcecodeDirectory: ''
+# Data directory on your HOST machine
+# Will by default be mounted as /home/jovyan/data
+dataDirectory: ''
+
+
+# NAMING OF KUBERNETES RESOURCES
+################################
+# These two keys can have arbitrary values. Choose the same namespace
+# for a specific project, but different jupyterReleaseName if you have
+# several Jupyter notebooks running in parallel for a specific project
+
+# lower case alphanumeric characters or '-', and must start and end with an
+# alphanumeric character
+
+# Kubernetes namespace = project name
+namespace: myproject
+# Helm release name for Jupyter
+jupyterReleaseName: jupyter
+
+
+# LINUX PERMISSIONS
+###################
+# Windows host: just leave the defaults
+# The Linux user id ("uid") for the main Jupyter user "Jovyan" to use inside
+# Jupyter. Best to set it to your host user id (get it on the host by typing
+# "id"). Do NOT remove the "&uid"; only replace the integer 1000
+userId: &uid 1000
+# The Linux main user group id ("gid") to use within the Jupyter container Set
+# it to your own host Linux gid (command: id, entry for gid). Do NOT remove
+# the "&gid"
+userGroup: &gid 1000

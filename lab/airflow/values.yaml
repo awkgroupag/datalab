@@ -1,0 +1,20 @@
+airflow:
+  git:
+    dags:
+      enabled: true
+    sync:
+      # Interval in seconds to pull the git repository containing the plugins and/or DAG files
+      interval: 60
+  postgresql:
+    enabled: false
+  service:
+    ports:
+      # Needs to be set to 80 (or 443) otherwise Bitnami's chart breaks down and results in a URL like
+      #   AIRFLOW_BASE_URL: http://localhost/myproject/airflow:8080 (!!!)
+      # See fucked up airflow.baseUrl function here:
+      # https://github.com/bitnami/charts/blob/master/bitnami/airflow/templates/_helpers.tpl
+      # Check the airflow web pod and its value for AIRFLOW_BASE_URL!
+      http: 80
+  web:
+    # MUST be set with helm upgrade -i ... --set airflow.web.baseUrl=http://...
+    # baseUrl: http://localhost/{{ .Release.Namespace }}/airflow

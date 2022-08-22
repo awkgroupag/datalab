@@ -1,2 +1,4 @@
 .ipynb_checkpoints/
 environment.env
+__pycache__
+myvalues.yaml
