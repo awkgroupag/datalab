@@ -66,7 +66,7 @@ chcp 65001 >nul
 :::::::::::::::::::::::::::::::::::::::::
 :: Loop through all the lines of the myvalues.yaml file that start with
 :: the string "namespace:" (lines starting with spaces are ignored)
-for /f "tokens=*" %%i in ('"FINDSTR /B namespace: %VALUES_PATH%"') do set root=%%i
+for /f "tokens=*" %%i in ('"FINDSTR /B namespace: %values_file%"') do set root=%%i
 :: A "string" on YAML side could come along like this:
 ::      namespace: my-namespace
 ::      namespace: 'my-namespace'
@@ -77,7 +77,7 @@ set root=%root:'=%
 set root=%root:"=%
 if "%root%"=="" (
     echo ERROR: You must provide a value for namespace in myvalues.yaml!
-    echo Please edit %VALUES_PATH% and add a string value for namespace
+    echo Please edit %values_file% and add a string value for namespace
     pause
     goto end_of_file
 )
