@@ -23,9 +23,13 @@ dataDirectory: ''
 # These two keys can have arbitrary values. Choose the same namespace
 # for a specific project, but different jupyterReleaseName if you have
 # several Jupyter notebooks running in parallel for a specific project
+
+# lower case alphanumeric characters or '-', and must start and end with an
+# alphanumeric character
+
 # Kubernetes namespace = project name
 namespace: 
-# Helm release name for Jupyter
+# Helm release name for Jupyter 
 jupyterReleaseName: 
 
 
@@ -71,7 +75,7 @@ jupyter:
   image:
     name: awkgroupag/datascience-notebook
     # Version of the Jupyter image - you want to change that to use an older image
-    tag: a40584f
+    tag: fae1fe6
   # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
   # Whatever token you enter here takes precedence; an existing secret is thus overwritten with the value here
   token:

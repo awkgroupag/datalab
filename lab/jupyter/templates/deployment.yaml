@@ -92,10 +92,9 @@ spec:
             - name: config-files
               subPath: overrides.json
               mountPath: "/opt/conda/share/jupyter/lab/settings/overrides.json"
-            {{- else }}
+            {{- end }}
             - name: data
               mountPath: {{ .containers.volumeMounts.mountPath.data | quote }}
-            {{- end }}
           {{- end }}
       volumes:
       - name: data

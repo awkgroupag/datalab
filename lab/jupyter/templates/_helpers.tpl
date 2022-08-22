@@ -73,3 +73,60 @@ Secret for MySQL, same logic
     {{- randAlphaNum 24 | b64enc }}
 {{- end }}
 {{- end }}
+
+
+
+{{/*
+Compile all warnings into a single message, and call fail.
+*/}}
+{{- define "datasciencelab.validateValues" -}}
+{{- $messages := list -}}
+{{- $messages := append $messages (include "datasciencelab.validateValues.namespacedefault" .) -}}
+{{- $messages := append $messages (include "datasciencelab.validateValues.namespace" .) -}}
+{{- $messages := append $messages (include "datasciencelab.validateValues.controlboardname" .) -}}
+{{- $messages := without $messages "" -}}
+{{- $message := join "\n" $messages -}}
+
+{{- if $message -}}
+{{-   printf "\nVALUES VALIDATION FAILED:\n%s" $message | fail -}}
+{{- end -}}
+{{- end -}}
+
+
+
+{{- define "datasciencelab.validateValues.namespacedefault" -}}
+{{- if eq .Release.Namespace "default" }}
+You are trying to install this helm chart into the Kubernetes default namespace "default".
+Please choose a dedicated namespace, NOT "default"!
+
+{{ end -}}
+{{- end -}}
+
+
+
+{{- define "datasciencelab.validateValues.namespace" -}}
+{{- if ne .Values.namespace .Release.Namespace }}
+You are trying to install this helm chart into the Kubernetes namespace "{{ .Release.Namespace }}",
+but you set your myvalues.yaml/values.yaml key to
+
+    namespace: {{ .Values.namespace }}
+
+Both namespaces need to match!
+
+{{ end -}}
+{{- end -}}
+
+
+{{/*
+Enforce naming the controlboard "controlboard"
+*/}}
+{{- define "datasciencelab.validateValues.controlboardname" -}}
+{{- if .Values.controlboard -}}
+{{- if ne .Release.Name "controlboard" }}
+You are trying to install this helm chart as a controlboard with special Kubernetes priviledges,
+probably with "--set controlboard=true", but want to name the helm release "{{ .Release.Name }}".
+Please name the helm release "controlboard"!
+
+{{ end -}}
+{{- end -}}
+{{- end -}}
