@@ -110,7 +110,7 @@ call set JUPYTERRELEASENAME=%%root:*%divider%=%%
 :: WARNING: you can't set variables in () and then use them further, hence no
 :: "smarter" if ... else clause here.
 :: See: https://stackoverflow.com/questions/9681863/windows-batch-variables-wont-set
-if "%CONTROLBOARD%"=="Y" (
+if "%controlboard%"=="Y" (
     set JUPYTERRELEASENAME=controlboard
 )
 echo Using jupyterReleaseName (helm release name): %JUPYTERRELEASENAME%
