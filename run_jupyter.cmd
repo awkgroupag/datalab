@@ -149,6 +149,7 @@ echo.
 :: This command will display helm's NOTES.txt
 :: helm might still fail due to a variety of reasons - but should say why
 %CMD%
+if errorlevel 1 goto :error_kubernetes_not_running
 
 echo.
 echo ======================================================================================
@@ -224,6 +225,14 @@ echo.
 echo ERROR: Something went wront: no URL found for %NAMESPACE% / %JUPYTERRELEASENAME% :-(
 echo.
 pause
+goto :end_of_file
+
+:::::::::::::::::::::::::::::
+:error_kubernetes_not_running
+:::::::::::::::::::::::::::::
+echo.
+echo Make sure Kubernetes (e.g Rancher Desktop) is up and running!
+echo.
 goto :end_of_file
 
 
