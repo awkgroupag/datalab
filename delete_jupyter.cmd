@@ -126,6 +126,7 @@ if not "%userinput%"=="yes" (
 :: helm might still fail due to a variety of reasons - but should say why
 echo.
 helm delete -n %NAMESPACE% %JUPYTERRELEASENAME%
+if errorlevel 1 goto :error_kubernetes_not_running
 
 if not "%NAMESPACE%"=="default" (
     echo.
@@ -159,6 +160,14 @@ for %%i in (%OPTIONS%) do if %_parm1%==--%%i (
 if defined _parm1 set BADOPTIONS=%BADOPTIONS% %1&shift
 goto :optlp
 
+
+:::::::::::::::::::::::::::::
+:error_kubernetes_not_running
+:::::::::::::::::::::::::::::
+echo.
+echo Make sure Kubernetes (e.g Rancher Desktop) is up and running!
+echo.
+goto :end_of_file
 
 
 ::::::::::::
