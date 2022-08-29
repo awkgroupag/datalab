@@ -51,7 +51,11 @@ spec:
           {{- with .Values.jupyter }}
           image: {{ .image.name }}:{{ .image.tag }}
           resources:
-            {{- toYaml .containers.resources | nindent 12 }}
+            {{- if $.Values.controlboard }}
+            {{- toYaml .containers.resources.controlboard | nindent 12 }}
+            {{- else }}
+            {{- toYaml .containers.resources.nonControlboard | nindent 12 }}
+            {{- end }}
           env:
             - name: JUPYTER_TOKEN
               valueFrom:
