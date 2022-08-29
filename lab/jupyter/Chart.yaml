@@ -2,7 +2,7 @@ apiVersion: v2
 name: datalab-jupyter
 description: The Eraneos Data Science Lab - Jupyter Notebook
 type: application
-version: 2.0.1
+version: 2.0.2
 appVersion: dfe3fb3
 keywords:
   - jupyterlab
