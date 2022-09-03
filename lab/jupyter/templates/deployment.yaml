@@ -94,8 +94,15 @@ spec:
               mountPath: "/home/jovyan/DO NOT SAVE ANYTHING HERE.md"
             {{- if $.Values.controlboard }}
             - name: config-files
+              subPath: jupyterhub_config-CONTROLBOARD.py
+              mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/my_config.py
+            - name: config-files
               subPath: overrides.json
               mountPath: "/opt/conda/share/jupyter/lab/settings/overrides.json"
+            {{- else }}
+            - name: config-files
+              subPath: jupyterhub_config.py
+              mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/my_config.py
             {{- end }}
             - name: data
               mountPath: {{ .containers.volumeMounts.mountPath.data | quote }}
