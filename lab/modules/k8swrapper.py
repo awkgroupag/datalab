@@ -56,7 +56,13 @@ def get_secret_key(api, secret_name, namespace, key):
     return base64.b64decode(secret[key].encode('utf-8')).decode('utf-8')
 
 
-def create_or_get_secret(api, secret_name, namespace, string_data, secret_type='Opaque', pretty='true'):
+def create_or_get_secret(api, secret_name, namespace, string_data,
+                         secret_type='Opaque', pretty='true'):
+    """If a k8s secret secret_name [str] exists in namespace, return it as a
+    dict of key value pairs. If not, create it based on string_data [dict],
+    consisting of key value pairs.
+    Returns the secret (existing or just created) as a dict
+    """
     try:
         create_secret(api, secret_name, namespace, string_data, secret_type, pretty)
     except ApiException:
