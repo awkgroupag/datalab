@@ -317,6 +317,8 @@ namespace "myproject" deleted
 ## Supported Stacks
 Run the following stacks:
 * [Jupyterlab](https://jupyterlab.readthedocs.io/en/stable/)
+* [dbt](https://docs.getdbt.com/)
+* [Airflow](https://airflow.apache.org/)
 * [PostgreSQL Database](https://www.postgresql.org/)
 * [MySQL Database](https://www.mysql.com/)
 * [Elastic Stack including Elasticsearch and Kibana](https://www.elastic.co/de/products/)
@@ -366,6 +368,7 @@ Web scraping
 Tools
 * [Pandas Profiling](https://pandas-profiling.ydata.ai/docs/master/index.html): Create profiling reports from pandas DataFrame objects
 * [lxml](https://lxml.de/): secure and fast XML and HTML with Python
+* [dotenv](https://github.com/theskumar/python-dotenv/): reads key-value pairs from a .env file and can set them as environment variables
 
 JupyterLab plugins
 * [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git): Version control using Git within Jupyter
