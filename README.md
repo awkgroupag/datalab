@@ -30,6 +30,17 @@
     $ chmod 700 get_helm.sh
     $ ./get_helm.sh
     ```
+  * Configure access to the K8S-cluster (more details for [K3S see here](https://rancher.com/docs/k3s/latest/en/cluster-access)):
+    ```console
+    $ mkdir -p ~/.kube
+    $ sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+    $ sudo chown <user> ~/.kube/config
+    $ sudo nano ~/.bashrc
+    # Add the following line at the end:
+    export KUBECONFIG=~/.kube/config
+    # Save and exit the editor nano, then apply this new setting
+    $ source ~/.bashrc
+    ```
 * A code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
