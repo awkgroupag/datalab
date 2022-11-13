@@ -19,7 +19,7 @@ sources:
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
-    version: 1.x.x
+    version: 2.1.x
 maintainers:
   - name: Thomas Kathriner
     email: thomas.kathriner@awk.ch
