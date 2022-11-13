@@ -30,6 +30,17 @@
     $ chmod 700 get_helm.sh
     $ ./get_helm.sh
     ```
+  * Configure access to the K8S-cluster (more details for [K3S see here](https://rancher.com/docs/k3s/latest/en/cluster-access)):
+    ```console
+    $ mkdir -p ~/.kube
+    $ sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+    $ sudo chown <user> ~/.kube/config
+    $ sudo nano ~/.bashrc
+    # Add the following line at the end:
+    export KUBECONFIG=~/.kube/config
+    # Save and exit the editor nano, then apply this new setting
+    $ source ~/.bashrc
+    ```
 * A code version management like `git` (used below). Since we're using GitHub, try [GitHub Desktop](https://desktop.github.com/) that comes bundled with `git`.
 
 ### Test requirements with [Podinfo](https://github.com/stefanprodan/podinfo)
@@ -354,9 +365,10 @@ Visualizations
 
 Frontend and apps
 * [Streamlit](https://docs.streamlit.io/en/stable/): The fastest way to build and share data apps
+  - Usage: **YOU HAVE TO USE THE DEDICATED ANACONDA ENVIRONMENT streamlit**: switch the Jupyter Notebook kernel to `streamlit`
 
 Databases:
-* [psycopg2 PostgreSQL Connector](https://www.psycopg.org/docs/): most popular PostgreSQL database adapter for the Python
+* [psycopg PostgreSQL Connector](https://www.psycopg.org/docs/): most popular PostgreSQL database adapter for the Python
 * [sqlalchemy-utils](https://sqlalchemy-utils.readthedocs.io/en/latest/): custom data types and various utility functions for SQLAlchemy
 * [sqlalchemy_schemadisplay](https://github.com/fschulze/sqlalchemy_schemadisplay): Turn SQLAlchemy DB Model into a graph
 * [mysql-connector-python MySQL Connector](https://dev.mysql.com/doc/connector-python/en/)
@@ -369,6 +381,7 @@ Tools
 * [Pandas Profiling](https://pandas-profiling.ydata.ai/docs/master/index.html): Create profiling reports from pandas DataFrame objects
 * [lxml](https://lxml.de/): secure and fast XML and HTML with Python
 * [dotenv](https://github.com/theskumar/python-dotenv/): reads key-value pairs from a .env file and can set them as environment variables
+* [openpyxl](https://openpyxl.readthedocs.io/en/stable/) and [xlsxwriter](https://xlsxwriter.readthedocs.io/): read/write Excel files e.g. using a Pandas dataframe
 
 JupyterLab plugins
 * [jupyterlab-git](https://github.com/jupyterlab/jupyterlab-git): Version control using Git within Jupyter

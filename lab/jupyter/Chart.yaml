@@ -2,8 +2,8 @@ apiVersion: v2
 name: datalab-jupyter
 description: The Eraneos Data Science Lab - Jupyter Notebook
 type: application
-version: 2.0.6
-appVersion: fde1585
+version: 1.0.1
+appVersion: 1.0.1
 keywords:
   - jupyterlab
   - jupyter
@@ -19,7 +19,7 @@ sources:
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
-    version: 1.x.x
+    version: 2.1.x
 maintainers:
   - name: Thomas Kathriner
     email: thomas.kathriner@awk.ch
