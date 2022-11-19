@@ -1,4 +1,4 @@
-* [Requirements](#requirements)
+* [Requirements (run through this once)](#requirements-run-through-this-once)
 * [Installation](#installation)
 * [Usage](#usage)
   * [Windows](#windows)
@@ -13,7 +13,11 @@
 * Collaborate and share your environment easily even years later - being sure that everything still runs
 * Control your Kubernetes environment through the Jupyter Notebook `controlboard` instead of command line arguments
 
-## Requirements
+## Requirements (run through this once)
+<details>
+  <summary>Click me to expand this section</summary>
+  <br/>
+
 * Windows:
   * WSL set-up (see [ACL Onboarding, setup for WSL](https://github.com/awkgroupag/ITA-ACL-Onboarding/blob/main/General_topics/dev-setup.md#wsl) for instructions on how to get WSL ready)
   * [Rancher Desktop](https://docs.rancherdesktop.io/getting-started/installation) installed
@@ -88,8 +92,13 @@ Once your test has been successful, return to the command prompt, hit `CTRL+C` t
 $ helm delete testrelease
 release "testrelease" uninstalled
 ```
+</details>
 
 ## Installation
+<details>
+  <summary>Click me to expand this section</summary>
+  <br/>
+
 ### 1. Create the directory structure for your new project
 * Create a new dedicated directory for your source code on your local machine where you want the Data Science Lab to run
 * Download this entire data science lab's sourcecode:
@@ -160,6 +169,7 @@ We need only `uid` and `gid`, thus `values.yaml` needs to look like this:
 userId: &uid 1000
 userGroup: &gid 1010
 ```
+</details>
 
 ## Usage
 
@@ -180,6 +190,10 @@ controlboard-datalab-jupyter-d76c7bcb4-z8bf4   0/1     ContainerCreating   0    
 
 
 ### Windows
+<details>
+  <summary>Click me to expand this section</summary>
+  <br/>
+
 #### 1a. Start a single Jupyter Notebook directly
 In your `datalab` directory, just run `run_jupyter.cmd` directly. JupyterLab will open in Chrome automatically.
 
@@ -201,9 +215,13 @@ As everything else will be **deleted** when the Notebook Kubernetes pod is delet
 #### 4. Cleaning up: Remove the Kubernetes pods when done
 * Calling `delete_jupyter.cmd` removes the pod, thus resetting everything
 * If you used the controlboard to start other tech stacks like PostgreSQL: Be sure to stop any other stacks (=delete their helm releases) you might have started from within the controlboard first. Then run `delete_controlboard.cmd`.
-
+</details>
 
 ### Linux and helm
+<details>
+  <summary>Click me to expand this section</summary>
+  <br/>
+
 ####  1. Use helm to start your Jupyter Notebook
 * Using the command prompt, navigate to your source code folder, `datalab` above. Then cd into `lab` so you're actually working within `datalab/lab`
 * We assume you used the following values in your `myvalues.yaml`:
@@ -298,6 +316,7 @@ To also delete any left-over [Kubernetes secrets](https://kubernetes.io/docs/con
 $ kubectl delete namespace myproject
 namespace "myproject" deleted
 ```
+</details>
 
 ## Supported Stacks
 Run the following stacks:
