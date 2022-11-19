@@ -1,8 +1,8 @@
-* [Requirements](#requirements)
-* [Installation](#installation)
+* [Requirements (run through this once)](#requirements-run-through-this-once)
+* [Installation per Jupyter project](#installation-per-jupyter-project)
 * [Usage](#usage)
   * [Windows](#windows)
-  * [Linux and helm](#linux-and-helm)
+  * [Linux (or using Helm commands and Windows command line)](#linux-or-using-helm-commands-and-windows-command-line)
 * [Supported Stacks](#supported-stacks)
 * [Additions/Tweaks to JupyerLab](#additionstweaks-to-jupyerlab)
 
@@ -13,7 +13,11 @@
 * Collaborate and share your environment easily even years later - being sure that everything still runs
 * Control your Kubernetes environment through the Jupyter Notebook `controlboard` instead of command line arguments
 
-## Requirements
+## Requirements (run through this once)
+<details>
+  <summary>Click me to expand this section</summary>
+  <br/>
+
 * Windows:
   * WSL set-up (see [ACL Onboarding, setup for WSL](https://github.com/awkgroupag/ITA-ACL-Onboarding/blob/main/General_topics/dev-setup.md#wsl) for instructions on how to get WSL ready)
   * [Rancher Desktop](https://docs.rancherdesktop.io/getting-started/installation) installed
@@ -34,7 +38,7 @@
     ```console
     $ mkdir -p ~/.kube
     $ sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-    $ sudo chown <user> ~/.kube/config
+    $ sudo chown $USER ~/.kube/config
     $ sudo nano ~/.bashrc
     # Add the following line at the end:
     export KUBECONFIG=~/.kube/config
@@ -88,8 +92,13 @@ Once your test has been successful, return to the command prompt, hit `CTRL+C` t
 $ helm delete testrelease
 release "testrelease" uninstalled
 ```
+</details>
 
-## Installation
+## Installation per Jupyter project
+<details>
+  <summary>Click me to expand this section</summary>
+  <br/>
+
 ### 1. Create the directory structure for your new project
 * Create a new dedicated directory for your source code on your local machine where you want the Data Science Lab to run
 * Download this entire data science lab's sourcecode:
@@ -108,16 +117,14 @@ my_new_project
 |  |  |  └──...
 |  |  ├──jupyter
 |  |  |  └──...
+|  |  ├──knowhow
+|  |  |  └──...
 |  |  ├──modules
 |  |  |  └──...
 |  |  ├──resources
 |  |  |  └──...
 |  |  ├──controlboard.ipynb
-|  |  ├──database_getting_started.ipynb
-|  |  ├──database_SAP_S4HANA.ipynb
 |  |  ├──myvalues.yaml.EXAMPLE
-|  ├──resources
-|  |  └──...
 |  ├──.gitignore
 |  ├──delete_controlboard.cmd
 |  ├──delete_jupyter.cmd
@@ -149,7 +156,7 @@ If you need to fine-tune your Jupyter Kubernetes pod, check `lab/jupyter/values.
 
 #### Windows: you need to adjust your Windows paths for Rancher Desktop!
 Rancher Desktop Kubernetes runs inside a Linux VM. You need to thus adjust your paths for `sourcecodeDirectory` and `dataDirectory` for your Linux VM to find anything on the Windows side:
-> :warning: `C:\GitHub\Repos\datalab` wird zu `/mnt/c/GitHub/Repos/datalab`
+> :warning: `C:\GitHub\Repos\datalab` becomes `/mnt/c/GitHub/Repos/datalab`
 
 #### Linux: Mind the permissions for your folders!
 Check the comments in `myvalues.yaml` and be sure to set the following numbers correctly. In the authors case, `id` returned the following:
@@ -162,30 +169,7 @@ We need only `uid` and `gid`, thus `values.yaml` needs to look like this:
 userId: &uid 1000
 userGroup: &gid 1010
 ```
-
-### 3. Set-up GitHub repository for backup, version-control & collaboration
-1. Create a new **empty** repository (usually a private one, thus visible for Eraneos employees only) on the [AWK GitHub page](https://github.com/awkgroupag) (the green `New`-button). Note the new URL to your new repo, e.g. https://github.com/awkgroupag/MY-NEW-REPO
-2. Open a command prompt and navigate to your source code folder (`datalab` in the diagram above)
-  * :warning: Be sure to NOT have any data in the directory you are currently in! See above :warning:
-3. Type (replacing the URL)
-```console
-$ git init
-# git's default branch name is master, let's change this to GitHub's main
-$ git branch -M main
-$ git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
-# Add the entire datalab to your first commit
-$ git add .
-$ git commit -m "initial commit"
-# Actually upload the files to GitHub.com
-# Save GitHub credentials so you don't need to auth again and again
-$ git config --global credential.helper store
-$ git push --set-upstream origin main
-```
-4. You should be prompted for your GitHub credentials after the last command above
-5. Check [Atlassian's Comparing Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) to get started with `git`. See the [Git-flow-Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) to understand collaboration with other team members.
-    * Use `git pull` to get the latest changes from GitHub
-    * Use `git commit` and `git push` to push your changes to GitHub
-    * Work with dedicated new branches for changes, do not work directly with the branch `main`!
+</details>
 
 ## Usage
 
@@ -202,10 +186,14 @@ controlboard-datalab-jupyter-d76c7bcb4-z8bf4   0/1     ContainerCreating   0    
 
 > #### :information_source: You can easily have several Notebooks running within a namespace (=project). And several namespaces (projects) running simultaneously. Until you run out of CPU or RAM.
 
-> #### :rainbow: Any Linux commands will also work using the Windows command prompt.
+> #### :rainbow: Any Linux command here will also work using the Windows command prompt.
 
 
 ### Windows
+<details>
+  <summary>Click me to expand this section</summary>
+  <br/>
+
 #### 1a. Start a single Jupyter Notebook directly
 In your `datalab` directory, just run `run_jupyter.cmd` directly. JupyterLab will open in Chrome automatically.
 
@@ -227,9 +215,13 @@ As everything else will be **deleted** when the Notebook Kubernetes pod is delet
 #### 4. Cleaning up: Remove the Kubernetes pods when done
 * Calling `delete_jupyter.cmd` removes the pod, thus resetting everything
 * If you used the controlboard to start other tech stacks like PostgreSQL: Be sure to stop any other stacks (=delete their helm releases) you might have started from within the controlboard first. Then run `delete_controlboard.cmd`.
+</details>
 
+### Linux (or using Helm commands and Windows command line)
+<details>
+  <summary>Click me to expand this section</summary>
+  <br/>
 
-### Linux and helm
 ####  1. Use helm to start your Jupyter Notebook
 * Using the command prompt, navigate to your source code folder, `datalab` above. Then cd into `lab` so you're actually working within `datalab/lab`
 * We assume you used the following values in your `myvalues.yaml`:
@@ -324,6 +316,7 @@ To also delete any left-over [Kubernetes secrets](https://kubernetes.io/docs/con
 $ kubectl delete namespace myproject
 namespace "myproject" deleted
 ```
+</details>
 
 ## Supported Stacks
 Run the following stacks:
