@@ -34,7 +34,7 @@
     ```console
     $ mkdir -p ~/.kube
     $ sudo cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-    $ sudo chown <user> ~/.kube/config
+    $ sudo chown $USER ~/.kube/config
     $ sudo nano ~/.bashrc
     # Add the following line at the end:
     export KUBECONFIG=~/.kube/config
