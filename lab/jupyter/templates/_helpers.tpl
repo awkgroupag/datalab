@@ -83,6 +83,7 @@ Compile all warnings into a single message, and call fail.
 {{- $messages := list -}}
 {{- $messages := append $messages (include "datasciencelab.validateValues.namespacedefault" .) -}}
 {{- $messages := append $messages (include "datasciencelab.validateValues.namespace" .) -}}
+{{- $messages := append $messages (include "datasciencelab.validateValues.releasename" .) -}}
 {{- $messages := append $messages (include "datasciencelab.validateValues.controlboardname" .) -}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
@@ -114,6 +115,21 @@ but you set your myvalues.yaml/values.yaml key to
 Both namespaces need to match!
 
 {{ end -}}
+{{- end -}}
+
+
+{{- define "datasciencelab.validateValues.releasename" -}}
+{{- if not .Values.controlboard -}}
+{{- if ne .Values.jupyterReleaseName .Release.Name }}
+You are trying to install this helm chart with release name "{{ .Release.Name }}",
+but you set your myvalues.yaml/values.yaml key to
+
+    jupyterReleaseName: {{ .Values.jupyterReleaseName }}
+
+Both Helm chart release name and jupyterReleaseName need to match!
+
+{{ end -}}
+{{- end -}}
 {{- end -}}
 
 
