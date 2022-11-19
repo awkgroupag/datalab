@@ -1,8 +1,8 @@
 * [Requirements (run through this once)](#requirements-run-through-this-once)
-* [Installation](#installation)
+* [Installation per Jupyter project](#installation-per-jupyter-project)
 * [Usage](#usage)
   * [Windows](#windows)
-  * [Linux and helm](#linux-and-helm)
+  * [Linux (or using Helm commands and Windows command line)](#linux-or-using-helm-commands-and-windows-command-line)
 * [Supported Stacks](#supported-stacks)
 * [Additions/Tweaks to JupyerLab](#additionstweaks-to-jupyerlab)
 
@@ -94,7 +94,7 @@ release "testrelease" uninstalled
 ```
 </details>
 
-## Installation
+## Installation per Jupyter project
 <details>
   <summary>Click me to expand this section</summary>
   <br/>
@@ -156,7 +156,7 @@ If you need to fine-tune your Jupyter Kubernetes pod, check `lab/jupyter/values.
 
 #### Windows: you need to adjust your Windows paths for Rancher Desktop!
 Rancher Desktop Kubernetes runs inside a Linux VM. You need to thus adjust your paths for `sourcecodeDirectory` and `dataDirectory` for your Linux VM to find anything on the Windows side:
-> :warning: `C:\GitHub\Repos\datalab` wird zu `/mnt/c/GitHub/Repos/datalab`
+> :warning: `C:\GitHub\Repos\datalab` becomes `/mnt/c/GitHub/Repos/datalab`
 
 #### Linux: Mind the permissions for your folders!
 Check the comments in `myvalues.yaml` and be sure to set the following numbers correctly. In the authors case, `id` returned the following:
@@ -186,7 +186,7 @@ controlboard-datalab-jupyter-d76c7bcb4-z8bf4   0/1     ContainerCreating   0    
 
 > #### :information_source: You can easily have several Notebooks running within a namespace (=project). And several namespaces (projects) running simultaneously. Until you run out of CPU or RAM.
 
-> #### :rainbow: Any Linux commands will also work using the Windows command prompt.
+> #### :rainbow: Any Linux command here will also work using the Windows command prompt.
 
 
 ### Windows
@@ -217,7 +217,7 @@ As everything else will be **deleted** when the Notebook Kubernetes pod is delet
 * If you used the controlboard to start other tech stacks like PostgreSQL: Be sure to stop any other stacks (=delete their helm releases) you might have started from within the controlboard first. Then run `delete_controlboard.cmd`.
 </details>
 
-### Linux and helm
+### Linux (or using Helm commands and Windows command line)
 <details>
   <summary>Click me to expand this section</summary>
   <br/>
