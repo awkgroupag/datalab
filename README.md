@@ -163,30 +163,6 @@ userId: &uid 1000
 userGroup: &gid 1010
 ```
 
-### 3. Set-up GitHub repository for backup, version-control & collaboration
-1. Create a new **empty** repository (usually a private one, thus visible for Eraneos employees only) on the [AWK GitHub page](https://github.com/awkgroupag) (the green `New`-button). Note the new URL to your new repo, e.g. https://github.com/awkgroupag/MY-NEW-REPO
-2. Open a command prompt and navigate to your source code folder (`datalab` in the diagram above)
-  * :warning: Be sure to NOT have any data in the directory you are currently in! See above :warning:
-3. Type (replacing the URL)
-```console
-$ git init
-# git's default branch name is master, let's change this to GitHub's main
-$ git branch -M main
-$ git remote add origin https://github.com/awkgroupag/MY-NEW-REPO
-# Add the entire datalab to your first commit
-$ git add .
-$ git commit -m "initial commit"
-# Actually upload the files to GitHub.com
-# Save GitHub credentials so you don't need to auth again and again
-$ git config --global credential.helper store
-$ git push --set-upstream origin main
-```
-4. You should be prompted for your GitHub credentials after the last command above
-5. Check [Atlassian's Comparing Workflows](https://www.atlassian.com/git/tutorials/comparing-workflows) to get started with `git`. See the [Git-flow-Workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) to understand collaboration with other team members.
-    * Use `git pull` to get the latest changes from GitHub
-    * Use `git commit` and `git push` to push your changes to GitHub
-    * Work with dedicated new branches for changes, do not work directly with the branch `main`!
-
 ## Usage
 
 > #### :warning: be aware that if you use the lab for first time, more than 8 GB will have to be downloaded! To check the current status, use the command prompt: `ContainerCreating` means Kubernetes is still downloading.
