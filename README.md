@@ -116,8 +116,6 @@ my_new_project
 |  |  ├──database_getting_started.ipynb
 |  |  ├──database_SAP_S4HANA.ipynb
 |  |  ├──myvalues.yaml.EXAMPLE
-|  ├──resources
-|  |  └──...
 |  ├──.gitignore
 |  ├──delete_controlboard.cmd
 |  ├──delete_jupyter.cmd
