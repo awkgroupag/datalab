@@ -39,11 +39,44 @@ spec:
       terminationGracePeriodSeconds: 30
       {{- with .Values.jupyter }}
       securityContext:
-      {{- if .sudo }}
+        {{- if .sudo }}
         runAsUser: 0
-      {{- else }}
-        {{- toYaml .securityContext | nindent 8 }}
-      {{- end }}
+        {{- else }}
+        runAsUser: {{ $.Values.userId }}
+        {{- end }}
+        supplementalGroups: {{- range $group := .securityContext.supplementalGroups }}
+        - {{ $group }}
+        {{- end }}
+        {{- if $.Values.controlboard }}
+        # Necessary to set both fsGroup as well as runAsGroup to 65534 in
+        # order to have access to the Kubernetes API token mounted
+        # at /var/run/secrets/kubernetes.io/serviceaccount. Otherwise we'll
+        # get a permission denied even for root. This is closely linked to
+        # how butched up the Jupyter startup-script works with permissions
+        runAsGroup: {{ $.Values.userGroup }}
+        fsGroup: 65534
+        {{- else }}
+        runAsGroup: {{ $.Values.userGroup }}
+        fsGroup: {{ .securityContext.fsGroup }}
+        {{- end }}
+        {{- if .securityContext.fsGroupChangePolicy }}
+        fsGroupChangePolicy: {{ .securityContext.fsGroupChangePolicy }}
+        {{- end }}
+        {{- if .securityContext.runAsNonRoot }}
+        runAsNonRoot: {{ .securityContext.runAsNonRoot }}
+        {{- end }}
+        {{- if .securityContext.seLinuxOptions }}
+        seLinuxOptions: {{ .securityContext.seLinuxOptions }}
+        {{- end }}
+        {{- if .securityContext.seccompProfile }}
+        seccompProfile: {{ .securityContext.seccompProfile }}
+        {{- end }}
+        {{- if .securityContext.sysctls }}
+        sysctls: {{ .securityContext.sysctls }}
+        {{- end }}
+        {{- if .securityContext.windowsOptions }}
+        windowsOptions: {{ .securityContext.windowsOptions }}
+        {{- end }}
       {{- end }}
       containers:
         - imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
@@ -67,6 +100,14 @@ spec:
             {{- if .sudo }}
             - name: GRANT_SUDO
               value: "yes"
+            - name: NB_UID
+              value: "{{ $.Values.userId }}"
+            - name: NB_GID
+              {{- if $.Values.controlboard }}
+              value: "65534"
+              {{- else }}
+              value: "{{ $.Values.userGroup }}"
+              {{- end }}
             {{- end }}
             {{- if .containers.extraEnvVars }}
             {{- toYaml .containers.extraEnvVars | nindent 12 }}
