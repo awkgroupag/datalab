@@ -1,0 +1,22 @@
+{{/*- Check if there is a secret already deployed (e.g. user used helm install --wait) */}}
+
+Cloudbeaver
+===========
+
+Use the following URL to access Cloudbeaver:
+
+    {{ .Values.cloudbeaver.conf.server.serverURL }}/{{ .Release.Namespace }}/{{ .Release.Name }}
+
+
+CLEANUP
+=======
+If you want to completely clean up your Kubernetes resources using the command line, do the following:
+1) Delete the helm chart (this will leave any Cloudbeaver settings intact):
+
+    helm uninstall -n {{ .Release.Namespace }} {{ .Release.Name }}
+
+2) To additionally remove any Cloudbeaver settings:
+
+    kubectl delete pvc -n {{ .Release.Namespace }} {{ include "common.names.fullname" . }}
+
+{{ include "cloudbeaver.validateValues" . }}
