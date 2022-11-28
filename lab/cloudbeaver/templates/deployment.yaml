@@ -1,0 +1,78 @@
+{{- $fullName := include "common.names.fullname" . -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "common.labels.matchLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "common.labels.standard" . | nindent 8 }}
+        {{- if .Values.cloudbeaver.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.cloudbeaver.podLabels "context" $) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.commonLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.commonLabels "context" $) | nindent 8 }}
+        {{- end }}
+      annotations:
+        {{- if .Values.cloudbeaver.podAnnotations }}
+        {{- include "common.tplvalues.render" ( dict "value" .Values.cloudbeaver.podAnnotations "context" $ ) | nindent 8 }}
+        {{- end }}
+        {{- if .Values.commonAnnotations }}
+        {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 8 }}
+        {{- end }}
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        {{- toYaml .Values.cloudbeaver.securityContext | nindent 8 }}
+      containers:
+        - imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+          name: {{ .Chart.Name }}
+          {{- with .Values.cloudbeaver }}
+          image: {{ .image.name }}:{{ $.Chart.AppVersion }}
+          {{- if .containers.resources }}
+          resources:
+            {{- toYaml .containers.resources | nindent 12 }}
+          {{- end }}
+          # This is broken and does not work!
+          # args:
+          # - "-web-config/etc/cloudbeaver/cloudbeaver.conf"
+          envFrom:
+          - secretRef:
+              name: {{ $fullName | quote }}
+              optional: false
+          {{- if .containers.extraEnvVars }}
+          env:
+            {{- toYaml .containers.extraEnvVars | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: data
+              mountPath: /opt/cloudbeaver/workspace
+              subPath: dbeaver
+            - name: config
+              mountPath: /opt/cloudbeaver/conf/cloudbeaver.conf
+              subPath: cloudbeaver.conf
+            # - name: config
+            #   mountPath: /etc/cloudbeaver/cloudbeaver.conf
+            #   subPath: cloudbeaver.conf
+          {{- end }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "common.names.fullname" . }}
+        - name: config
+          configMap:
+            name: {{ include "common.names.fullname" . }}

@@ -1,0 +1,19 @@
+apiVersion: v2
+name: cloudbeaver
+description: The Eraneos Data Science Lab - Cloudbeaver
+type: application
+version: 1.0.0
+appVersion: 22.2.5
+keywords:
+  - cloudbeaver
+home: https://www.eraneos.com/
+sources:
+  - https://github.com/dbeaver/cloudbeaver/wiki/Run-Docker-Container
+  - https://github.com/bsgrigorov/dbeaver-helm
+dependencies:
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    version: 2.1.x
+maintainers:
+  - name: Thomas Kathriner
+    email: thomas.kathriner@awk.ch

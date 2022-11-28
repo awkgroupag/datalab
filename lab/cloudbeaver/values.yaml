@@ -1,0 +1,96 @@
+cloudbeaver:
+  image:
+    name: dbeaver/cloudbeaver
+  adminUsername: admin
+  # This entire section get's translated 1:1 as cloudbeaver.conf
+  # See https://github.com/dbeaver/cloudbeaver/wiki/Server-configuration
+  conf:
+    server: 
+      serverPort: 8978
+      serverName: "Cloudbeaver"
+      # Server address (full URL). Used to generate links and for third-party services integration
+      serverURL: "http://localhost"
+      rootURI: "/{{ .Release.Namespace }}/{{ .Release.Name }}"
+      serviceURI: "/api/"
+      expireSessionAfterPeriod: 1800000
+      # I would leave the settings below untouched!
+      workspaceLocation: "workspace"
+      contentRoot: "web"
+      driversLocation: "drivers"
+      productConfiguration: "conf/product.conf"
+      develMode: false
+      enableSecurityManager: false
+      database:
+        driver: "h2_embedded"
+        url: "jdbc:h2:${workspace}/.data/cb.h2.dat"
+        createDatabase: true
+        initialDataConfiguration: "conf/initial-data.conf"
+        pool:
+          minIdleConnections: 4
+          maxIdleConnections: 10
+          maxConnections: 100
+          validationQuery: "SELECT 1"
+    app:
+      anonymousAccessEnabled: true
+      anonymousUserRole: "user"
+      supportsCustomConnections: true
+      showReadOnlyConnectionInfo: false
+      forwardProxy: false
+      publicCredentialsSaveEnabled: true
+      adminCredentialsSaveEnabled: true
+      resourceManagerEnabled: true
+      resourceQuotas:
+        dataExportFileSizeLimit: 10000000
+        resourceManagerFileSizeLimit: 500000
+        sqlMaxRunningQueries: 100
+        sqlResultSetRowsLimit: 100000
+        sqlResultSetMemoryLimit: 2000000
+        sqlTextPreviewMaxLength: 4096
+        sqlBinaryPreviewMaxLength: 261120
+    enabledAuthProviders:
+      - "local"
+    disabledDrivers:
+      - "sqlite:sqlite_jdbc"
+      - "h2:h2_embedded"
+      - "clickhouse:yandex_clickhouse"
+  storage:
+    capacity: "100Mi"
+  service:
+    type: "ClusterIP"
+    protocol: "TCP"
+    port: 80
+  containers:
+    # resources:
+    #   # Tell Kubernetes how much CPU and RAM/Memory may be used for its calculations by default (requests) and at max (limits)
+    #   requests:
+    #     memory: "50Mi"
+    #     cpu: "0.1"
+    #   limits:
+    #     memory: "100Mi"
+    # Add any additional environment variables for the container here
+    # extraEnvVars:
+    # - name: MY_NEW_ENVIRONMENT_VARIABLE
+    #   value: "1234"
+    # Extra commands to run for the pod
+    command: []
+  securityContext: {}
+  # Additional annotations to add to each pod
+  podAnnotations: {}
+  # Additional labels to add to each pod
+  podLabels: {}
+
+
+# String to fully override common.names.fullname template 
+fullnameOverride: ""
+
+# String to partially override common.names.fullname template (will maintain the release name)  
+nameOverride: ""
+
+# What do we do with container images?
+imagePullPolicy: IfNotPresent
+
+# Add labels to all the deployed resources
+commonLabels: {}
+
+# Add annotations to all the deployed resources
+commonAnnotations: {}
