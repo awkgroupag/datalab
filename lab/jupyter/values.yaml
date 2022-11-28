@@ -38,12 +38,14 @@ jupyterReleaseName:
 # Windows host: just leave the defaults
 # The Linux user id ("uid") for the main Jupyter user "Jovyan" to use inside
 # Jupyter. Best to set it to your host user id (get it on the host by typing
-# "id"). Do NOT remove the "&uid"; only replace the integer 1000
-userId: &uid 1000
+# "id").
+# userId: 0 (root) is impossible due to Jupyter's startup script
+userId: 1000
 # The Linux main user group id ("gid") to use within the Jupyter container Set
-# it to your own host Linux gid (command: id, entry for gid). Do NOT remove
-# the "&gid"
-userGroup: &gid 1000
+# it to your own host Linux gid (command: id, entry for gid).
+# If you start a controlboard, the userGroup 65534 (nogroup) will be forced,
+# to ensure that the controlboard works as designed
+userGroup: 1000
 
 
 # CONTROLBOARD OR NORMAL JUPYTER NOTEBOOK?
@@ -54,6 +56,7 @@ userGroup: &gid 1000
 # either use 
 #   helm upgrade --install ... jupyter --set controlboard=true
 # or use a dedicated values.yaml to override this setting.
+# When true, userGroup=65534 as well as securitycontext.fsGroup=65534 will be forced
 controlboard: false
 
 
@@ -61,15 +64,17 @@ controlboard: false
 # OPTIONAL CONFIGS #
 ####################
 # No need to change anything below
-# If you want to enable a certain tech-stack, simply set it's "enabled" key
-# from false to true
 
 # ================
 # JUPYTER NOTEBOOK
 # ================
 # Optionally change any configs here
 jupyter:
-  # Enable sudo rights for the Jupyter user? (run as root within container; not recommended)
+  # Enable sudo rights for the Jupyter user? (e.g. to install Linux packages; not recommended)
+  # Will force the pod to be run initially with user root (uid 0) - this might
+  # not be possible on a secured Kubernetes - but then the Jupyter container
+  # will fall back to user jovyan and the user id you specified under userId
+  # above
   sudo: false
   # Default values for AWK Data Science Lab
   image:
@@ -82,13 +87,23 @@ jupyter:
   # Security context for the pod. Will be overriden if you enable sudo above and you will run the container as root
   # Issues with permissions? Try to change the ids here
   securityContext:
-    # Linux User ID of Jupyter user, (NB_UID value in the Jupyter doc https://jupyter-docker-stacks.readthedocs.io)
     # Will be set to 0 if sudo is enabled above
-    runAsUser: *uid
+    # Set userId above - this setting here has no effect
+    # runAsUser: <ineffective>
     # Linux User Group ID for the Jupyter user
-    runAsGroup: *gid
+    # Set userGroup above - this setting here has no effect
+    # runAsGroup: <ineffective>
     # Additional group membership so the Jupyter user is still able to use pip and anaconda within the container. Don't change this
     supplementalGroups: [100]
+    # fsGroup will be forced to 65534 if you run this Notebook as controlboard. 
+    fsGroup:
+    # You should NOT need to change anything here
+    fsGroupChangePolicy:
+    runAsNonRoot:
+    seLinuxOptions:
+    seccompProfile:
+    sysctls:
+    windowsOptions:
   containers:
     resources:
       # Tell Kubernetes how much CPU and RAM/Memory Jupyter may use for its calculations by default (requests) and at max (limits)
