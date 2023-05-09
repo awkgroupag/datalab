@@ -83,6 +83,8 @@ spec:
           name: {{ .Chart.Name }}
           {{- with .Values.jupyter }}
           image: {{ .image.name }}:{{ .image.tag }}
+          ports:
+            - containerPort: 8888
           resources:
             {{- if $.Values.controlboard }}
             {{- toYaml .containers.resources.controlboard | nindent 12 }}
