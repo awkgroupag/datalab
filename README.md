@@ -21,6 +21,7 @@
 * Windows:
   * WSL set-up (see [ACL Onboarding, setup for WSL](https://github.com/awkgroupag/ITA-ACL-Onboarding/blob/main/General_topics/dev-setup.md#wsl) for instructions on how to get WSL ready)
   * [Rancher Desktop](https://docs.rancherdesktop.io/getting-started/installation) installed
+    - :warning: Use version 1.7.0 from the [GitHub Release Page](https://github.com/rancher-sandbox/rancher-desktop/releases). Newer versions broke traefik.
   * In the Rancher preferences, make sure that `Enable Traefik` is activated (it is enabled by default)
 * Linux:
   * Another Kubernetes distribution up and running, e.g. [K3S](https://k3s.io/):
