@@ -111,10 +111,10 @@ jupyter:
       # Will also be mountes as setting for JupyterHub
       controlboard:
         requests:
-          memory: "50Mi"
+          memory: "100Mi"
           cpu: "0.1"
         limits:
-          memory: "100Mi"
+          memory: "250Mi"
           cpu: "0.5"
       # Ressource settings if NOT controlboard, but normal Jupyter
       # Notebook
