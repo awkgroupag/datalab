@@ -112,10 +112,10 @@ jupyter:
       controlboard:
         requests:
           memory: "100Mi"
-          cpu: "0.1"
+          cpu: "0.3"
         limits:
           memory: "250Mi"
-          cpu: "0.5"
+          cpu: "1"
       # Ressource settings if NOT controlboard, but normal Jupyter
       # Notebook
       nonControlboard:
