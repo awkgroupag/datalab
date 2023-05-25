@@ -111,10 +111,10 @@ jupyter:
       # Will also be mountes as setting for JupyterHub
       controlboard:
         requests:
-          memory: "100Mi"
-          cpu: "0.3"
-        limits:
           memory: "250Mi"
+          cpu: "0.6"
+        limits:
+          memory: "500Mi"
           cpu: "1"
       # Ressource settings if NOT controlboard, but normal Jupyter
       # Notebook
@@ -134,8 +134,12 @@ jupyter:
       mountPath:
         sourcecode: /home/jovyan/work
         data: /home/jovyan/data
-    # Extra commands to run for the pod
-    command: []
+    # Extra arguments to pass to jupyter notebook on startup.
+    # The following 2 arguments will be passed before any additional ones!
+    # - "start-notebook.sh"
+    # - "--ServerApp.base_url='/{{ .Release.Namespace }}/{{ .Release.Name }}'"
+    # https://jupyter-notebook.readthedocs.io/en/stable/config.html
+    args: []
   # Additional annotations to add to each pod
   podAnnotations: {}
   # Additional labels to add to each pod

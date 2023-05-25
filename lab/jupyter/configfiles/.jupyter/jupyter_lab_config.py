@@ -1,5 +1,7 @@
 # Configuration file for lab.
 
+c = get_config()  #noqa
+
 #------------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
 #------------------------------------------------------------------------------
@@ -19,32 +21,32 @@
 # c.Application.log_level = 30
 
 ## Configure additional log handlers.
-#
+#  
 #  The default stderr logs handler is configured by the log_level, log_datefmt
 #  and log_format settings.
-#
+#  
 #  This configuration can be used to configure additional handlers (e.g. to
 #  output the log to a file) or for finer control over the default handlers.
-#
+#  
 #  If provided this should be a logging configuration dictionary, for more
 #  information see:
 #  https://docs.python.org/3/library/logging.config.html#logging-config-
 #  dictschema
-#
+#  
 #  This dictionary is merged with the base logging configuration which defines
 #  the following:
-#
+#  
 #  * A logging formatter intended for interactive use called
 #    ``console``.
 #  * A logging handler that writes to stderr called
 #    ``console`` which uses the formatter ``console``.
 #  * A logger with the name of this application set to ``DEBUG``
 #    level.
-#
+#  
 #  This example adds a new handler that writes to a file:
-#
+#  
 #  .. code-block:: python
-#
+#  
 #     c.Application.logging_config = {
 #         'handlers': {
 #             'file': {
@@ -106,7 +108,7 @@
 #  See also: Application.log_level
 # c.JupyterApp.log_level = 30
 
-##
+## 
 #  See also: Application.logging_config
 # c.JupyterApp.logging_config = {}
 
@@ -122,14 +124,16 @@
 # ExtensionApp(JupyterApp) configuration
 #------------------------------------------------------------------------------
 ## Base class for configurable Jupyter Server Extension Applications.
-#
+#  
 #      ExtensionApp subclasses can be initialized two ways:
-#      1. Extension is listed as a jpserver_extension, and ServerApp calls
-#          its load_jupyter_server_extension classmethod. This is the
-#          classic way of loading a server extension.
-#      2. Extension is launched directly by calling its `launch_instance`
-#          class method. This method can be set as a entry_point in
-#          the extensions setup.py
+#  
+#      - Extension is listed as a jpserver_extension, and ServerApp calls
+#        its load_jupyter_server_extension classmethod. This is the
+#        classic way of loading a server extension.
+#  
+#      - Extension is launched directly by calling its `launch_instance`
+#        class method. This method can be set as a entry_point in
+#        the extensions setup.py.
 
 ## Answer yes to any prompts.
 #  See also: JupyterApp.answer_yes
@@ -166,7 +170,7 @@
 #  See also: Application.log_level
 # c.ExtensionApp.log_level = 30
 
-##
+## 
 #  See also: Application.logging_config
 # c.ExtensionApp.logging_config = {}
 
@@ -191,7 +195,7 @@
 # c.ExtensionApp.show_config_json = False
 
 ## paths to search for serving static files.
-#
+#  
 #          This allows adding javascript/css to be available from the notebook server machine,
 #          or overriding individual files in the IPython
 #  Default: []
@@ -202,7 +206,7 @@
 # c.ExtensionApp.static_url_prefix = ''
 
 ## Paths to search for serving jinja templates.
-#
+#  
 #          Can be used to override templates from notebook.templates.
 #  Default: []
 # c.ExtensionApp.template_paths = []
@@ -213,7 +217,7 @@
 ## A Lab Server Application that runs out-of-the-box
 
 ## "A list of comma-separated URIs to get the allowed extensions list
-#
+#  
 #  .. versionchanged:: 2.0.0
 #      `LabServerApp.whitetlist_uris` renamed to `allowed_extensions_uris`
 #  Default: ''
@@ -236,7 +240,7 @@
 # c.LabServerApp.blacklist_uris = ''
 
 ## A list of comma-separated URIs to get the blocked extensions list
-#
+#  
 #  .. versionchanged:: 2.0.0
 #      `LabServerApp.blacklist_uris` renamed to `blocked_extensions_uris`
 #  Default: ''
@@ -304,7 +308,7 @@
 #  See also: Application.log_level
 # c.LabServerApp.log_level = 30
 
-##
+## 
 #  See also: Application.logging_config
 # c.LabServerApp.logging_config = {}
 
@@ -395,7 +399,7 @@
 #------------------------------------------------------------------------------
 # LabApp(LabServerApp) configuration
 #------------------------------------------------------------------------------
-##
+## 
 #  See also: LabServerApp.allowed_extensions_uris
 # c.LabApp.allowed_extensions_uris = ''
 
@@ -419,7 +423,7 @@
 #  See also: LabServerApp.blacklist_uris
 # c.LabApp.blacklist_uris = ''
 
-##
+## 
 #  See also: LabServerApp.blocked_extensions_uris
 # c.LabApp.blocked_extensions_uris = ''
 
@@ -428,7 +432,14 @@
 #  Default: True
 # c.LabApp.cache_files = True
 
-## Whether to enable collaborative mode (experimental).
+## A callable class that receives the current version at instantiation and
+#  calling it must return asynchronously a string indicating which version is
+#  available and how to install or None if no update is available. The string
+#  supports Markdown format.
+#  Default: 'jupyterlab.handlers.announcements.CheckForUpdate'
+# c.LabApp.check_for_updates_class = 'jupyterlab.handlers.announcements.CheckForUpdate'
+
+## Whether to enable collaborative mode.
 #  Default: False
 # c.LabApp.collaborative = False
 
@@ -475,6 +486,12 @@
 #  Default: []
 # c.LabApp.extra_labextensions_path = []
 
+## Whether to skip loading styles for disabled prebuilt extensions.
+#          This will be the default behavior starting with JupyterLab 4.0
+#          (and this flag will be removed).
+#  Default: False
+# c.LabApp.future_skip_styles_for_disabled = False
+
 ## Generate default config file.
 #  See also: JupyterApp.generate_config
 # c.LabApp.generate_config = False
@@ -520,9 +537,14 @@
 #  See also: Application.log_level
 # c.LabApp.log_level = 30
 
-##
+## 
 #  See also: Application.logging_config
 # c.LabApp.logging_config = {}
+
+## URL that serves news Atom feed; by default the JupyterLab organization
+#  announcements will be fetched. Set to None to turn off fetching announcements.
+#  Default: 'https://jupyterlab.github.io/assets/feed.xml'
+# c.LabApp.news_url = 'https://jupyterlab.github.io/assets/feed.xml'
 
 ## Whether a notebook should start a kernel automatically.
 #  Default: True
@@ -626,51 +648,46 @@
 #------------------------------------------------------------------------------
 # ServerApp(JupyterApp) configuration
 #------------------------------------------------------------------------------
+## The Jupyter Server application class.
+
 ## Set the Access-Control-Allow-Credentials: true header
 #  Default: False
 # c.ServerApp.allow_credentials = False
 
 ## Set the Access-Control-Allow-Origin header
-#
+#  
 #          Use '*' to allow any origin to access your server.
-#
+#  
 #          Takes precedence over allow_origin_pat.
 #  Default: ''
 # c.ServerApp.allow_origin = ''
 
 ## Use a regular expression for the Access-Control-Allow-Origin header
-#
+#  
 #          Requests from an origin matching the expression will get replies with:
-#
+#  
 #              Access-Control-Allow-Origin: origin
-#
+#  
 #          where `origin` is the origin of the request.
-#
+#  
 #          Ignored if allow_origin is set.
 #  Default: ''
 # c.ServerApp.allow_origin_pat = ''
 
-## Allow password to be changed at login for the Jupyter server.
-#
-#                      While logging in with a token, the Jupyter server UI will give the opportunity to
-#                      the user to enter a new password at the same time that will replace
-#                      the token login mechanism.
-#
-#                      This can be set to false to prevent changing password from
-#  the UI/API.
+## DEPRECATED in 2.0. Use PasswordIdentityProvider.allow_password_change
 #  Default: True
 # c.ServerApp.allow_password_change = True
 
 ## Allow requests where the Host header doesn't point to a local server
-#
+#  
 #         By default, requests get a 403 forbidden response if the 'Host' header
 #         shows that the browser thinks it's on a non-local domain.
 #         Setting this option to True disables this check.
-#
+#  
 #         This protects against 'DNS rebinding' attacks, where a remote web server
 #         serves you a page and then changes its DNS to send later requests to a
 #         local IP, bypassing same-origin checks.
-#
+#  
 #         Local IP addresses (such as 127.0.0.1 and ::1) are allowed as local,
 #         along with hostnames configured in local_hostnames.
 #  Default: False
@@ -698,11 +715,11 @@
 # c.ServerApp.autoreload = False
 
 ## The base URL for the Jupyter server.
-#
+#  
 #                         Leading and trailing slashes can be omitted,
 #                         and will automatically be added.
 #  Default: '/'
-c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
+# c.ServerApp.base_url = '/'
 
 ## Specify what command to use to invoke a web
 #                        browser when starting the server. If not specified, the
@@ -734,18 +751,17 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 # c.ServerApp.config_manager_class = 'jupyter_server.services.config.manager.ConfigManager'
 
 ## The content manager class to use.
-#  Default: 'jupyter_server.services.contents.largefilemanager.LargeFileManager'
-# c.ServerApp.contents_manager_class = 'jupyter_server.services.contents.largefilemanager.LargeFileManager'
+#  Default: 'jupyter_server.services.contents.largefilemanager.AsyncLargeFileManager'
+# c.ServerApp.contents_manager_class = 'jupyter_server.services.contents.largefilemanager.AsyncLargeFileManager'
 
-## Extra keyword arguments to pass to `set_secure_cookie`. See tornado's
-#  set_secure_cookie docs for details.
+## DEPRECATED. Use IdentityProvider.cookie_options
 #  Default: {}
 # c.ServerApp.cookie_options = {}
 
 ## The random bytes used to secure cookies.
 #          By default this is a new random number every time you start the server.
 #          Set it to a value in a config file to enable logins to persist across server sessions.
-#
+#  
 #          Note: Cookie secrets should be kept private, do not share config files with
 #          cookie_secret stored in plaintext (you can read the value from a file).
 #  Default: b''
@@ -756,12 +772,12 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 # c.ServerApp.cookie_secret_file = ''
 
 ## Override URL shown to users.
-#
+#  
 #          Replace actual URL, including protocol, address, port and base URL,
 #          with the given value when displaying URL to the users. Do not change
 #          the actual connection URL. If authentication token is enabled, the
 #          token is added to the custom URL automatically.
-#
+#  
 #          This option is intended to be used when the URL to display to the user
 #          cannot be determined reliably by the Jupyter server (proxified
 #          or containerized setups for example).
@@ -773,13 +789,13 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 # c.ServerApp.default_url = '/'
 
 ## Disable cross-site-request-forgery protection
-#
-#          Jupyter notebook 4.3.1 introduces protection from cross-site request forgeries,
+#  
+#          Jupyter server includes protection from cross-site request forgeries,
 #          requiring API requests to either:
-#
+#  
 #          - originate from pages served by this server (validated with XSRF cookie and token), or
 #          - authenticate with a token
-#
+#  
 #          Some anonymous compute resources still desire the ability to run code,
 #          completely without authentication.
 #          These services can disable all authentication and security checks,
@@ -792,14 +808,14 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 # c.ServerApp.extra_services = []
 
 ## Extra paths to search for serving static files.
-#
+#  
 #          This allows adding javascript/css to be available from the Jupyter server machine,
 #          or overriding individual files in the IPython
 #  Default: []
 # c.ServerApp.extra_static_paths = []
 
 ## Extra paths to search for serving jinja templates.
-#
+#  
 #          Can be used to override templates from jupyter_server.templates.
 #  Default: []
 # c.ServerApp.extra_template_paths = []
@@ -816,22 +832,21 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 #  See also: JupyterApp.generate_config
 # c.ServerApp.generate_config = False
 
-## Extra keyword arguments to pass to `get_secure_cookie`. See tornado's
-#  get_secure_cookie docs for details.
+## DEPRECATED. Use IdentityProvider.get_secure_cookie_kwargs
 #  Default: {}
 # c.ServerApp.get_secure_cookie_kwargs = {}
 
-## (bytes/sec)
-#          Maximum rate at which stream output can be sent on iopub before they are
-#          limited.
-#  Default: 1000000
-# c.ServerApp.iopub_data_rate_limit = 1000000
+## The identity provider class to use.
+#  Default: 'jupyter_server.auth.identity.PasswordIdentityProvider'
+# c.ServerApp.identity_provider_class = 'jupyter_server.auth.identity.PasswordIdentityProvider'
 
-## (msgs/sec)
-#          Maximum rate at which messages can be sent on iopub before they are
-#          limited.
-#  Default: 1000
-# c.ServerApp.iopub_msg_rate_limit = 1000
+## DEPRECATED. Use ZMQChannelsWebsocketConnection.iopub_data_rate_limit
+#  Default: 0.0
+# c.ServerApp.iopub_data_rate_limit = 0.0
+
+## DEPRECATED. Use ZMQChannelsWebsocketConnection.iopub_msg_rate_limit
+#  Default: 0.0
+# c.ServerApp.iopub_msg_rate_limit = 0.0
 
 ## The IP address the Jupyter server will listen on.
 #  Default: 'localhost'
@@ -857,31 +872,30 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 
 ## The kernel spec manager class to use. Should be a subclass of
 #  `jupyter_client.kernelspec.KernelSpecManager`.
-#
+#  
 #  The Api of KernelSpecManager is provisional and might change without warning
 #  between this version of Jupyter and the next stable one.
 #  Default: 'builtins.object'
 # c.ServerApp.kernel_spec_manager_class = 'builtins.object'
 
-## Preferred kernel message protocol over websocket to use (default: None). If an
-#  empty string is passed, select the legacy protocol. If None, the selected
-#  protocol will depend on what the front-end supports (usually the most recent
-#  protocol supported by the back-end and the front-end).
-#  Default: None
-# c.ServerApp.kernel_ws_protocol = None
+## The kernel websocket connection class to use.
+#  Default: 'jupyter_server.services.kernels.connection.channels.ZMQChannelsWebsocketConnection'
+# c.ServerApp.kernel_websocket_connection_class = 'jupyter_server.services.kernels.connection.channels.ZMQChannelsWebsocketConnection'
+
+## DEPRECATED. Use ZMQChannelsWebsocketConnection.kernel_ws_protocol
+#  Default: ''
+# c.ServerApp.kernel_ws_protocol = ''
 
 ## The full path to a private key file for usage with SSL/TLS.
 #  Default: ''
 # c.ServerApp.keyfile = ''
 
-## Whether to limit the rate of IOPub messages (default: True). If True, use
-#  iopub_msg_rate_limit, iopub_data_rate_limit and/or rate_limit_window to tune
-#  the rate.
-#  Default: True
-# c.ServerApp.limit_rate = True
+## DEPRECATED. Use ZMQChannelsWebsocketConnection.limit_rate
+#  Default: False
+# c.ServerApp.limit_rate = False
 
 ## Hostnames to allow as local when allow_remote_access is False.
-#
+#  
 #         Local IP addresses (such as 127.0.0.1 and ::1) are automatically accepted
 #         as local as well.
 #  Default: ['localhost']
@@ -899,13 +913,13 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 #  See also: Application.log_level
 # c.ServerApp.log_level = 30
 
-##
+## 
 #  See also: Application.logging_config
 # c.ServerApp.logging_config = {}
 
 ## The login handler class to use.
-#  Default: 'jupyter_server.auth.login.LoginHandler'
-# c.ServerApp.login_handler_class = 'jupyter_server.auth.login.LoginHandler'
+#  Default: 'jupyter_server.auth.login.LegacyLoginHandler'
+# c.ServerApp.login_handler_class = 'jupyter_server.auth.login.LegacyLoginHandler'
 
 ## The logout handler class to use.
 #  Default: 'jupyter_server.auth.logout.LogoutHandler'
@@ -914,7 +928,7 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 ## Sets the maximum allowed size of the client request body, specified in the
 #  Content-Length request header field. If the size in a request exceeds the
 #  configured value, a malformed HTTP message is returned to the client.
-#
+#  
 #  Note: max_body_size is applied even in streaming mode.
 #  Default: 536870912
 # c.ServerApp.max_body_size = 536870912
@@ -942,23 +956,11 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 #  Default: False
 # c.ServerApp.open_browser = False
 
-## Hashed password to use for web authentication.
-#
-#                        To generate, type in a python/IPython shell:
-#
-#                          from jupyter_server.auth import passwd; passwd()
-#
-#                        The string should be of the form type:salt:hashed-
-#  password.
+## DEPRECATED in 2.0. Use PasswordIdentityProvider.hashed_password
 #  Default: ''
 # c.ServerApp.password = ''
 
-## Forces users to use a password for the Jupyter server.
-#                        This is useful in a multi user environment, for instance when
-#                        everybody in the LAN can access each other's machine through ssh.
-#
-#                        In such a case, serving on localhost is not secure since
-#                        any user can connect to the Jupyter server via ssh.
+## DEPRECATED in 2.0. Use PasswordIdentityProvider.password_required
 #  Default: False
 # c.ServerApp.password_required = False
 
@@ -984,10 +986,9 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 #  Default: True
 # c.ServerApp.quit_button = True
 
-## (sec) Time window used to
-#          check the message and data rate limits.
-#  Default: 3
-# c.ServerApp.rate_limit_window = 3
+## DEPRECATED. Use ZMQChannelsWebsocketConnection.rate_limit_window
+#  Default: 0.0
+# c.ServerApp.rate_limit_window = 0.0
 
 ## Reraise exceptions encountered loading server extensions?
 #  Default: False
@@ -1009,8 +1010,8 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 #  See also: Application.show_config_json
 # c.ServerApp.show_config_json = False
 
-## Shut down the server after N seconds with no kernels or terminals running and
-#  no activity. This can be used together with culling idle kernels
+## Shut down the server after N seconds with no kernelsrunning and no activity.
+#  This can be used together with culling idle kernels
 #  (MappingKernelManager.cull_idle_timeout) to shutdown the Jupyter server when
 #  it's not in use. This is not precisely timed: it may shut down up to a minute
 #  later. 0 (the default) disables this automatic shutdown.
@@ -1035,27 +1036,18 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 # c.ServerApp.terminado_settings = {}
 
 ## Set to False to disable terminals.
-#
+#  
 #           This does *not* make the server more secure by itself.
 #           Anything the user can in a terminal, they can also do in a notebook.
-#
+#  
 #           Terminals may also be automatically disabled if the terminado package
 #           is not available.
-#  Default: True
-# c.ServerApp.terminals_enabled = True
+#  Default: False
+# c.ServerApp.terminals_enabled = False
 
-## Token used for authenticating first-time connections to the server.
-#
-#          The token can be read from the file referenced by JUPYTER_TOKEN_FILE or set directly
-#          with the JUPYTER_TOKEN environment variable.
-#
-#          When no password is enabled,
-#          the default is to generate a new, random token.
-#
-#          Setting to an empty string disables authentication altogether, which
-#  is NOT RECOMMENDED.
-#  Default: '<generated>'
-# c.ServerApp.token = '<generated>'
+## DEPRECATED. Use IdentityProvider.token
+#  Default: '<DEPRECATED>'
+# c.ServerApp.token = '<DEPRECATED>'
 
 ## Supply overrides for the tornado.web.Application that the Jupyter server uses.
 #  Default: {}
@@ -1076,7 +1068,7 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 #       launching a browser using a redirect file can lead the browser failing to load.
 #       This is because of the difference in file structures/paths between the runtime and
 #       the browser.
-#
+#  
 #       Disabling this setting to False will disable this behavior, allowing the browser
 #       to launch by using a URL and visible token (as before).
 #  Default: True
@@ -1086,28 +1078,28 @@ c.ServerApp.base_url = '/{{ .Release.Namespace }}/{{ .Release.Name }}'
 #          `new` argument passed to the standard library method `webbrowser.open`.
 #          The behaviour is not guaranteed, but depends on browser support. Valid
 #          values are:
-#
+#  
 #           - 2 opens a new tab,
 #           - 1 opens a new window,
 #           - 0 opens in an existing window.
-#
+#  
 #          See the `webbrowser.open` documentation for details.
 #  Default: 2
 # c.ServerApp.webbrowser_open_new = 2
 
 ## Set the tornado compression options for websocket connections.
-#
+#  
 #  This value will be returned from
 #  :meth:`WebSocketHandler.get_compression_options`. None (default) will disable
 #  compression. A dict (even an empty one) will enable compression.
-#
+#  
 #  See the tornado docs for WebSocketHandler.get_compression_options for details.
 #  Default: None
 # c.ServerApp.websocket_compression_options = None
 
 ## The base URL for websockets,
 #          if it differs from the HTTP server (hint: it almost certainly doesn't).
-#
+#  
 #          Should be in the form of an HTTP origin: ws[s]://hostname[:port]
 #  Default: ''
 # c.ServerApp.websocket_url = ''

@@ -3,13 +3,35 @@ Use a configmap to mount all files in the subdirectory configfiles
 All files will be process by helm, replacing {{ XYZ }} appropriately
 Do NOT name several files identically!
 
-See https://helm.sh/docs/chart_template_guide/accessing_files/
-and https://github.com/helm/helm/issues/4157
+See
+https://helm.sh/docs/chart_template_guide/accessing_files/
+https://github.com/helm/helm/issues/4157
+https://pabraham-devops.medium.com/mapping-kubernetes-configmap-to-read-write-folders-and-files-8a548c855817
+
 */}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "common.names.fullname" . }}
+  name: {{ include "common.names.fullname" . }}-jupyterdir
+  labels:
+    {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+binaryData:
+  jupyter: |-
+    {{ .Files.Get "configfiles/.jupyter.zip" | b64enc }}
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "common.names.fullname" . }}-rest
   labels:
     {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.commonLabels }}
@@ -21,7 +43,7 @@ metadata:
     {{- end }}
 binaryData:
   {{- $files := .Files }}
-  {{- range $path, $bytes := .Files.Glob "configfiles/**" }}
+  {{- range $path, $bytes := .Files.Glob "configfiles/rest/**" }}
     {{- base ($path) | quote | nindent 2 }}: |-
     {{- tpl ($files.Get $path) $ | b64enc | nindent 4 }}
   {{- end }}

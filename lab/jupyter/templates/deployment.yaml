@@ -114,41 +114,37 @@ spec:
             {{- if .containers.extraEnvVars }}
             {{- toYaml .containers.extraEnvVars | nindent 12 }}
             {{- end }}
+          args:
+            - "start-notebook.sh"
+            - "--ServerApp.base_url='/{{ $.Release.Namespace }}/{{ $.Release.Name }}'"
+          {{- if .containers.args }}
+          {{- toYaml .containers.args | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: work
               mountPath: {{ .containers.volumeMounts.mountPath.sourcecode | quote }}
-            - name: config-files
-              subPath: jupyter_lab_config.py
-              mountPath: /home/jovyan/.jupyter/jupyter_lab_config.py
-            - name: config-files
-              subPath: extensionmanager-extension.jupyterlab-settings
-              mountPath: /home/jovyan/.jupyter/lab/user-settings/@jupyterlab/extensionmanager-extension/plugin.jupyterlab-settings
-            - name: config-files
-              subPath: jupyterlab-lsp.completion.jupyterlab-settings
-              mountPath: /home/jovyan/.jupyter/lab/user-settings/@krassowski/jupyterlab-lsp/completion.jupyterlab-settings
-            - name: config-files
-              subPath: jupyterlab-lsp.plugin.jupyterlab-settings
-              mountPath: /home/jovyan/.jupyter/lab/user-settings/@krassowski/jupyterlab-lsp/plugin.jupyterlab-settings
-            - name: config-files
-              subPath: pycodestyle
-              mountPath: /home/jovyan/.config/pycodestyle
-            - name: config-files
+            - name: data
+              mountPath: {{ .containers.volumeMounts.mountPath.data | quote }}
+            - name: jupyterdir
+              mountPath: /home/jovyan/.jupyter
+            - name: config-files-rest
               subPath: DO-NOT-SAVE-ANYTHING-HERE.md
               mountPath: "/home/jovyan/DO NOT SAVE ANYTHING HERE.md"
             {{- if $.Values.controlboard }}
-            - name: config-files
+            - name: config-files-rest
               subPath: jupyterhub_config-CONTROLBOARD.py
               mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/my_config.py
-            - name: config-files
+            - name: config-files-rest
               subPath: overrides.json
               mountPath: "/opt/conda/share/jupyter/lab/settings/overrides.json"
             {{- else }}
-            - name: config-files
+            - name: config-files-rest
               subPath: jupyterhub_config.py
               mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/my_config.py
             {{- end }}
-            - name: data
-              mountPath: {{ .containers.volumeMounts.mountPath.data | quote }}
+            - name: config-files-rest
+              subPath: pycodestyle
+              mountPath: /home/jovyan/.config/pycodestyle
           {{- end }}
       volumes:
       - name: data
@@ -159,6 +155,34 @@ spec:
         hostPath:
           path: {{ required "You need to set the path for sourcecodeDirectory in myvalues.yaml!" .Values.sourcecodeDirectory | quote }}
           type: DirectoryOrCreate
-      - name: config-files
+      - name: config-files-jupyterdir
         configMap:
-          name: {{ include "common.names.fullname" . }}
+          name: {{ include "common.names.fullname" . }}-jupyterdir
+      - name: jupyterdir
+        emptyDir: {}
+      - name: config-files-rest
+        configMap:
+          name: {{ include "common.names.fullname" . }}-rest
+
+      # We need an init container to allow for changes by the user
+      # Just mounting files would lead to permission issues
+      # NOTE: files without a file extension ("md" in readme.md)
+      # will be turned into directories by Jupyter :-(
+      initContainers:
+      - name: setup-configs
+        image: busybox:latest
+        volumeMounts:
+        - name: config-files-jupyterdir
+          subPath: jupyter
+          mountPath: /configfiles/.jupyter.zip
+        - name: jupyterdir
+          mountPath: /.jupyter
+        command: 
+        - sh
+        - "-c"
+        args: 
+        - 
+          echo Unzipping .jupyter directory, do NOT overwrite existing files &&
+          unzip /configfiles/.jupyter.zip -n -d / &&
+          echo Changing permissions to {{ $.Values.userId }}:{{ $.Values.userGroup }} &&
+          chown -R {{ $.Values.userId }}:{{ $.Values.userGroup }} /.jupyter/*
