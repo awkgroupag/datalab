@@ -1,9 +1,9 @@
 dependencies:
 - name: common
   repository: https://charts.bitnami.com/bitnami
-  version: 2.1.2
+  version: 2.4.0
 - name: airflow
   repository: https://charts.bitnami.com/bitnami
-  version: 14.0.3
-digest: sha256:3cbe8bcdbecc132534de3d8988b163c0b5023e6eb2a2cd0cb97bdec72f5ccc92
-generated: "2022-11-13T12:35:42.725409785+01:00"
+  version: 14.2.4
+digest: sha256:eca91f91267197f9e1109dbf4828b1b4d68073533721196fed1d4e7540f78e32
+generated: "2023-05-28T16:38:54.3869572+02:00"

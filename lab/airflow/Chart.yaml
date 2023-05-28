@@ -14,10 +14,10 @@ sources:
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
-    version: 2.1.x
+    version: 2.4.0
   - name: airflow
     repository: https://charts.bitnami.com/bitnami
-    version: 14.0.3
+    version: 14.2.4
 maintainers:
   - name: Thomas Kathriner
     email: thomas.kathriner@awk.ch
