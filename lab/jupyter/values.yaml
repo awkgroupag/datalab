@@ -139,6 +139,8 @@ jupyter:
     # - "start-notebook.sh"
     # - "--ServerApp.base_url='/{{ .Release.Namespace }}/{{ .Release.Name }}'"
     # https://jupyter-notebook.readthedocs.io/en/stable/config.html
+    # If this is not sufficient for you, change the configuration files
+    # directly in the folder jupyter/configfiles
     args: []
   # Additional annotations to add to each pod
   podAnnotations: {}
