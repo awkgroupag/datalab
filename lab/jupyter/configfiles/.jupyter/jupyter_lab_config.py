@@ -1103,9 +1103,3 @@ c = get_config()  #noqa
 #          Should be in the form of an HTTP origin: ws[s]://hostname[:port]
 #  Default: ''
 # c.ServerApp.websocket_url = ''
-
-
-# Allow access to hidden files
-c.ContentsManager.allow_hidden = True
-# Allow access to hidden files
-c.FileContentsManager.allow_hidden = True
