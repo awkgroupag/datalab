@@ -80,7 +80,7 @@ jupyter:
   image:
     name: awkgroupag/scipy-notebook
     # Version of the Jupyter image - you want to change that to use an older image
-    tag: x86_64-2023-05-28
+    tag: x86_64-2023-05-29
   # If no Jupyer token is given, a random one is generated and saved in a Kubernetes secret (this is more secure than providing a string here)
   # Whatever token you enter here takes precedence; an existing secret is thus overwritten with the value here
   token:
